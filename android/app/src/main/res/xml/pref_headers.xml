@@ -1,0 +1,10 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+    <header
+            android:fragment="com.beertag.android.views.Login.LoginActivity$GeneralPreferenceFragment"
+            android:title="@string/username">
+        <extra android:name="Username" android:value="Login"></extra>
+    </header>
+
+</preference-headers>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".views.beerCreate.BeerCreateFragment"
+             android:configChanges="orientation|screenSize|keyboardHidden"
+>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sv_create_beer"
+        >
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_blue_dark"
+                android:orientation="vertical">
+
+            <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/beer_name"/>
+
+            <EditText
+                    android:id="@+id/et_brewery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/brewery"
+                    android:layout_below="@+id/et_name"
+                    android:layout_marginTop="13dp"
+            />
+
+            <EditText
+                    android:id="@+id/et_country_of_origin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country_of_origin"
+                    android:layout_below="@+id/et_brewery"
+                    android:layout_marginTop="13dp"/>
+
+            <EditText
+                    android:id="@+id/et_abv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/abv"
+                    android:layout_below="@+id/et_country_of_origin"
+                    android:layout_marginTop="13dp"/>
+
+            <EditText
+                    android:id="@+id/et_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description"
+                    android:layout_below="@+id/et_abv"
+                    android:layout_marginTop="13dp"/>
+
+            <EditText
+                    android:id="@+id/et_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/style"
+                    android:layout_below="@+id/et_description"
+                    android:layout_marginTop="13dp"/>
+
+
+            <EditText
+                    android:id="@+id/et_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tag"
+                    android:layout_below="@+id/et_style"
+                    android:layout_marginTop="13dp"/>
+
+
+            <EditText
+                    android:id="@+id/et_imageUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_image_url"
+                    android:layout_below="@+id/et_tag"
+                    android:layout_marginTop="13dp"/>
+
+            <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:layout_below="@+id/et_imageUrl"
+                    android:layout_marginTop="15dp"/>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>
