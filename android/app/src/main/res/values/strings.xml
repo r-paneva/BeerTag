@@ -10,5 +10,11 @@
     <string name="tag">Tag</string>
     <string name="enter_image_url">Enter image URL</string>
     <string name="save">SAVE</string>
+    <string name="select_country">Select Country</string>
+    <string-array name="countries">
+        <item>"AUSTRALIA"</item>
+        <item>"BULGARIA"</item>
+        <item>"INDIA"</item>
+    </string-array>
 
 </resources>

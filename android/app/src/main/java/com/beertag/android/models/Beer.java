@@ -1,9 +1,6 @@
 package com.beertag.android.models;
 
 
-import com.beertag.android.models.base.Country;
-import com.beertag.android.models.base.Style;
-
 import java.io.Serializable;
 
 public class Beer implements Serializable {

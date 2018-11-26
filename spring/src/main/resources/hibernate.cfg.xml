@@ -22,5 +22,6 @@
         <property name = "hibernate.connection.password">
             dev_user
         </property>
+        <mapping class="com.beertag.models.Country"/>
     </session-factory>
 </hibernate-configuration>

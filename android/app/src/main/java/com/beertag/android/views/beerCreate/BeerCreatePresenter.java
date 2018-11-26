@@ -4,7 +4,10 @@ package com.beertag.android.views.beerCreate;
 import com.beertag.android.Constants;
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Country;
 import com.beertag.android.services.base.BeersService;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -46,8 +49,8 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
             mView.showLoading();
             Disposable disposable = Observable
                 .create((ObservableOnSubscribe<Beer>) emitter -> {
-                    Beer createdBeer = mBeersService.createBeer(beer);
-                    //emitter.onNext(createdBeer);
+                    mBeersService.createBeer(beer);
+                    emitter.onNext(beer);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())
@@ -69,6 +72,14 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
 
     private void accept(Beer s) {
         mView.navigateToHome();
+    }
+
+    private void presentCountriesToView(List<Country> countries) {
+        if (countries.isEmpty()) {
+            mView.showEmptyCountryList();
+        } else {
+            mView.showCountries(countries);
+        }
     }
 
 //private int getResponceCode(){

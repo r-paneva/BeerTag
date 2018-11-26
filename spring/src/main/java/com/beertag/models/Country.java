@@ -6,25 +6,25 @@ import javax.persistence.*;
 
 @Entity
 @EnableAutoConfiguration
-@Table(name = "Beers")
+@Table(name = "country")
 
 public class Country {
 
     @Id
     @Column(name = "countryId")
-    private Long countryId;
+    private int countryId;
 
-    @Column(columnDefinition = "beer_style_name", name = "name")
+    @Column( name = "name")
     private String name;
 
     //Getters and setters omitted for brevity
 
 
-    public Long getCountryId() {
+    public int getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Long countryId) {
+    public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 

@@ -2,6 +2,7 @@ package com.beertag.android.diconfig;
 
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Country;
 import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.User;
 import com.beertag.android.parsers.base.JsonParser;
@@ -43,6 +44,17 @@ public class RepositoriesModule {
     @Provides
     @Singleton
     public Repository<User> UserRepository(
+            @Named("baseServerUrl") String baseServerUrl,
+            HttpRequester httpRequester,
+            JsonParser<User> jsonParser
+    ) {
+        String url = baseServerUrl; // + "/Users";
+        return new HttpUserRepository(url, httpRequester, jsonParser);
+    }
+
+    @Provides
+    @Singleton
+    public Repository<Country> CountryRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
             JsonParser<User> jsonParser

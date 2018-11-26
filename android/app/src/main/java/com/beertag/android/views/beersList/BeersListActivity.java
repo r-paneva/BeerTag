@@ -60,8 +60,8 @@ public class BeersListActivity
                     .commit();
 
 //        if (!isPhone()) {
-//            mEstateDetailsFragment.setPresenter(mEstateDetailsPresenter);
-//            transaction.replace(R.id.content_details, mEstateDetailsFragment);
+//            mBeerDetailsFragment.setPresenter(mBeerDetailsPresenter);
+//            transaction.replace(R.id.content_details, mBeerDetailsFragment);
 //        }
 
             //transaction.commit();

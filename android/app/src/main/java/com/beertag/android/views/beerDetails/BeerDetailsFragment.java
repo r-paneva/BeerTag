@@ -149,7 +149,7 @@ public class BeerDetailsFragment
             @Override
             public void onClick(View v) {
                 Context context= getContext();
-                FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),mTenant);
+                FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),user);
                 fiveStarsDialog.setRateText("How many stars this beer deserves?")
                         .setTitle("")
                         //.setForceMode(false)

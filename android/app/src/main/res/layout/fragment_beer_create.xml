@@ -31,14 +31,15 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/brewery"
                     android:layout_below="@+id/et_name"
-                    android:layout_marginTop="13dp"
-            />
+                    android:layout_marginTop="13dp" />
 
-            <EditText
-                    android:id="@+id/et_country_of_origin"
+            <Spinner
+                    android:id="@+id/sp_country_of_origin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/country_of_origin"
+                    android:hint="@string/select_country"
+                    android:layout_centerHorizontal="true"
+                    android:textColorHint="#05ab9a"
                     android:layout_below="@+id/et_brewery"
                     android:layout_marginTop="13dp"/>
 
@@ -47,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/abv"
-                    android:layout_below="@+id/et_country_of_origin"
+                    android:layout_below="@+id/sp_country_of_origin"
                     android:layout_marginTop="13dp"/>
 
             <EditText
@@ -93,4 +94,10 @@
                     android:layout_marginTop="15dp"/>
         </RelativeLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
 </FrameLayout>

@@ -2,18 +2,19 @@ package com.beertag.android.views.beerCreate;
 
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.beertag.android.Constants;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
-import com.beertag.android.views.beersList.BeersListActivity;
+import com.beertag.android.models.Country;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +24,7 @@ import butterknife.OnClick;
 
 public class BeerCreateFragment extends Fragment implements BeerCreateContracts.View {
     private BeerCreateContracts.Presenter mPresenter;
+    private BeerCreateContracts.Navigator mNavigator;
 
     @BindView(R.id.et_name)
     EditText mName;
@@ -30,8 +32,8 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
     @BindView(R.id.et_brewery)
     EditText mBrewery;
 
-    @BindView(R.id.et_country_of_origin)
-    EditText mCountryOfOrigin;
+    @BindView(R.id.sp_country_of_origin)
+    Spinner mCountryOfOrigin;
 
     @BindView(R.id.et_abv)
     EditText mABV;
@@ -48,7 +50,8 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
     @BindView(R.id.et_imageUrl)
     EditText mImage;
 
-    private BeerCreateContracts.Navigator mNavigator;
+    @Inject
+    public BeerCreateActivity mActivity;
 
     @Inject
     public BeerCreateFragment() {
@@ -60,8 +63,12 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_beer_create, container, false);
         ButterKnife.bind(this, view);
+
+        mCountryOfOrigin.setAdapter(mActivity.countryAdapter);
+
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -72,6 +79,21 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
     public void onPause() {
         super.onPause();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void showCountries(List<Country> countries) {
+//            createAdapter.clear();
+//            createAdapter.addAll(String.valueOf(countries));
+//            createAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyCountryList() {
+        Toast.makeText(getContext(),
+                "Can not load countries",
+                Toast.LENGTH_LONG)
+                .show();
     }
 
     @OnClick(R.id.btn_save)
@@ -96,7 +118,7 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
         try {
             String name = mName.getText().toString();
             String brewery = mBrewery.getText().toString();
-            String origin = mCountryOfOrigin.getText().toString();
+            String origin = mCountryOfOrigin.getSelectedItem().toString();
             String abv = mABV.getText().toString();
             String description = mDescription.getText().toString();
             String style = mStyle.getText().toString();
@@ -115,8 +137,8 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
 
             mPresenter.save(beer);
         } catch (Exception e) {
-                Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG) // todo
-                        .show();
+            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG) // todo
+                    .show();
         }
     }
 
@@ -154,5 +176,6 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
     public void setNavigator(BeerCreateContracts.Navigator navigator) {
         mNavigator = navigator;
     }
+
 
 }

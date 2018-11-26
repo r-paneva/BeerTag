@@ -2,8 +2,10 @@ package com.beertag.android.views.beerCreate;
 
 
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Country;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface BeerCreateContracts {
     interface View {
@@ -19,6 +21,10 @@ public interface BeerCreateContracts {
         void showLoading();
 
         void showMessage(String message);
+
+        void showCountries(List<Country> countries);
+
+        void showEmptyCountryList();
     }
 
     interface Presenter {

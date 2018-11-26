@@ -9,6 +9,7 @@ import com.beertag.android.Constants;
 import com.beertag.android.R;
 import com.beertag.android.views.Login.LoginActivity;
 import com.beertag.android.views.beerCreate.BeerCreateActivity;
+import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -77,6 +78,8 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
             return new Intent(this, BeerCreateActivity.class);
         } else if (identifier == Constants.LIST_IDENTIFIER) {
             return new Intent(this, BeersListActivity.class);
+        } else if (identifier == Constants.DETAILS_IDENTIFIER) {
+            return new Intent(this, BeerDetailsActivity.class);
         } else if (identifier == Constants.LOGOUT_IDENTIFIER) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sp.edit();
