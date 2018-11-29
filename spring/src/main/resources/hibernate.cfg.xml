@@ -23,5 +23,6 @@
             dev_user
         </property>
         <mapping class="com.beertag.models.Country"/>
+        <mapping class="com.beertag.models.Style"/>
     </session-factory>
 </hibernate-configuration>
