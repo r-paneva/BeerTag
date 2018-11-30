@@ -1,5 +1,6 @@
 package com.beertag.android.diconfig;
 
+import com.beertag.android.views.Login.LoginActivity;
 import com.beertag.android.views.beerCreate.BeerCreateActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
@@ -28,10 +29,10 @@ public abstract class ActivityBindingModule {
     abstract BeerCreateActivity BeerCreateActivity();
 
 
-//    @ActivityScoped
-//    @ContributesAndroidInjector(
-//            modules = LoginModule.class
-//    )
-//    abstract LoginActivity LoginActivity();
+    @ActivityScoped
+    @ContributesAndroidInjector(
+            modules = LoginModule.class
+    )
+    abstract LoginActivity LoginActivity();
 
 }

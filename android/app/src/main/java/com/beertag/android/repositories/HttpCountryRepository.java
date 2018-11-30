@@ -8,7 +8,7 @@ import com.beertag.android.repositories.base.Repository;
 import java.io.IOException;
 import java.util.List;
 
-public class HttpCountryRepository implements Repository {
+public class HttpCountryRepository<C> implements Repository {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;

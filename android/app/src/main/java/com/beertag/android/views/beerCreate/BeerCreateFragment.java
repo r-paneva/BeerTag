@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +27,7 @@ import butterknife.OnClick;
 public class BeerCreateFragment extends Fragment implements BeerCreateContracts.View {
     private BeerCreateContracts.Presenter mPresenter;
     private BeerCreateContracts.Navigator mNavigator;
+    List<String> mCountries = new ArrayList<>();
 
     @BindView(R.id.et_name)
     EditText mName;
@@ -63,8 +66,17 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_beer_create, container, false);
         ButterKnife.bind(this, view);
+        mPresenter.loadCountries();
 
-        mCountryOfOrigin.setAdapter(mActivity.countryAdapter);
+//        List<String> bb = new ArrayList<>();
+//        bb.add("sdfg");
+//        bb.add("vbnghj");
+
+        final ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>
+                (this.getActivity(), android.R.layout.simple_spinner_dropdown_item, mCountries);
+
+        countryAdapter.notifyDataSetChanged();
+        mCountryOfOrigin.setAdapter(countryAdapter);
 
         return view;
     }
@@ -83,9 +95,9 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
 
     @Override
     public void showCountries(List<Country> countries) {
-//            createAdapter.clear();
-//            createAdapter.addAll(String.valueOf(countries));
-//            createAdapter.notifyDataSetChanged();
+        for (Country c : countries) {
+            mCountries.add(c.getName());
+        }
     }
 
     @Override
@@ -98,22 +110,7 @@ public class BeerCreateFragment extends Fragment implements BeerCreateContracts.
 
     @OnClick(R.id.btn_save)
 
-//    @Override
-//    public void onClick(View v) {
-//        try {
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.clear();
-//            mUser = mLoginPresenter.getUserByName(String.valueOf(mUsername.getText()));
-//            if (mUser != null) {
-//                editor.putString("username", String.valueOf(mUsername.getText()));
-//            } else {
-//                Toast.makeText(mActivity, "No such username in the database!", Toast.LENGTH_LONG).show();
-//            }
-//            editor.commit();
-//            startActivity(new Intent(getApplicationContext(), BeersListActivity.class));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     public void onBeerSaveClicked() {
         try {
             String name = mName.getText().toString();

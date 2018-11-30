@@ -6,6 +6,7 @@ import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
 import com.beertag.android.services.base.BeersService;
+import com.beertag.android.services.base.CountryService;
 
 import java.util.List;
 
@@ -21,13 +22,15 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
     private final BeersService mBeersService;
     private final SchedulerProvider mSchedulerProvider;
     private BeerCreateContracts.View mView;
+    private final CountryService mCountriesService;
 
     @Inject
     public BeerCreatePresenter(
             BeersService beerService,
-            SchedulerProvider schedulerProvider) {
+            SchedulerProvider schedulerProvider, CountryService mCountriesService) {
         mBeersService = beerService;
         mSchedulerProvider = schedulerProvider;
+        this.mCountriesService = mCountriesService;
     }
 
     @Override
@@ -81,6 +84,23 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
             mView.showCountries(countries);
         }
     }
+
+    @Override
+    public void loadCountries() {
+        Disposable observable = Observable
+                .create((ObservableOnSubscribe<List<Country>>) emitter -> {
+                    List<Country> countries = mCountriesService.getAllCountries();
+                    emitter.onNext(countries);
+                    emitter.onComplete();
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .subscribe(
+                        this::presentCountriesToView,
+                        error -> mView.showError(error)
+                );
+    }
+
 
 //private int getResponceCode(){
 //        int statusCode = 0;

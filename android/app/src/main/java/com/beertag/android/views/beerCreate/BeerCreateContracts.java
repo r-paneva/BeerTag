@@ -34,6 +34,8 @@ public interface BeerCreateContracts {
         void unsubscribe();
 
         void save(Beer beer) throws IOException;
+
+        void loadCountries();
     }
 
     public interface Navigator {

@@ -13,16 +13,16 @@ import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
 @Component(modules = {
-        AndroidSupportInjectionModule.class,
-        HttpModule.class,
-        ParsersModule.class,
-        AppModule.class,
         ActivityBindingModule.class,
-        LoginModule.class,
-        RepositoriesModule.class,
+        AppModule.class,
         AsyncModule.class,
+        HttpModule.class,
+        LoginModule.class,
+        ParsersModule.class,
+        RepositoriesModule.class,
         ServicesModule.class,
-        ViewsModule.class
+        ViewsModule.class,
+        AndroidSupportInjectionModule.class
 })
 
 public interface AppComponent extends AndroidInjector<BeerTagApplication> {

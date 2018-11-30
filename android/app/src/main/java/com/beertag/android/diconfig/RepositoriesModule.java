@@ -7,6 +7,7 @@ import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.User;
 import com.beertag.android.parsers.base.JsonParser;
 import com.beertag.android.repositories.HttpBeerRepository;
+import com.beertag.android.repositories.HttpCountryRepository;
 import com.beertag.android.repositories.HttpRatingRepository;
 import com.beertag.android.repositories.HttpUserRepository;
 import com.beertag.android.repositories.base.Repository;;
@@ -21,7 +22,7 @@ import dagger.Provides;
 public class RepositoriesModule {
     @Provides
     @Singleton
-    public HttpBeerRepository BeerRepository(
+    public Repository<Beer> BeerRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
             JsonParser<Beer> jsonParser
@@ -57,9 +58,9 @@ public class RepositoriesModule {
     public Repository<Country> CountryRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
-            JsonParser<User> jsonParser
+            JsonParser<Country> jsonParser
     ) {
-        String url = baseServerUrl; // + "/Users";
-        return new HttpUserRepository(url, httpRequester, jsonParser);
+        String url = baseServerUrl; // + "/countries";
+        return new HttpCountryRepository(url, httpRequester, jsonParser);
     }
 }

@@ -2,18 +2,21 @@ package com.beertag.android.services;
 
 import com.beertag.android.models.Country;
 import com.beertag.android.repositories.HttpCountryRepository;
+import com.beertag.android.repositories.base.Repository;
 import com.beertag.android.services.base.CountryService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class HttpCountryService implements CountryService {
 
-    private final HttpCountryRepository mRepository;
+    private final Repository<Country> mRepository;
 
-    public HttpCountryService(HttpCountryRepository repository) {
-        mRepository = repository;
+    public HttpCountryService(Repository<Country> repository) {
+        this.mRepository = repository;
     }
 
     @Override

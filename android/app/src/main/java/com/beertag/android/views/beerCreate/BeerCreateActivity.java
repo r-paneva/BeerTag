@@ -21,9 +21,6 @@ import butterknife.ButterKnife;
 import static android.R.layout.simple_spinner_dropdown_item;
 
 public class BeerCreateActivity extends BaseDrawerActivity implements BeerCreateContracts.Navigator {
-    ArrayAdapter<String> countryAdapter;
-    List<Country> countries = new ArrayList<>();
-    private CountryService mCountryService;
 
     @Inject
     BeerCreateFragment mView;
@@ -31,6 +28,7 @@ public class BeerCreateActivity extends BaseDrawerActivity implements BeerCreate
     @Inject
     BeerCreateContracts.Presenter mPresenter;
 
+    @Inject
     public BeerCreateActivity() {
 
     }
@@ -43,11 +41,6 @@ public class BeerCreateActivity extends BaseDrawerActivity implements BeerCreate
 
         mView.setPresenter(mPresenter);
         mView.setNavigator(this);
-
-        countryAdapter = new ArrayAdapter<String>(
-                this,
-                simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.countries));
 
         getFragmentManager()
                 .beginTransaction()

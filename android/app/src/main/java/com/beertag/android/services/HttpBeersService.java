@@ -12,10 +12,10 @@ import java.util.List;
 
 
 public class HttpBeersService implements BeersService {
-    private final HttpBeerRepository mRepository;
+    private final Repository<Beer> mRepository;
 
-    public HttpBeersService(HttpBeerRepository repository) {
-        mRepository = repository;
+    public HttpBeersService(Repository<Beer> repository) {
+        this.mRepository = repository;
     }
 
     @Override

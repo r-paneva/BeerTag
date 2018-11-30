@@ -4,8 +4,6 @@ import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
 import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.User;
-import com.beertag.android.repositories.HttpBeerRepository;
-import com.beertag.android.repositories.HttpCountryRepository;
 import com.beertag.android.repositories.base.Repository;
 import com.beertag.android.services.HttpBeersService;
 import com.beertag.android.services.HttpCountryService;
@@ -22,7 +20,7 @@ import dagger.Provides;
 @Module
 public class ServicesModule {
     @Provides
-    public BeersService BeersService(HttpBeerRepository repository) {
+    public BeersService BeersService(Repository<Beer> repository) {
         return new HttpBeersService(repository);
     }
 
@@ -37,7 +35,7 @@ public class ServicesModule {
     }
 
     @Provides
-    public CountryService CountryService(HttpCountryRepository repository) {
+    public CountryService CountryService(Repository<Country> repository) {
         return new HttpCountryService(repository);
     }
 }
