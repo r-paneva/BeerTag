@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardUseCompatPadding="true"
+                                    app:cardBackgroundColor="@color/md_blue_100">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/iv_beer"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:padding="2dp" />
+
+        <TextView
+            android:id="@+id/tv_name_beer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="145dp"
+            android:layout_marginTop="5dp"
+            android:text="Beer"
+            android:textColor="@android:color/black"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="145dp"
+            android:layout_marginTop="68dp"
+            android:text="Country"
+            android:textColor="@android:color/black"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/iv_beer"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="145dp"
+            android:text="Style"
+            android:textColor="@android:color/black"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

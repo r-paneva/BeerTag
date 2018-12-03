@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- A 'parent' preference, which enables/disables child preferences (below)
+             when checked/unchecked. -->
+    <!--<SwitchPreference-->
+    <!--android:defaultValue="true"-->
+    <!--android:key="sensors_light_sensor"-->
+    <!--android:title="@string/please_enter_your_username" />-->
+
+    <EditTextPreference
+            android:key="username"
+            android:dialogTitle="login"
+            android:dialogMessage="please_enter_your_username"
+            android:defaultValue=" "
+            android:inputType="textPersonName"/>
+
+</PreferenceScreen>
+        <!--android:title="@string/login"-->
+        <!--android:summary="Customise darkness value for you"-->

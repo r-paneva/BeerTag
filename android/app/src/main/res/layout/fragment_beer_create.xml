@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/md_blue_100">
+
+    <ScrollView
+        android:id="@+id/sv_create_beer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_centerHorizontal="true"
+                android:text="New Beer details"
+                android:textColor="@color/md_blue_800"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="13dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_beer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/title"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Beer" />
+
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/beer_name"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_brewery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_beer_name"
+                >
+
+                <TextView
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Brewery" />
+
+                <EditText
+                    android:id="@+id/et_brewery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="14sp"
+                    android:hint="@string/brewery" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_brewery">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Country" />
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/sp_country_of_origin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:hint="Select country of origin"
+                    android:textColor="@color/md_blue_800"
+                    app:ms_background_color="@color/md_blue_100"
+                    android:textColorHint="@color/material_drawer_hint_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_alcohol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_country">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Alcohol" />
+
+                <EditText
+                    android:id="@+id/et_abv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="14sp"
+                    android:hint="Alcohol by volume" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_alcohol">
+
+                <TextView
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Description" />
+
+                <EditText
+                    android:id="@+id/et_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="14sp"
+                    android:hint="@string/description" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_description">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Style" />
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/sp_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:hint="Select beer style"
+                    android:textColor="@color/md_blue_800"
+                    app:ms_background_color="@color/md_blue_100"
+                    android:textColorHint="@color/material_drawer_hint_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_style">
+
+                <TextView
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Tag" />
+
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/sp_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:hint="You can select tag"
+                    android:textColor="@color/md_blue_800"
+                    app:ms_background_color="@color/md_blue_100"
+                    android:textColorHint="@color/material_drawer_hint_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layout_tag">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="16sp"
+                    android:text="Image" />
+
+
+                <EditText
+                    android:id="@+id/et_imageUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/md_blue_800"
+                    android:textSize="14sp"
+                    android:hint="@string/enter_image_url" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_image"
+                android:layout_marginTop="20dp"
+                android:text="@string/save" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
+</android.support.v7.widget.CardView>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".views.beerDetails.BeerDetailsFragment">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:layout_margin="8dp">
+
+            <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="beer_title"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:textSize="25sp"/>
+
+            <ImageView
+                    android:id="@+id/iv_beer_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_below="@id/tv_name"/>
+
+            <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_beer_details"
+                    android:scrollbars="vertical"
+                    android:text="Description"
+                    android:textColor="@android:color/black"
+                    android:textSize="19sp"/>
+
+            <TextView
+                    android:id="@+id/tv_brewery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_description"
+                    android:scrollbars="vertical"
+                    android:text="Brewery"
+                    android:textColor="@android:color/black"
+                    android:textSize="19sp"/>
+
+            <TextView
+                    android:id="@+id/tv_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_brewery"
+                    android:textColor="@android:color/black"
+                    android:text="Country"
+                    android:textSize="19sp"/>
+
+            <TextView
+                    android:id="@+id/tv_ABV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_country"
+                    android:textColor="@android:color/black"
+                    android:text="ABV"
+                    android:textSize="19sp"/>
+
+            <TextView
+                    android:id="@+id/tv_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_ABV"
+                    android:textColor="@android:color/black"
+                    android:text="Style"
+                    android:textSize="19sp"/>
+
+            <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_style"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="19sp"
+                    android:text="Tag"
+                    android:color="@color/md_red_900"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/tv_beer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_style"
+                    android:textColor="@android:color/black"
+                    android:text="Name"
+                    android:textSize="19sp"/>
+
+            <RatingBar
+                    android:id="@+id/rating_beer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_beer_name"
+                    style="?android:attr/ratingBarStyle"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:isIndicator="true"
+                    android:outlineAmbientShadowColor="@color/md_yellow_500"/>
+
+            <TextView
+                    android:id="@+id/tv_rate_beer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_beer_name"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/md_light_green_900"
+                    android:contextClickable="true"
+                    android:text="Rate beer"
+                    android:textSize="22sp"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">android</string>
+    <string name="username">username</string>
+    <string name="beer_name">Beer name</string>
+    <string name="brewery">Brewery</string>
+    <string name="country_of_origin">Country of Origin</string>
+    <string name="abv">ABV</string>
+    <string name="description">Description</string>
+    <string name="style">Style</string>
+    <string name="tag">Tag</string>
+    <string name="enter_image_url">Enter image URL</string>
+    <string name="save">SAVE</string>
+    <string name="select_country">Select Country</string>
+    <string-array name="countries">
+        <item>"AUSTRALIA"</item>
+        <item>"BULGARIA"</item>
+        <item>"INDIA"</item>
+    </string-array>
+
+</resources>
