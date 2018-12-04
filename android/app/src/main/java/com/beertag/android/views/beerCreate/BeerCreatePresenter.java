@@ -60,6 +60,10 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
         if (beer.getName().length() < Constants.BEER_NAME_MIN_VALUE ||
                 beer.getName().length() > Constants.BEER_NAME_MAX_VALUE) {
             mView.showMessage(Constants.NAME_ERROR_MESSAGE);
+        } else if (beer.getCountry().getName().isEmpty()) {
+            mView.showMessage(Constants.COUNTRY_ERROR_MESSAGE);
+        } else if (beer.getStyle().getName().isEmpty()) {
+            mView.showMessage(Constants.STYLE_ERROR_MESSAGE);
         } else {
             mView.showLoading();
             Disposable disposable = Observable
@@ -115,11 +119,11 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
     }
 
     @Override
-    public void loadCountry() {
+    public void loadCountry(String name) {
 
-         Disposable observable = Observable
+        Disposable observable = Observable
                 .create((ObservableOnSubscribe<Country>) emitter -> {
-                    Country country = mCountryService.getByName(mView.getCountryName());
+                    Country country = mCountryService.getByName(name);
                     emitter.onNext(country);
                     emitter.onComplete();
                 })
@@ -127,7 +131,7 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
                 .observeOn(mSchedulerProvider.ui())
                 .subscribe(mView::setCountry,
                         error -> mView.showError(error)
-                        );
+                );
     }
 
     @Override

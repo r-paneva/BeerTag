@@ -54,7 +54,7 @@ public class HttpCountryRepository implements Repository {
 
     @Override
     public Object getByName(String name) throws IOException {
-        String url = mServerUrl + name;
+        String url = mServerUrl + "name/" + name;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }

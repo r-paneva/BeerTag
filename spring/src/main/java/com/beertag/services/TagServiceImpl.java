@@ -42,7 +42,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void update(Tag tag) {
-        int id = tag.getTagId();
+        int id = tag.getId();
         mTagRepository.update(id, tag);
     }
 

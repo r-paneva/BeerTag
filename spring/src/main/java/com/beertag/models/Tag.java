@@ -13,8 +13,8 @@ import java.util.List;
 public class Tag implements Serializable {
 
     @Id
-    @Column(name = "tagId")
-    private int tagId;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -26,8 +26,8 @@ public class Tag implements Serializable {
 //    Getters and setters omitted for brevity
 
 
-    public Tag(int tagId, String name) {
-        this.tagId = tagId;
+    public Tag(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -40,12 +40,12 @@ public class Tag implements Serializable {
 
     public void setName(String name){this.name = name;}
 
-    public int getTagId() {
-        return tagId;
+    public int getId() {
+        return id;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Beer> getBeersList() {

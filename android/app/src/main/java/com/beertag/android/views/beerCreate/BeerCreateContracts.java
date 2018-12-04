@@ -37,9 +37,6 @@ public interface BeerCreateContracts {
         void setStyle(Style style);
 
         void setTag (Tag tag);
-
-        String getCountryName();
-
     }
 
     interface Presenter {

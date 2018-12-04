@@ -14,8 +14,8 @@ import java.util.List;
 public class Country implements Serializable {
 
     @Id
-    @Column(name = "countryId")
-    private int countryId;
+    @Column(name = "id")
+    private int id;
 
 //    @OneToMany(mappedBy = "country")
 //    @JsonIgnore
@@ -25,8 +25,8 @@ public class Country implements Serializable {
     @Column( name = "name")
     private String name;
 
-    public Country(int countryId, String name) {
-        this.countryId = countryId;
+    public Country(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -36,12 +36,12 @@ public class Country implements Serializable {
     //Getters and setters omitted for brevity
 
 
-    public int getCountryId() {
-        return countryId;
+    public int getId() {
+        return id;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

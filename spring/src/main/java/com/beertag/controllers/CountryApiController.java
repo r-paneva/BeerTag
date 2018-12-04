@@ -33,7 +33,7 @@ public class CountryApiController {
     }
 
     @RequestMapping(
-            path = "/{name}",
+            path = "/name/{name}",
             method = RequestMethod.GET
     )
     public Country getByName(@PathVariable("name") String name) {

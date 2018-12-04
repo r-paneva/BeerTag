@@ -38,7 +38,7 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public void update(Style style) {
-        int id = style.getStyleId();
+        int id = style.getId();
         mStyleRepository.update(id, style);
     }
 }

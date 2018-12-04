@@ -37,7 +37,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public void update(Country country) {
-        int id = country.getCountryId();
+        int id = country.getId();
         mCountryRepository.update(id, country);
     }
 }

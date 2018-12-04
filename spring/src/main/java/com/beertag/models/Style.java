@@ -16,8 +16,8 @@ import java.util.List;
 public class Style implements Serializable {
 
     @Id
-    @Column(name = "styleId")
-    private int styleId;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -28,7 +28,7 @@ public class Style implements Serializable {
 
 
     public Style(int id, String name) {
-        this.styleId = id;
+        this.id = id;
         this.name = name;
     }
 
@@ -38,12 +38,12 @@ public class Style implements Serializable {
     //Getters and setters omitted for brevity
 
 
-    public int getStyleId() {
-        return styleId;
+    public int getId() {
+        return id;
     }
 
-    public void setStyleId(int styleId) {
-        this.styleId = styleId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Beer> getBeersList() {
