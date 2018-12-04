@@ -32,6 +32,8 @@ public interface BeersListContracts {
         void selectBeer(Beer beer);
 
         UsersService getUsersService();
+
+        public void unsubscribe();
     }
 
     interface Navigator {

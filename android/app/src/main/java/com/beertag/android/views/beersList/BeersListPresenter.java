@@ -35,11 +35,6 @@ public class BeersListPresenter
     }
 
     @Override
-    public void subscribe(BeersListContracts.View view) {
-        mView = view;
-    }
-
-    @Override
     public void loadBeers() {
         mView.showLoading();
 //        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(BeersListActivity.getAppContext());
@@ -91,6 +86,16 @@ public class BeersListPresenter
         } else {
             mView.showBeers(Beers);
         }
+    }
+
+    @Override
+    public void unsubscribe() {
+        mView = null;
+    }
+
+    @Override
+    public void subscribe(BeersListContracts.View view) {
+        mView = view;
     }
 
     @Override

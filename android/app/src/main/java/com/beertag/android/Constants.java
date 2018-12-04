@@ -17,6 +17,8 @@ public class Constants {
 
     public static final long BEER_NAME_MIN_VALUE = 5;
     public static final long BEER_NAME_MAX_VALUE = 18;
-    public static final String NAME_ERROR_MESSAGE = "Beer name must be between 5 and 18 chars";
+    public static final String NAME_ERROR_MESSAGE = "Beer Name must be between 5 and 18 chars";
     public static final String UNSUCCESSFUL_CREATION = "Unsuccessful create new beer!";
+    public static final String COUNTRY_ERROR_MESSAGE = "Country can't be empty";
+    public static final String STYLE_ERROR_MESSAGE = "Style can't be empty";
 }

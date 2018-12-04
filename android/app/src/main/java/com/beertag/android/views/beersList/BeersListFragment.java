@@ -71,6 +71,12 @@ public class BeersListFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
     public void setPresenter(BeersListContracts.Presenter presenter) {
         mPresenter = presenter;
     }
