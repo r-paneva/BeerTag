@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.home.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/prb_loading_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_home_user_image"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/et_user_picture"
+                android:scaleType="fitXY"
+                android:src="@drawable/defaultuserpicture"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/tv_user_names"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_home_user_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fam_image_options_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="2dp"
+        app:fab_addButtonColorNormal="@color/colorAccent"
+        app:fab_addButtonColorPressed="@color/colorAccent"
+        app:fab_addButtonPlusIconColor="@color/colorWhite"
+        app:fab_addButtonSize="mini"
+        app:fab_expandDirection="up">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_change_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_icon="@drawable/ic_photo_library_black_24dp"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_icon="@drawable/ic_photo_camera_black_24dp"
+            app:fab_size="mini" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</FrameLayout>
