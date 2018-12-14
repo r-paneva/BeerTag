@@ -7,12 +7,12 @@
     <!--android:key="sensors_light_sensor"-->
     <!--android:title="@string/please_enter_your_username" />-->
 
-    <EditTextPreference
-            android:key="username"
-            android:dialogTitle="login"
-            android:dialogMessage="please_enter_your_username"
-            android:defaultValue=" "
-            android:inputType="textPersonName"/>
+    <!--<EditTextPreference-->
+            <!--android:key="username"-->
+            <!--android:dialogTitle="login"-->
+            <!--android:dialogMessage="please_enter_your_username"-->
+            <!--android:defaultValue=" "-->
+            <!--android:inputType="textPersonName"/>-->
 
 </PreferenceScreen>
         <!--android:title="@string/login"-->

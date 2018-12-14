@@ -1,16 +1,50 @@
 <resources>
     <string name="app_name">android</string>
-    <string name="username">username</string>
-    <string name="beer_name">Beer name</string>
-    <string name="brewery">Brewery</string>
-    <string name="country_of_origin">Country of Origin</string>
-    <string name="abv">ABV</string>
-    <string name="description">Description</string>
-    <string name="style">Style</string>
-    <string name="tag">Tag</string>
-    <string name="enter_image_url">Enter image URL</string>
-    <string name="save">SAVE</string>
-    <string name="select_country">Select Country</string>
+
+    <string name="username">com.beertag.android.name</string>
+    <string name="userId">com.beertag.android.userId</string>
+    <string name="fullname">com.beertag.android.fullname</string>
+    <string name="userpicture">com.beertag.android.picture</string>
+
+
+    <string name="et_beer_name">Beer name</string>
+    <string name="et_description">Description</string>
+    <string name="et_user_picture">User Picture</string>
+    <string name="et_username">userName</string>
+    <string name="et_login_in">login in</string>
+    <string name="et_enter_to_search">Enter to search</string>
+    <string name="et_alcohol_by_volume">Alcohol by volume</string>
+    <string name="et_brewery">Brewery</string>
+
+
+    <string name="iv_picture">Picture</string>
+    <string name="iv_press_the_button_to_take_a_picture">press the button to take a picture</string>
+    <string name="iv_push_button_to_make_picture">push_button_to_make_picture</string>
+
+
+    <string name="btn_open_camera">OPEN CAMERA</string>
+    <string name="btn_save">SAVE</string>
+
+    <string name="tv_take_a_picture">TAKE A PICTURE</string>
+    <string name="tv_beer_name">beer name</string>
+    <string name="tv_style">STYLE</string>
+    <string name="tv_alcohol">ALCOHOL</string>
+    <string name="tv_brewery">BREWERY</string>
+    <string name="tv_country">COUNTRY</string>
+    <string name="tv_description">DESCRIPTION</string>
+    <string name="tv_tag">TAG</string>
+    <string name="tv_rate_beer">Rate beer</string>
+    <string name="tv_Title">NEW BEER DETAILS</string>
+    <string name="tv_beer">BEER</string>
+    <string name="tv_image">IMAGE</string>
+    <string name="tv_rate">RATE</string>
+
+
+    <string name="hint_select_country_of_origin">Select country of origin</string>
+    <string name="hint_select_beer_style">Select beer style</string>
+    <string name="hint_you_can_select_tag">You can select tag</string>
+
+
     <string-array name="countries">
         <item>"AUSTRALIA"</item>
         <item>"BULGARIA"</item>

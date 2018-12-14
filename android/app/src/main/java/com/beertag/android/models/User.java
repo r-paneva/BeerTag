@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String userName;
     private String firstName;
     private String lastName;
+    private String image;
     private List<Beer> drank;
     private List<Beer> want_to_drink;
 
@@ -16,14 +17,19 @@ public class User implements Serializable {
         // public constructor is needed for parsing from/to JSON to work
     }
 
-    public User(int id, String userName, String firstName, String lastName) {
-        this.id = id;
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User( String userName) {
+        setUserName(userName);
         this.drank = new ArrayList<>();
         this.want_to_drink = new ArrayList<>();
     }
+
+    public User( String userName, String firstName, String lastName, String image) {
+        setUserName(userName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setImage(image);
+    }
+
 
     public String getFirstName() {
         return firstName;
@@ -73,6 +79,13 @@ public class User implements Serializable {
         this.want_to_drink = want_to_drink;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
 
 

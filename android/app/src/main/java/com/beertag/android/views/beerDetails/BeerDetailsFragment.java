@@ -1,50 +1,81 @@
 package com.beertag.android.views.beerDetails;
 
 
+import android.Manifest;
 import android.app.Activity;
-
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.beertag.android.BuildConfig;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.User;
+import com.beertag.android.utils.Constants;
+import com.beertag.android.utils.ImageEncoder;
+import com.beertag.android.views.beerCreate.BeerCreateContracts;
 import com.beertag.android.views.beersList.BeersListActivity;
-import com.squareup.picasso.Picasso;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class BeerDetailsFragment
-        extends Fragment
-        implements BeerDetailsContracts.View, ReviewListener {
+        extends android.support.v4.app.Fragment
+        implements BeerDetailsContracts.View, ReviewListener, BeerDetailsContracts.Navigator {
 
 
     private BeerDetailsContracts.Presenter mPresenter;
+    private BeerDetailsContracts.Navigator mNavigator;
+
+    private static final int GALLERY_IMAGE_CHOOSER_REQUEST_CODE = 7;
+    private static final int TAKE_PICTURE_REQUEST_CODE = 2;
+
+    @BindView(R.id.prb_loading)
+    ProgressBar mProgressBarView;
 
     @BindView(R.id.tv_name)
     TextView mNameTextView;
 
     @BindView(R.id.iv_beer_details)
-    ImageView mImageView;
+    ImageView mBeerImageView;
 
     @BindView(R.id.tv_description)
     TextView mDescriptionTextView;
@@ -64,19 +95,26 @@ public class BeerDetailsFragment
     @BindView(R.id.tv_tag)
     TextView mTagTextView;
 
-    @BindView(R.id.tv_beer_name)
-    TextView mBeerName;
-
     @BindView(R.id.rating_beer)
     RatingBar mBeerRatingBar;
 
     @BindView(R.id.tv_rate_beer)
     TextView mRateBeer;
 
+    @BindView(R.id.fab_take_picture)
+    FloatingActionButton mTakePictureButton;
+
+    @BindView(R.id.fab_change_picture)
+    FloatingActionButton mChangePictureButton;
+
+    @BindView(R.id.fam_image_options_menu)
+    FloatingActionsMenu mImageChangeFloatingMenu;
+
     View mView;
     ReviewListener mReviewListener;
     User user;
     Beer beer;
+    int mBeerId;
     private String mWhoRates;
 
     Handler handler = new Handler();
@@ -92,9 +130,10 @@ public class BeerDetailsFragment
         }
 
         private void refresh() {
-            mPresenter.loadBeer();
+//            mPresenter.loadBeer();
         }
     };
+    private SharedPreferences sharedPrefs;
 
     @Inject
     public BeerDetailsFragment() {
@@ -102,12 +141,14 @@ public class BeerDetailsFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_beer_details, container, false);
         ButterKnife.bind(this, rootView);
         mView = rootView;
+
         hideKeyboardFrom(getContext(), mView);
+
         return rootView;
     }
 
@@ -127,28 +168,53 @@ public class BeerDetailsFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void setPresenter(BeerDetailsContracts.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
     public void showBeer(Beer beer) {
         mReviewListener = this;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(BeersListActivity.getAppContext());
-        String username = sharedPrefs.getString("username", "");
-        mNameTextView.setText(beer.getName());
-        if(!beer.getImage().isEmpty()) {
-            Picasso.get().load(beer.getImage()).into(mImageView);
-        }
-        mDescriptionTextView.setText("Description : " + beer.getDescription());
-        mDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+//        String username = sharedPrefs.getString("username", "");
+        mBeerId=beer.getId();
 
-        mBreweryTextView.setText("Brewery : "+beer.getBrewery());
-        mCountryTextView.setText("Country : "+beer.getCountry().getName());
-        mABVTextView.setText("Alcohol by Volume : "+beer.getAlcohol());
-        mStyleTextView.setText("Style : "+beer.getStyle().getName());
-        mTagTextView.setText("Style : "+beer.getTag().getName());
+        mNameTextView.setText(beer.getName().toUpperCase());
+
+        if (Objects.equals(beer.getImage(), null) || beer.getImage().length() <= 2) {
+            showDefaultBeerPicture();
+        } else {
+            InputStream stream = new ByteArrayInputStream(Base64.decode(beer.getImage().getBytes(), Base64.DEFAULT));
+            Bitmap bitmap = BitmapFactory.decodeStream(stream);
+            mBeerImageView.setImageBitmap(bitmap);
+        }
+
+        mDescriptionTextView.setText(String.format("Description : %s", beer.getDescription()));
+        mDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+        mBreweryTextView.setText(String.format("Brewery : %s", beer.getBrewery()));
+        mCountryTextView.setText(String.format("Country : %s", beer.getCountry().getName()));
+        mABVTextView.setText(String.format("Alcohol by Volume : %s%%", beer.getAlcohol()));
+        mStyleTextView.setText(String.format("Style : %s", beer.getStyle().getName()));
+        if(beer.getTag()!= null) {
+            mTagTextView.setText(String.format("Tag : %s", beer.getTag().getName()));
+        }
         mBeerRatingBar.setRating(beer.getRating());
-        mRateBeer.setText("Rate beer");
+        mRateBeer.setText(getString(R.string.tv_rate));
         mRateBeer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context= getContext();
+                Context context = getContext();
                 FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),user);
                 fiveStarsDialog.setRateText("How many stars this beer deserves?")
                         .setTitle("")
@@ -164,23 +230,18 @@ public class BeerDetailsFragment
     }
 
     @Override
-    public void setPresenter(BeerDetailsContracts.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void showError(Throwable e) {
-
-    }
-
-    @Override
     public void showLoading() {
-
+        mProgressBarView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
+        mProgressBarView.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void hideLoading(Beer beer) {
+        Toast.makeText(getContext(), "Information updated!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -188,8 +249,100 @@ public class BeerDetailsFragment
         mPresenter.setRating(user, beer, stars);
     }
 
+    @Override
+    public void showDefaultBeerPicture() {
+        mBeerImageView.setImageResource(R.drawable.defaultbeerpicture);
+    }
+
+    @Override
+    public void showBeerImage(Bitmap userImage) {
+        mBeerImageView.setImageBitmap(userImage);
+    }
+
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @OnClick(R.id.fab_change_picture)
+    public void onSelectPictureFromGalleryButtonClick() {
+        mImageChangeFloatingMenu.collapse();
+        mPresenter.selectPictureFromGalleryButtonClickIsClicked();
+    }
+
+    @OnClick(R.id.fab_take_picture)
+    public void onTakePictureButtonClick() {
+        mImageChangeFloatingMenu.collapse();
+        mPresenter.takePictureButtonIsClicked();
+    }
+
+    @Override
+    public void presentOptionToTakePicture() {
+        Intent intentToTakePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intentToTakePicture, TAKE_PICTURE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (!Objects.equals(data.getData(), null)) {
+                Uri uri = data.getData();
+                Bitmap image;
+                try {
+                    image = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), uri);
+                    mPresenter.newImageIsChosen(image);
+                    showMessage("Taken from gallery");
+                } catch (IOException e) {
+                    showError(e);
+                }
+            } else {
+                showMessage("Error!!! ");
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TAKE_PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if ((!Objects.equals(data, null)) && (!Objects.equals(data.getExtras(), null))) {
+                Bitmap image;
+                try {
+                    image = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    mPresenter.newImageIsChosen(image);
+                    showMessage("Photo was captured");
+                } catch (NullPointerException npe) {
+                    showError(npe);
+                }
+            } else {
+                showMessage("Error!!! ");
+            }
+        }
+    }
+
+            @Override
+    public void showError(Throwable error) {
+        String errorMessage = Constants.ERROR_MESSAGE + error.getMessage();
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showOptionToChooseImage() {
+        Intent intentToChooseImage = new Intent(Intent.ACTION_GET_CONTENT);
+        intentToChooseImage.setType(Constants.IMAGE_FILE_TYPE);
+        startActivityForResult(intentToChooseImage, GALLERY_IMAGE_CHOOSER_REQUEST_CODE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    public void setNavigator(BeerDetailsContracts.Navigator navigator) {
+        mNavigator = navigator;
+    }
+
+    @Override
+    public void navigateToHome() {
+        mNavigator.navigateToHome();
     }
 }

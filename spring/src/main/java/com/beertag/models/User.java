@@ -30,7 +30,7 @@ public class User {
     private String lastName;
 
     @Column(name = "Image")
-    private String imageUrl;
+    private String image;
 
 
 //    private List<Beer> drank;
@@ -45,7 +45,7 @@ public class User {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.imageUrl = image;
+        this.image = image;
 //        this.drank = new ArrayList<>();
 //        this.want_to_drink = new ArrayList<>();
     }
@@ -98,12 +98,12 @@ public class User {
 //        this.want_to_drink = want_to_drink;
 //    }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 

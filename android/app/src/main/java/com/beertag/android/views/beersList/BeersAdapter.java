@@ -1,7 +1,10 @@
 package com.beertag.android.views.beersList;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +13,13 @@ import android.widget.TextView;
 
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
-import com.squareup.picasso.Picasso;
+import com.beertag.android.utils.ImageEncoder;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -22,11 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHolder> {
-    private List<Beer> mBeers;
+    private final List<Beer> mBeers;
     private OnBeerClickListener mOnBeerClickListener;
+    private final ImageEncoder mImageEncoder;
 
     @Inject
-    public BeersAdapter() {
+    public BeersAdapter(ImageEncoder imageEncoder) {
+        mImageEncoder = imageEncoder;
         mBeers = new ArrayList<>();
     }
 
@@ -52,15 +60,15 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
         return mBeers.get(position);
     }
 
-    public void clear() {
+    void clear() {
         mBeers.clear();
     }
 
-    public void addAll(List<Beer> Beers) {
+    void addAll(List<Beer> Beers) {
         mBeers.addAll(Beers);
     }
 
-    public void setOnBeerClickListener(OnBeerClickListener onBeerClickListener) {
+    void setOnBeerClickListener(OnBeerClickListener onBeerClickListener) {
         this.mOnBeerClickListener = onBeerClickListener;
     }
 
@@ -71,10 +79,16 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
         @BindView(R.id.tv_style)
         TextView mStyle;
 
+        @BindView(R.id.tv_alcohol)
+        TextView mAlcohol;
+
+        @BindView(R.id.tv_brewery)
+        TextView mBrewery;
+
         @BindView(R.id.tv_country)
         TextView mCountry;
 
-        @BindView(R.id.iv_beer)
+        @BindView(R.id.iv_beer_image)
         ImageView mBeerImageView;
 
         private OnBeerClickListener mOnClickListener;
@@ -86,14 +100,20 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
         }
 
         void bind(Beer beer) {
-            mName.setText(beer.getName());
+            mName.setText(beer.getName().toUpperCase());
             mStyle.setText(beer.getStyle().getName());
             mCountry.setText(beer.getCountry().getName());
-            if(!beer.getImage().isEmpty()) {
-                Picasso.get()
-                        .load(beer.getImage())
-                        .into(mBeerImageView);
+            mAlcohol.setText(beer.getAlcohol()+"%");
+            mBrewery.setText(beer.getBrewery());
+
+            if (Objects.equals(beer.getImage(), null) ||  beer.getImage().length()<= 2 ) {
+                mBeerImageView.setImageResource(R.drawable.defaultbeerpicture);
+            } else {
+                InputStream stream = new ByteArrayInputStream(Base64.decode(beer.getImage().getBytes(), Base64.DEFAULT));
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
+                mBeerImageView.setImageBitmap(bitmap);
             }
+
             mBeer = beer;
         }
 
@@ -110,4 +130,5 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
     interface OnBeerClickListener {
         void onClick(Beer beer);
     }
+
 }

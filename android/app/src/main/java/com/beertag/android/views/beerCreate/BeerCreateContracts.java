@@ -1,6 +1,8 @@
 package com.beertag.android.views.beerCreate;
 
 
+import android.graphics.Bitmap;
+
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
 import com.beertag.android.models.Style;
@@ -37,6 +39,8 @@ public interface BeerCreateContracts {
         void setStyle(Style style);
 
         void setTag (Tag tag);
+
+        void presentOptionToTakePicture();
     }
 
     interface Presenter {
@@ -59,10 +63,11 @@ public interface BeerCreateContracts {
 
         void loadTag(String name);
 
+        void takePictureButtonIsClicked();
+
     }
 
-    public interface Navigator {
-
+     interface Navigator {
         void navigateToHome();
     }
 }

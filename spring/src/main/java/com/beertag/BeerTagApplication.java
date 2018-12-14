@@ -1,9 +1,7 @@
 package com.beertag;
 
 
-import com.beertag.models.Beer;
-import com.beertag.models.RatingVote;
-import com.beertag.models.User;
+import com.beertag.models.*;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +21,9 @@ public class BeerTagApplication {
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Beer.class)
                 .addAnnotatedClass(RatingVote.class)
+                .addAnnotatedClass(Country.class)
+                .addAnnotatedClass(Style.class)
+                .addAnnotatedClass(Tag.class)
                 .buildSessionFactory();
     }
 }

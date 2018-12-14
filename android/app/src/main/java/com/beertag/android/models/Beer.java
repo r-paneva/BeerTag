@@ -22,15 +22,28 @@ public class Beer implements Serializable {
     }
 
     public Beer( String name, String brewery, String alcohol, String description, String image, Country country, Tag tag, Style style) {
-        this.name = name;
-        this.brewery = brewery;
-        this.alcohol = alcohol;
-        this.description = description;
-        this.image = image;
-        this.tag = tag;
-        this.style = style;
-        this.country = country;
+        setName(name);
+        setBrewery(brewery);
+        setCountry(country);
+        setAlcohol(alcohol);
+        setDescription(description);
+        setStyle(style);
+        setImage(image);
+        setTag(tag);
     }
+
+    public Beer( String name, String brewery, String alcohol, String description, Country country, Tag tag, Style style) {
+        setName(name);
+        setBrewery(brewery);
+        setCountry(country);
+        setAlcohol(alcohol);
+        setDescription(description);
+        setStyle(style);
+        setTag(tag);
+    }
+
+
+
     public String getName() {
         return name;
     }
@@ -83,8 +96,8 @@ public class Beer implements Serializable {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String picture) {
+        this.image = picture;
     }
 
     public float getRating() {

@@ -3,8 +3,10 @@ package com.beertag.repositories;
 import com.beertag.models.User;
 import com.beertag.repositories.base.UsersRepository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,5 +48,24 @@ public class SqlUsersRepositoryImpl implements UsersRepository {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    @Override
+    public void update(User item) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(item);
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 }

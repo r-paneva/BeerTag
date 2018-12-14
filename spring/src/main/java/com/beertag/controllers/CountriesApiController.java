@@ -1,22 +1,19 @@
-package com.beertag.api;
+package com.beertag.controllers;
 
 import com.beertag.models.Country;
 import com.beertag.services.base.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/countries")
-public class CountryApiController {
+public class CountriesApiController {
     private final CountryService mCountryService;
 
     @Autowired
-    public CountryApiController(CountryService countryService) {
+    public CountriesApiController(CountryService countryService) {
         mCountryService = countryService;
     }
 
@@ -28,12 +25,19 @@ public class CountryApiController {
     }
 
     @RequestMapping(
-            value = "/{id}",
+            value = "/id/{id}",
             method = RequestMethod.GET
     )
     public Country getCountryByID(@PathVariable("id") int id) {
         return mCountryService.getCountryByID(id);
     }
 
+    @RequestMapping(
+            path = "/name/{name}",
+            method = RequestMethod.GET
+    )
+    public Country getByName(@PathVariable("name") String name) {
+        return mCountryService.getByName(name);
+    }
 
 }

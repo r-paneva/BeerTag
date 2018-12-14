@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="23"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/md_blue_100">
@@ -18,14 +20,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/prb_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_title"
                 android:layout_centerHorizontal="true"
-                android:text="New Beer details"
+                android:text="@string/tv_Title"
                 android:textColor="@color/md_blue_800"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="13dp"/>
 
@@ -43,8 +52,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Beer" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_beer" />
 
 
                 <EditText
@@ -52,8 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="24dp"
-                    android:hint="@string/beer_name"
+                    android:layout_marginTop="30dp"
+                    android:hint="@string/et_beer_name"
                     android:textColor="@color/md_blue_800"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -72,8 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Brewery" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_brewery" />
 
                 <EditText
                     android:id="@+id/et_brewery"
@@ -83,7 +92,7 @@
                     android:layout_marginStart="10dp"
                     android:textColor="@color/md_blue_800"
                     android:textSize="14sp"
-                    android:hint="@string/brewery" />
+                    android:hint="@string/et_brewery" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,8 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Country" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_country" />
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/sp_country_of_origin"
@@ -109,7 +118,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="Select country of origin"
+                    android:hint="@string/hint_select_country_of_origin"
                     android:textColor="@color/md_blue_800"
                     app:ms_background_color="@color/md_blue_100"
                     android:textColorHint="@color/material_drawer_hint_text" />
@@ -128,8 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Alcohol" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_alcohol" />
 
                 <EditText
                     android:id="@+id/et_abv"
@@ -139,7 +148,7 @@
                     android:layout_marginStart="10dp"
                     android:textColor="@color/md_blue_800"
                     android:textSize="14sp"
-                    android:hint="Alcohol by volume" />
+                    android:hint="@string/et_alcohol_by_volume" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,8 +164,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Description" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_description" />
 
                 <EditText
                     android:id="@+id/et_description"
@@ -166,7 +175,7 @@
                     android:layout_marginStart="10dp"
                     android:textColor="@color/md_blue_800"
                     android:textSize="14sp"
-                    android:hint="@string/description" />
+                    android:hint="@string/et_description" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,8 +191,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Style" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_style" />
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/sp_style"
@@ -192,7 +201,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-                    android:hint="Select beer style"
+                    android:hint="@string/hint_select_beer_style"
                     android:textColor="@color/md_blue_800"
                     app:ms_background_color="@color/md_blue_100"
                     android:textColorHint="@color/material_drawer_hint_text" />
@@ -206,13 +215,13 @@
                 android:layout_below="@+id/layout_style">
 
                 <TextView
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Tag" />
+                    android:textSize="14sp"
+                    android:text="@string/tv_tag" />
 
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
@@ -220,9 +229,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginStart="10dp"
-                    android:hint="You can select tag"
+                    android:hint="@string/hint_you_can_select_tag"
                     android:textColor="@color/md_blue_800"
                     app:ms_background_color="@color/md_blue_100"
                     android:textColorHint="@color/material_drawer_hint_text" />
@@ -236,24 +245,35 @@
                 android:layout_below="@+id/layout_tag">
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_blue_800"
-                    android:textSize="16sp"
-                    android:text="Image" />
-
-
-                <EditText
-                    android:id="@+id/et_imageUrl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/md_blue_800"
                     android:textSize="14sp"
-                    android:hint="@string/enter_image_url" />
+                    android:text="@string/tv_image" />
+
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_new_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="3dp"
+                    app:fab_colorNormal="@color/colorAccent"
+                    app:fab_colorPressed="@color/colorAccent"
+                    app:fab_icon="@drawable/ic_photo_camera_black_24dp"
+                    app:fab_size="mini" />
+
+                <ImageView
+                    android:id="@+id/iv_beer_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/iv_push_button_to_make_picture"
+                    />
             </LinearLayout>
 
             <Button
@@ -262,7 +282,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_image"
                 android:layout_marginTop="20dp"
-                android:text="@string/save" />
+                android:text="@string/btn_save" />
         </RelativeLayout>
     </ScrollView>
 

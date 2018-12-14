@@ -6,11 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.beertag.android.Constants;
+import com.beertag.android.utils.Constants;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.views.BaseDrawerActivity;
-import com.beertag.android.views.Login.LoginActivity;
+import com.beertag.android.views.login.LoginActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsFragment;
 import com.beertag.android.views.beerDetails.BeerDetailsPresenter;
@@ -103,7 +103,7 @@ public class BeersListActivity
 
     private boolean shouldStartSignIn() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return sharedPrefs.getString("username", "").isEmpty();
+        return sharedPrefs.getString("name", "").isEmpty();
     }
 
     private void startSignIn() {

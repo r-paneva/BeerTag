@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(User user) {
+            mUsersRepository.update(user);
+    }
+
+    @Override
     public User getByUserName(String userName) {
         return mUsersRepository.getByUserName(userName);
     }

@@ -2,11 +2,13 @@ package com.beertag.android.views.beerDetails;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.beertag.android.Constants;
+import com.beertag.android.utils.Constants;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.views.BaseDrawerActivity;
@@ -15,13 +17,20 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class BeerDetailsActivity extends BaseDrawerActivity {
+import static com.beertag.android.utils.Constants.PREFERENCES_BEER_ID_KEY;
+import static com.beertag.android.utils.Constants.PREFERENCES_BEER_NAME_KEY;
+
+public class BeerDetailsActivity extends BaseDrawerActivity implements BeerDetailsContracts.Navigator {
 
     @Inject
     BeerDetailsFragment mBeerDetailsFragment;
 
     @Inject
     BeerDetailsContracts.Presenter mBeerDetailsPresenter;
+
+    @Inject
+    public BeerDetailsActivity() {
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +40,15 @@ public class BeerDetailsActivity extends BaseDrawerActivity {
 
         Intent intent = getIntent();
         Beer beer = (Beer) intent.getSerializableExtra(Constants.EXTRA_KEY);
+        persistBeerSessionData(beer);
 
         mBeerDetailsPresenter.setBeerId(beer.getId());
         mBeerDetailsFragment.setPresenter(mBeerDetailsPresenter);
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, mBeerDetailsFragment)
                 .commit();
-
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -58,10 +67,19 @@ public class BeerDetailsActivity extends BaseDrawerActivity {
         return Constants.DETAILS_IDENTIFIER;
     }
 
-    //    @Override
-    public void navigateToHome() {
+    @Override
+    public void navigateToHome(){
         Intent intent = new Intent(this, BeerDetailsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void persistBeerSessionData(Beer beer) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(PREFERENCES_BEER_ID_KEY, beer.getId());
+        editor.putString(PREFERENCES_BEER_NAME_KEY, beer.getName());
+        editor.apply();
     }
 }

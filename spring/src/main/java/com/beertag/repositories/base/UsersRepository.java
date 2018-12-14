@@ -8,4 +8,6 @@ public interface UsersRepository{
     User getByUserName(String userName);
 
     List getAll();
+
+    void update (User user);
 }

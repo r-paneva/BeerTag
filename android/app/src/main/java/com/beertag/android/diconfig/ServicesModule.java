@@ -54,4 +54,5 @@ public class ServicesModule {
     public TagService TagService(Repository<Tag> repository) {
         return new HttpTagService(repository);
     }
+
 }

@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tags")
-public class TagApiController {
+public class TagsApiController {
 
     private final TagService mTagService;
 
     @Autowired
-    public TagApiController(TagService tagService) {
+    public TagsApiController(TagService tagService) {
         mTagService = tagService;
     }
 
@@ -46,14 +46,6 @@ public class TagApiController {
     )
     public Tag getByName(@PathVariable("name") String name) {
         return mTagService.getByName(name);
-    }
-
-
-    @RequestMapping(
-            method = RequestMethod.PUT
-    )
-    public void updateTag(@RequestBody Tag tag) {
-        mTagService.update(tag);
     }
 
 }

@@ -39,7 +39,6 @@ public class BeersApiController {
         mBeerService.update(beer);
     }
 
-
     @RequestMapping(
             method = RequestMethod.POST
     )

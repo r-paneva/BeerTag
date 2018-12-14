@@ -7,7 +7,7 @@ import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
-import com.beertag.android.parsers.base.JsonParser;
+import com.beertag.android.parsers.json.JsonParser;
 import com.beertag.android.repositories.HttpBeerRepository;
 import com.beertag.android.repositories.HttpCountryRepository;
 import com.beertag.android.repositories.HttpRatingRepository;

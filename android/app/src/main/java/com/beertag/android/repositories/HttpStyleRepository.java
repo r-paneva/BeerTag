@@ -2,7 +2,7 @@ package com.beertag.android.repositories;
 
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Style;
-import com.beertag.android.parsers.base.JsonParser;
+import com.beertag.android.parsers.json.JsonParser;
 import com.beertag.android.repositories.base.Repository;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class HttpStyleRepository implements Repository {
     }
 
     @Override
-    public Object update(Object item) throws IOException {
+    public Object update (Object item) throws IOException {
         return null;
     }
 

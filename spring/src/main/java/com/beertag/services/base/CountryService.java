@@ -9,5 +9,4 @@ public interface CountryService {
     List<Country> getAll();
     Country getCountryByID(int id);
     Country getByName(String name);
-    void update(Country country);
 }

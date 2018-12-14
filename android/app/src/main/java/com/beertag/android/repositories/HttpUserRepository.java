@@ -2,7 +2,7 @@ package com.beertag.android.repositories;
 
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.User;
-import com.beertag.android.parsers.base.JsonParser;
+import com.beertag.android.parsers.json.JsonParser;
 import com.beertag.android.repositories.base.Repository;
 
 import java.io.IOException;
@@ -42,15 +42,15 @@ public class HttpUserRepository implements Repository {
     public Object delete(Object item) throws IOException {
         String requestBody = mJsonParser.toJson((User) item);
         //String responseBody =
-        mHttpRequester.delete(mServerUrl + "delete", requestBody);
+        mHttpRequester.delete(mServerUrl , requestBody);
         return null;//mJsonParser.fromJson(responseBody);
     }
 
     @Override
     public Object update(Object item) throws IOException {
         String requestBody = mJsonParser.toJson((User) item);
-        mHttpRequester.put(mServerUrl + "update", requestBody);
-        return null;//mJsonParser.fromJson(responseBody);
+        mHttpRequester.put(mServerUrl, requestBody);
+        return null;//mJsonParser.fromJson(responseBody, Beer.class);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class HttpUserRepository implements Repository {
 
     @Override
     public Object getByName(String username) throws IOException {
-        String url = mServerUrl + "username/" + username;
+        String url = mServerUrl + username;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }

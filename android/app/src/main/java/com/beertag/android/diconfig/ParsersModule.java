@@ -6,8 +6,8 @@ import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
-import com.beertag.android.parsers.GsonJsonParser;
-import com.beertag.android.parsers.base.JsonParser;
+import com.beertag.android.parsers.json.GsonJsonParser;
+import com.beertag.android.parsers.json.JsonParser;
 
 import dagger.Module;
 import dagger.Provides;
@@ -43,5 +43,4 @@ public class ParsersModule {
     public JsonParser<Tag> TagJsonParser() {
         return new GsonJsonParser<>(Tag.class, Tag[].class);
     }
-
 }

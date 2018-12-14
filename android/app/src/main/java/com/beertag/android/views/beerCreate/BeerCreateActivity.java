@@ -2,23 +2,16 @@ package com.beertag.android.views.beerCreate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
-import com.beertag.android.Constants;
+import com.beertag.android.utils.Constants;
 import com.beertag.android.R;
-import com.beertag.android.models.Country;
-import com.beertag.android.services.base.CountryService;
 import com.beertag.android.views.BaseDrawerActivity;
+import com.beertag.android.views.image.ImageViewActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-
-import static android.R.layout.simple_spinner_dropdown_item;
 
 public class BeerCreateActivity extends BaseDrawerActivity implements BeerCreateContracts.Navigator {
 
@@ -59,4 +52,11 @@ public class BeerCreateActivity extends BaseDrawerActivity implements BeerCreate
         startActivity(intent);
         finish();
     }
+
+//    @Override
+//    public void navigateToImageView(String beerImage) {
+//        Intent intent = new Intent(this, ImageViewActivity.class);
+//        intent.putExtra(Constants.IMAGE_MESSAGE_EXTRA, beerImage);
+//        startActivity(intent);
+//    }
 }

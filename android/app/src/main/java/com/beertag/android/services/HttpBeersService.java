@@ -24,8 +24,8 @@ public class HttpBeersService implements BeersService {
     }
 
     @Override
-    public List<Beer> getBeersByStyle(String userName) throws IOException {
-        //return mRepository.getBeersByStyle(userName);
+    public List<Beer> getBeersByStyle(String style) throws IOException {
+        //return mRepository.getBeersByStyle(style);
         return null;
     }
 
@@ -64,7 +64,7 @@ public class HttpBeersService implements BeersService {
 
     @Override
     public Beer updateBeer(Beer beer) throws IOException {
-        return null;
+        return (Beer) mRepository.update(beer);
     }
 
 

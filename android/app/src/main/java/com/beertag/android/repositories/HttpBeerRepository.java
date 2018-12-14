@@ -2,7 +2,7 @@ package com.beertag.android.repositories;
 
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Beer;
-import com.beertag.android.parsers.base.JsonParser;
+import com.beertag.android.parsers.json.JsonParser;
 import com.beertag.android.repositories.base.Repository;
 
 import java.io.IOException;
@@ -47,10 +47,11 @@ public class HttpBeerRepository implements Repository {
     }
 
     @Override
-    public Object update(Object item) throws IOException {
-        String requestBody = mJsonParser.toJson((Beer) item);
-        mHttpRequester.put(mServerUrl , requestBody);
-        return null;//mJsonParser.fromJson(responseBody);
+    public Object update (Object beer) throws IOException {
+        String updateServerUrl = mServerUrl;
+        String requestBody = mJsonParser.toJson((Beer)beer);
+        String responseBody = mHttpRequester.put(updateServerUrl, requestBody);
+        return mJsonParser.fromJson(responseBody);
     }
 
     @Override
@@ -61,8 +62,8 @@ public class HttpBeerRepository implements Repository {
     }
 
     @Override
-    public Object getByName(String username) throws IOException {
-        String url = mServerUrl + "username/" + username;
+    public Object getByName(String name) throws IOException {
+        String url = mServerUrl + "name/" + name;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }

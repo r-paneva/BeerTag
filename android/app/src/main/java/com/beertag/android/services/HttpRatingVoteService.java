@@ -21,7 +21,7 @@ public class HttpRatingVoteService implements RatingVoteService {
     }
 
     @Override
-    public RatingVote updateRatingVote(RatingVote ratingVote) throws IOException {
+    public RatingVote updateRatingVote(int id, RatingVote ratingVote) throws IOException {
         return mRatingVoteRepository.update(ratingVote);
     }
 

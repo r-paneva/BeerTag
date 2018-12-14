@@ -1,8 +1,8 @@
 package com.beertag.android.views.beerCreate;
 
 
-import com.beertag.android.Constants;
-import com.beertag.android.async.AsyncSchedulerProvider;
+import android.graphics.Bitmap;
+
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
@@ -12,8 +12,11 @@ import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.CountryService;
 import com.beertag.android.services.base.StyleService;
 import com.beertag.android.services.base.TagService;
+import com.beertag.android.utils.Constants;
+import com.beertag.android.utils.ImageEncoder;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -32,7 +35,7 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
     private final TagService mTagService;
 
     @Inject
-    public BeerCreatePresenter(
+    BeerCreatePresenter(
             BeersService beerService,
             SchedulerProvider schedulerProvider,
             CountryService countriesService,
@@ -210,17 +213,9 @@ public class BeerCreatePresenter implements BeerCreateContracts.Presenter {
         }
     }
 
-
-//private int getResponceCode(){
-//        int statusCode = 0;
-//        try {
-//            url = new URL(Constants.BASE_SERVER_URL+ "/beers");
-//            HttpURLConnection http = (HttpURLConnection) url.openConnection();
-//            statusCode = http.getResponseCode();
-//        } catch (java.io.IOException e) {
-//            e.printStackTrace();
-//        }
-//      return statusCode;
-//    }
+    @Override
+    public void takePictureButtonIsClicked() {
+        mView.presentOptionToTakePicture();
+    }
 
 }

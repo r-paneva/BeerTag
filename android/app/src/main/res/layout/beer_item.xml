@@ -13,48 +13,81 @@
         android:layout_margin="4dp">
 
         <ImageView
-            android:id="@+id/iv_beer"
-            android:layout_width="130dp"
+            android:id="@+id/iv_beer_image"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:padding="2dp" />
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/iv_picture"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tv_name_beer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="145dp"
-            android:layout_marginTop="5dp"
-            android:text="Beer"
-            android:textColor="@android:color/black"
-            android:textSize="19sp"
+            android:layout_alignStart="@+id/iv_beer_image"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_beer"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="145dp"
-            android:layout_marginTop="68dp"
-            android:text="Country"
-            android:textColor="@android:color/black"
-            android:textSize="19sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/iv_beer"
+            android:layout_below="@+id/tv_name_beer"
+            android:layout_alignStart="@+id/iv_beer_image"
             android:layout_centerVertical="true"
-            android:layout_marginStart="145dp"
-            android:text="Style"
-            android:textColor="@android:color/black"
-            android:textSize="19sp"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_style"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_alcohol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_name_beer"
+            android:layout_toEndOf="@+id/tv_style"
+            android:text="@string/tv_alcohol"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_brewery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_style"
+            android:layout_alignStart="@+id/iv_beer_image"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_brewery"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_style"
+            android:layout_toEndOf="@+id/tv_brewery"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/tv_country"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
 
 
     </RelativeLayout>

@@ -1,70 +1,75 @@
-package com.beertag.android.views.Login;
+package com.beertag.android.views.login;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
 
 import com.beertag.android.R;
 import com.beertag.android.models.User;
-import com.beertag.android.views.beersList.BeersListActivity;
+import com.beertag.android.views.home.HomeActivity;
+import com.stepstone.apprating.StringValue;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginContracts.Navigator {
-    @BindView(R.id.username)
-    EditText mUsername;
+import static com.beertag.android.utils.Constants.USER_EXTRA;
+import static com.beertag.android.utils.Constants.USER_PROFILE_IMAGE_KEY;
 
-    @BindView(R.id.bt_login)
-    Button mButtonLogin;
+public class LoginActivity extends DaggerAppCompatActivity implements LoginContracts.Navigator {
+    private static final String TAG = "LoginActivity";
+    SharedPreferences sharedPreferences;
 
     @Inject
-    LoginPresenter mLoginPresenter;
-    Activity mActivity;
-    User mUser;
+    LoginPresenter mPresenter;
+
+    @Inject
+    LoginFragment mLoginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mActivity = this;
         ButterKnife.bind(this);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+         mLoginFragment.setNavigator(this);
+         mLoginFragment.setPresenter(mPresenter);
 
-        mButtonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.clear();
-                    mUser = mLoginPresenter.getUserByName(String.valueOf(mUsername.getText()));
-                    if (mUser != null) {
-                        editor.putString("username", String.valueOf(mUsername.getText()));
-                    } else {
-                        Toast.makeText(mActivity, "No such username in the database!", Toast.LENGTH_LONG).show();
-                    }
-                    editor.commit();
-                    startActivity(new Intent(getApplicationContext(), BeersListActivity.class));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_login, mLoginFragment)
+                .commit();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter = null;
+        super.onDestroy();
+    }
+
+    @Override
+    public void navigateToHomeWithUser(User user) {
+        Intent intent = new Intent(this, HomeActivity.class);
+
+        sharedPreferences = getSharedPreferences("com.beertag.android", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(String.valueOf(R.string.username),user.getUserName());
+        editor.putString(String.valueOf(R.string.fullname), user.getFirstName()+" "+user.getLastName());
+        editor.putString(String.valueOf(R.string.userpicture), user.getImage());
+        editor.commit();
+
+        intent.putExtra(USER_EXTRA, user);
+        startActivity(intent);
+        finish();
     }
 }

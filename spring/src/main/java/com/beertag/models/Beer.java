@@ -40,10 +40,10 @@ public class Beer implements Serializable {
     private Style style;
 
     @ManyToOne()
-    @JoinColumn(name = "tagId", nullable=false)
+    @JoinColumn(name = "tagId")
     private Tag tag;
 
-    @Column(name = "image")
+    @Column(name = "image", nullable = false)
     private String image;
 
     @Column(name = "rating")
@@ -54,14 +54,24 @@ public class Beer implements Serializable {
     }
 
     public Beer(String name, String brewery, Country country, String alcohol, String description, Style style, String image, Tag tag) {
-        this.name = name;
-        this.brewery = brewery;
-        this.country = country;
-        this.alcohol = alcohol;
-        this.description = description;
-        this.style = style;
-        this.image = image;
-        this.tag = tag;
+        setName(name);
+        setBrewery(brewery);
+        setCountry(country);
+        setAlcohol(alcohol);
+        setDescription(description);
+        setStyle(style);
+        setImage(image);
+        setTag(tag);
+    }
+
+    public Beer(String name, String brewery, Country country, String alcohol, String description, Style style, Tag tag) {
+        setName(name);
+        setBrewery(brewery);
+        setCountry(country);
+        setAlcohol(alcohol);
+        setDescription(description);
+        setStyle(style);
+        setTag(tag);
     }
 
     public String getName() {

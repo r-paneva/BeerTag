@@ -9,5 +9,7 @@ public interface UsersService {
 
     List<User> getAllUsers() throws IOException;
 
-    User getUserByUsername(String username) throws IOException;
+    User getUserByUserName(String username) throws IOException;
+
+    User updateUser(User user) throws IOException;
 }

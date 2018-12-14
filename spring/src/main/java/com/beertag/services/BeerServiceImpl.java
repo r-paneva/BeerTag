@@ -33,10 +33,7 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void update(Beer beer) {
-        int id = beer.getId();
-        Beer getBeer = getBeerByID(id);
-//        getBeer.setRating(beer.getImage());
-        mBeerRepository.update(id, beer);
+        mBeerRepository.update(beer);
     }
 
     @Override

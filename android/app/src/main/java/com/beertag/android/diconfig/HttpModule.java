@@ -1,6 +1,6 @@
 package com.beertag.android.diconfig;
 
-import com.beertag.android.Constants;
+import com.beertag.android.utils.Constants;
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.http.OkHttpHttpRequester;
 

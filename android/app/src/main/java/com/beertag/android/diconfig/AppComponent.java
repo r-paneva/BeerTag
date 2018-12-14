@@ -3,6 +3,11 @@ package com.beertag.android.diconfig;
 import android.app.Application;
 
 import com.beertag.android.BeerTagApplication;
+import com.beertag.android.diconfig.viewmodules.GetPictureModule;
+import com.beertag.android.diconfig.viewmodules.HomeModule;
+import com.beertag.android.diconfig.viewmodules.ImageViewModule;
+import com.beertag.android.diconfig.viewmodules.LoginModule;
+import com.beertag.android.diconfig.viewmodules.ViewsModule;
 
 import javax.inject.Singleton;
 
@@ -16,11 +21,15 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityBindingModule.class,
         AppModule.class,
         AsyncModule.class,
+        HomeModule.class,
         HttpModule.class,
+        ImageViewModule.class,
+        GetPictureModule.class,
         LoginModule.class,
         ParsersModule.class,
         RepositoriesModule.class,
         ServicesModule.class,
+        UtilitiesModule.class,
         ViewsModule.class,
         AndroidSupportInjectionModule.class
 })

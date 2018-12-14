@@ -1,23 +1,85 @@
-<!--<resources>-->
-
-<!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
-<!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-<!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--<item name="colorPrimary">@color/colorPrimary</item>-->
-<!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-<!--<item name="colorAccent">@color/colorAccent</item>-->
-<!--</style>-->
-
-<!--</resources>-->
-
 <resources>
 
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="material_drawer_primary_text">@color/colorPrimaryDark</item>
+        <item name="material_drawer_secondary_text">@color/colorPrimaryDark</item>
+        <item name="material_drawer_divider">@color/colorPrimaryDark</item>
+        <item name="material_drawer_selected_text">@color/colorPrimaryDark</item>
+        <item name="material_drawer_header_selection_text">@color/colorPrimaryDark</item>
+        <item name="material_drawer_background">@color/colorWindow</item>
+        <item name="material_drawer_selected">@color/colorWindow</item>
+
+        <item name="android:windowBackground">@color/colorWindow</item>
+
+        <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
+
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="alertDialogStyle">@style/MyAlertDialogStyle</item>
+
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="MaterialEditTextStyle">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:layout_marginStart">30dp</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginEnd">30dp</item>
+        <item name="mtf_cardCollapsedHeight">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="mtf_labelColor">@color/colorAccent</item>
+        <item name="mtf_openKeyboardOnFocus">false</item>
+    </style>
+
+
+    <style name="SpinnerStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:alpha">0.8</item>
+
+    </style>
+
+    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">#1E448C</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorWindow</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MyAlertDialogButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MyAlertDialogButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButtonStyle</item>
+    </style>
+
+    <style name="MyAlertDialogButtonStyle" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="MyDialogFadeAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 </resources>

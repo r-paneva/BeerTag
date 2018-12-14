@@ -4,10 +4,7 @@ package com.beertag.controllers;
 import com.beertag.models.User;
 import com.beertag.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,4 +32,12 @@ public class UsersApiController {
     public User getUserByUsername(@PathVariable("userName") String userName) {
         return mUserService.getByUserName(userName);
     }
+
+    @RequestMapping(
+            method = RequestMethod.PUT
+    )
+    public void updateBeer(@RequestBody User user) {
+        mUserService.update(user);
+    }
+
 }

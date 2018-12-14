@@ -20,7 +20,7 @@
                 android:id="@+id/et_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter to search"/>
+                android:hint="@string/et_enter_to_search"/>
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_beers"

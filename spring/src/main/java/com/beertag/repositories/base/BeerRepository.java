@@ -10,7 +10,7 @@ public interface BeerRepository {
 
     void create(Beer beer);
 
-    void update(int id, Beer beer);
+    void update(Beer beer);
 
     void delete(Beer beer);
 

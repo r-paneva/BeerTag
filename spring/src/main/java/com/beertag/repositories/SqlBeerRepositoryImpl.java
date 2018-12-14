@@ -2,8 +2,10 @@ package com.beertag.repositories;
 
 import com.beertag.models.Beer;
 import com.beertag.repositories.base.BeerRepository;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,25 +48,27 @@ public class SqlBeerRepositoryImpl implements BeerRepository {
             session.save(item);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("You can't create new beer "+e.getMessage()+ "\nHttp Status: "+HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println("You can't create new beer " + e.getMessage() + "\nHttp Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void update(int id, Beer item) {
-        Beer object = null;
-        try (
-                Session session = sessionFactory.openSession();
-        ) {
-            session.beginTransaction();
-            object = session.get(item.getClass(), id);
-//            FieldCopyUtil.setFields(item, object);
-            session.update(object);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+    public void update(Beer item) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(item);
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
         }
     }
 

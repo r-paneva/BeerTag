@@ -21,8 +21,13 @@ public class HttpUsersService implements UsersService {
     }
 
     @Override
-    public User getUserByUsername(String username) throws IOException {
-//        return mUsersRepository.getUserByUsername(username);
-        return null;
+    public User getUserByUserName(String username) throws IOException {
+        return mUsersRepository.getByName(username);
     }
+
+    @Override
+    public User updateUser(User user) throws IOException {
+        return (User) mUsersRepository.update(user);
+    }
+
 }
