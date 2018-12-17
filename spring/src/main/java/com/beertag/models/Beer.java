@@ -153,4 +153,5 @@ public class Beer implements Serializable {
     public void setTag(Tag beerTag) {
         this.tag = beerTag;
     }
+
 }
