@@ -19,6 +19,7 @@ public class Constants {
     public static final long IMAGE_IDENTIFIER = 5;
     public static final long GET_PICTURE_IDENTIFIER = 6;
     public static final long HOME_IDENTIFIER = 7;
+    public static final long MY_BEERS_IDENTIFIER = 8;
 
     public static final long BEER_NAME_MIN_VALUE = 5;
     public static final long BEER_NAME_MAX_VALUE = 18;
@@ -27,7 +28,7 @@ public class Constants {
     public static final String COUNTRY_ERROR_MESSAGE = "Country can't be empty";
     public static final String STYLE_ERROR_MESSAGE = "Style can't be empty";
 
-    public static final int IMAGE_QUALITY = 50;
+    static final int IMAGE_QUALITY = 50;
     public static final String ERROR_LOADING_IMAGE = "Error Loading Image";
     public static final String IMAGE_MESSAGE_EXTRA = "Image message extra";
     public static final String USER_PROFILE_IMAGE_KEY = "userImage";
@@ -41,15 +42,17 @@ public class Constants {
     public static final String ERROR_MESSAGE = "Error: ";
     public static final String BEER_IMAGE_KEY = "beerImage" ;
 
-    public static final String USER_EXTRA = "user";
+    public static final String USER_EXTRA_KEY = "USER_EXTAR_KEY";
     public static final String PREFERENCES_USER_ID_KEY = "userId";
     public static final String PREFERENCES_USER_NAME_KEY = "userName";
     public static final String PREFERENCES_USER_FULL_NAME_KEY = "fullName";
-    public static final String ERROR_LOADING_USER_IMAGE = "Error loading user picture";
+    public static final String ERROR_LOADING_USER_IMAGE = "You have no picture";
 
     public static final int VISIBLE_CODE_VALUE = 0;
     public static final String UNSUCCESSFUL_LOGIN = "Unsuccessful login";
     public static final String USER_IMAGE_KEY = "userImage";
+    public static final String USER_CACHE_IMAGE_KEY = "userCacheImage" ;
+
 }
 
 

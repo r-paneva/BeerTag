@@ -1,70 +1,74 @@
 package com.beertag.android.repositories;
 
 import com.beertag.android.http.HttpRequester;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.parsers.json.JsonParser;
+import com.beertag.android.repositories.base.RatingRepository;
 import com.beertag.android.repositories.base.Repository;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpRatingRepository<T> implements Repository<T> {
+public class HttpRatingRepository implements RatingRepository {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;
-    private final JsonParser<T> mJsonParser;
+    private final JsonParser<MyBeers> mJsonParser;
 
     public HttpRatingRepository(
             String serverUrl,
             HttpRequester httpRequester,
-            JsonParser<T> jsonParser
+            JsonParser<MyBeers> jsonParser
 
     ) {
-        mServerUrl = serverUrl;
+        mServerUrl = serverUrl + "/mybeers/";
         mHttpRequester = httpRequester;
         mJsonParser = jsonParser;
     }
 
     @Override
-    public List<T> getAll() throws IOException {
-        String url = mServerUrl + "/rating";
+    public List<MyBeers> getAll() throws IOException {
+        String url = mServerUrl;
         String jsonArray = mHttpRequester.get(url);
         return mJsonParser.fromJsonArray(jsonArray);
     }
 
     @Override
-    public T add(T item) throws IOException {
+    public MyBeers add(MyBeers item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
         //String responseBody =
-        mHttpRequester.post(mServerUrl + "/rating/add", requestBody);
+        mHttpRequester.post(mServerUrl + "add/", requestBody);
         return null;//mJsonParser.fromJson(responseBody);
     }
 
     @Override
-    public T delete(T item) throws IOException {
+    public MyBeers delete(MyBeers item) throws IOException {
         return null;
     }
 
-    //// ??????
-    public T getRaitingById(int userId, int beerId) throws IOException {
-        String url = mServerUrl + "/" + userId + "/" + beerId;
+    @Override
+    public MyBeers update(MyBeers item) throws IOException {
+        String requestBody = mJsonParser.toJson(item);
+        mHttpRequester.put(mServerUrl + "update/", requestBody);
+        return null;//mJsonParser.fromJson(responseBody);
+    }
+
+    @Override
+    public MyBeers getRatingByBeerId(int beerId) throws IOException {
+        String url = mServerUrl + "rating/" + beerId;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }
 
     @Override
-    public T update(T item) throws IOException {
-        String requestBody = mJsonParser.toJson(item);
-        mHttpRequester.put(mServerUrl + "/rating/update", requestBody);
-        return null;//mJsonParser.fromJson(responseBody);
+    public List <MyBeers> getBeersByUserId(int userId) throws IOException {
+        String url = mServerUrl + "beers/" + userId;
+        String jsonArray = mHttpRequester.get(url);
+        return mJsonParser.fromJsonArray(jsonArray);
     }
 
     @Override
-    public T getById(int id) throws IOException {
-        return null;
-    }
-
-    @Override
-    public T getByName(String username) throws IOException {
+    public MyBeers getByDrunk(String drunk) throws IOException {
         return null;
     }
 }

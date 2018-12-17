@@ -8,10 +8,6 @@ public interface LoginContracts {
 
         void setPresenter(Presenter presenter);
 
-        void showLoginCredentialsProblemMessage(String message);
-
-        void hideLoginProblemMessage();
-
         void showLoading();
 
         void hideLoading();
@@ -31,9 +27,6 @@ public interface LoginContracts {
 
         void unsubscribe();
 
-        void checkErrorVisibility(int visibilityCode);
-
-        void handleLoginFieldFocusChange(int errorVisibilityCode);
     }
 
     interface Navigator {

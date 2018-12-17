@@ -7,4 +7,6 @@ public interface BitmapCacheRepository {
 
     Bitmap getBitmapFromCache(String key);
 
+    void clearBitmapCache();
+
 }

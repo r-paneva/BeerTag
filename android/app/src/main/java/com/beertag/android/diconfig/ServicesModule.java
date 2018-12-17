@@ -2,10 +2,10 @@ package com.beertag.android.diconfig;
 
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
-import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
+import com.beertag.android.repositories.base.RatingRepository;
 import com.beertag.android.repositories.base.Repository;
 import com.beertag.android.services.HttpBeersService;
 import com.beertag.android.services.HttpCountryService;
@@ -31,7 +31,7 @@ public class ServicesModule {
     }
 
     @Provides
-    public RatingVoteService RatingVoteService(Repository<RatingVote> repository) {
+    RatingVoteService RatingVoteService(RatingRepository repository) {
         return new HttpRatingVoteService(repository);
     }
 
@@ -41,17 +41,17 @@ public class ServicesModule {
     }
 
     @Provides
-    public CountryService CountryService(Repository<Country> repository) {
+    CountryService CountryService(Repository<Country> repository) {
         return new HttpCountryService(repository);
     }
 
     @Provides
-    public StyleService StyleService(Repository<Style> repository) {
+    StyleService StyleService(Repository<Style> repository) {
         return new HttpStyleService(repository);
     }
 
     @Provides
-    public TagService TagService(Repository<Tag> repository) {
+    TagService TagService(Repository<Tag> repository) {
         return new HttpTagService(repository);
     }
 

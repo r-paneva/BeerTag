@@ -33,14 +33,11 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @BindView(R.id.et_username_field)
     EditText mUserNameEditText;
 
-    @BindView(R.id.tv_login_credentials_problem)
-    TextView mLoginProblemTextView;
-
     @BindView(R.id.prb_loading_view)
     ProgressBar mProgressBarView;
 
-//    @BindView(R.id.btn_login)
-//    Button mLoginButton;
+    @BindView(R.id.btn_login)
+    Button mLoginButton;
 
 
     private LoginContracts.Presenter mPresenter;
@@ -54,7 +51,7 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -85,17 +82,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     }
 
     @Override
-    public void showLoginCredentialsProblemMessage(String message) {
-        mLoginProblemTextView.setVisibility(View.VISIBLE);
-        mLoginProblemTextView.setText(message);
-    }
-
-    @Override
-    public void hideLoginProblemMessage() {
-        mLoginProblemTextView.setVisibility(View.GONE);
-    }
-
-    @Override
     public void showLoading() {
         mProgressBarView.setVisibility(View.VISIBLE);
     }
@@ -109,12 +95,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
     @OnClick(R.id.btn_login)
     public void onLoginButtonClick() {
         mPresenter.getUserByUserName(mUserNameEditText.getText().toString());
-    }
-
-
-    @OnFocusChange(R.id.et_username_field)
-    public void onUsernameFieldFocusChange() {
-        mPresenter.handleLoginFieldFocusChange(mLoginProblemTextView.getVisibility());
     }
 
     @Override
@@ -134,11 +114,6 @@ public class LoginFragment extends Fragment implements LoginContracts.View {
         Toast
                 .makeText(getContext(), message, Toast.LENGTH_SHORT)
                 .show();
-    }
-
-    @OnTextChanged(R.id.et_username_field)
-    public void onUserNameEditTextChanged() {
-        mPresenter.checkErrorVisibility(mLoginProblemTextView.getVisibility());
     }
 
 }

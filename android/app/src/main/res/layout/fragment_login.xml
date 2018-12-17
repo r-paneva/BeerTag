@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,18 +19,9 @@
         android:id="@+id/et_username_field"
         style="@style/MaterialEditTextStyle"
         android:layout_marginTop="100dp"
+        android:textAlignment="center"
         android:hint="@string/et_username"
         android:inputType="text" />
-
-
-    <TextView
-        android:id="@+id/tv_login_credentials_problem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_username_field"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorRed"
-        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_login"
@@ -38,9 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_username_field"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         android:text="@string/et_login_in" />
 
 

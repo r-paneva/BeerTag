@@ -1,32 +1,53 @@
 package com.beertag.android.services;
 
-import com.beertag.android.models.RatingVote;
-import com.beertag.android.repositories.base.Repository;
+import com.beertag.android.models.MyBeers;
+import com.beertag.android.repositories.base.RatingRepository;
 import com.beertag.android.services.base.RatingVoteService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HttpRatingVoteService implements RatingVoteService {
 
-    private final Repository<RatingVote> mRatingVoteRepository;
+    private final RatingRepository mRatingVoteRepository;
 
     public HttpRatingVoteService(
-            Repository<RatingVote> ratingVoteRepository) {
+            RatingRepository ratingVoteRepository) {
         this.mRatingVoteRepository = ratingVoteRepository;
     }
 
     @Override
-    public RatingVote createRatingVote(RatingVote ratingVote) throws IOException {
-        return mRatingVoteRepository.add(ratingVote);
+    public MyBeers createMyBeer(MyBeers myBeers) throws IOException {
+        return mRatingVoteRepository.add(myBeers);
     }
 
     @Override
-    public RatingVote updateRatingVote(int id, RatingVote ratingVote) throws IOException {
-        return mRatingVoteRepository.update(ratingVote);
+    public MyBeers updateRatingVote(int id, MyBeers myBeers) throws IOException {
+        return mRatingVoteRepository.update(myBeers);
     }
 
     @Override
-    public RatingVote getById(RatingVote ratingVote) throws IOException {
-        return null;
+    public MyBeers deleteRatingVote(int id, MyBeers myBeers) throws IOException {
+        return mRatingVoteRepository.delete(myBeers);
+    }
+
+    @Override
+    public  List<MyBeers> getAll() throws IOException {
+        return mRatingVoteRepository.getAll();
+    }
+
+    @Override
+    public  List<MyBeers> getBeersByUserId (int userId) throws IOException {
+        return mRatingVoteRepository.getBeersByUserId(userId);
+    }
+
+    @Override
+    public  MyBeers getRatingByBeerId (int beerId) throws IOException {
+        return mRatingVoteRepository.getRatingByBeerId(beerId);
+    }
+
+    @Override
+    public  MyBeers getByDrunk (String drunk) throws IOException {
+        return mRatingVoteRepository.getByDrunk(drunk);
     }
 }

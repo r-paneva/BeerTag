@@ -16,6 +16,7 @@ public class LruBitmapCacheRepository implements BitmapCacheRepository {
     public void addBitmapToBitmapCache(Bitmap bitmap, String key) {
 
         mLruCache.put(key, bitmap);
+
     }
 
     @Override
@@ -23,5 +24,9 @@ public class LruBitmapCacheRepository implements BitmapCacheRepository {
         return mLruCache.get(key);
     }
 
+    @Override
+    public void clearBitmapCache(){
+        mLruCache.trimToSize(0);
+    }
 }
 

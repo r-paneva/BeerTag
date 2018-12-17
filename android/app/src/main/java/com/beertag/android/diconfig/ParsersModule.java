@@ -2,7 +2,7 @@ package com.beertag.android.diconfig;
 
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
-import com.beertag.android.models.RatingVote;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
@@ -25,8 +25,8 @@ public class ParsersModule {
     }
 
     @Provides
-    public JsonParser<RatingVote> RatingVoteJsonParser() {
-        return new GsonJsonParser<>(RatingVote.class, RatingVote[].class);
+    public JsonParser<MyBeers> RatingVoteJsonParser() {
+        return new GsonJsonParser<>(MyBeers.class, MyBeers[].class);
     }
 
     @Provides

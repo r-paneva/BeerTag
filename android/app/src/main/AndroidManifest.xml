@@ -2,17 +2,15 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
     package="com.beertag.android">
+
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" android:protectionLevel="signature"
-         />
 
     <uses-feature
         android:name="android.hardware.camera.any"
@@ -24,7 +22,6 @@
     <application
         android:name=".BeerTagApplication"
         android:allowBackup="true"
-
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="BEER TAG"
@@ -33,7 +30,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        android:configChanges="orientation|screenSize|keyboardHidden">
+        android:configChanges="orientation|screenSize|keyboardHidden"
+        >
 
         <activity android:name=".views.beersList.BeersListActivity"
                   android:screenOrientation="portrait">
@@ -46,8 +44,7 @@
 
         <activity android:name=".views.beerDetails.BeerDetailsActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".views.image.ImageViewActivity"
-            android:screenOrientation="portrait"/>
+       
         <activity android:name=".views.beerCreate.BeerCreateActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".views.login.LoginActivity"
@@ -55,6 +52,8 @@
         <activity android:name=".views.getPicture.GetPictureActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".views.home.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.myBeers.MyBeersListActivity"
             android:screenOrientation="portrait"/>
 
     </application>

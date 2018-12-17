@@ -2,15 +2,12 @@ package com.beertag.android.views.home;
 
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +19,10 @@ import android.widget.Toast;
 
 import com.beertag.android.R;
 import com.beertag.android.utils.Constants;
-import com.beertag.android.utils.ImageEncoder;
-import com.beertag.android.views.beerDetails.BeerDetailsActivity;
-import com.beertag.android.views.beersList.BeersListActivity;
-import com.beertag.android.views.login.LoginActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -39,8 +30,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.Context.ALARM_SERVICE;
 
 
 public class HomeFragment extends Fragment implements HomeContracts.View {
@@ -66,7 +55,6 @@ public class HomeFragment extends Fragment implements HomeContracts.View {
     FloatingActionsMenu mImageChangeFloatingMenu;
 
     private HomeContracts.Presenter mPresenter;
-    private AlarmManager mAlarmManager;
 
     @Inject
     public HomeFragment() {
@@ -74,7 +62,7 @@ public class HomeFragment extends Fragment implements HomeContracts.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 

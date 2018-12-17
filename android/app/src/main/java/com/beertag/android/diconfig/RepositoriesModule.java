@@ -3,7 +3,7 @@ package com.beertag.android.diconfig;
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
-import com.beertag.android.models.RatingVote;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
@@ -14,6 +14,7 @@ import com.beertag.android.repositories.HttpRatingRepository;
 import com.beertag.android.repositories.HttpStyleRepository;
 import com.beertag.android.repositories.HttpTagRepository;
 import com.beertag.android.repositories.HttpUserRepository;
+import com.beertag.android.repositories.base.RatingRepository;
 import com.beertag.android.repositories.base.Repository;;
 
 import javax.inject.Named;
@@ -23,10 +24,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class RepositoriesModule {
+class RepositoriesModule {
     @Provides
     @Singleton
-    public Repository<Beer> BeerRepository(
+    Repository<Beer> BeerRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
             JsonParser<Beer> jsonParser
@@ -37,13 +38,13 @@ public class RepositoriesModule {
 
     @Provides
     @Singleton
-    public Repository<RatingVote> RatingVoteRepository(
+    public RatingRepository RatingVoteRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
-            JsonParser<RatingVote> jsonParser
+            JsonParser<MyBeers> jsonParser
     ) {
         String url = baseServerUrl;
-        return new HttpRatingRepository<>(url, httpRequester, jsonParser);
+        return new HttpRatingRepository(url, httpRequester, jsonParser);
     }
 
     @Provides

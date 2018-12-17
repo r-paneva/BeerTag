@@ -4,14 +4,12 @@ import android.graphics.Bitmap;
 
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
-import com.beertag.android.models.RatingVote;
 import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.RatingVoteService;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.utils.ImageEncoder;
-import com.beertag.android.views.beerCreate.BeerCreateActivity;
 
 import java.util.Objects;
 
@@ -21,8 +19,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.Disposable;
 
-public class BeerDetailsPresenter
-        implements BeerDetailsContracts.Presenter {
+public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
+
     private final BeersService mBeersService;
     private final RatingVoteService mRatingVoteService;
     private final SchedulerProvider mSchedulerProvider;
@@ -89,16 +87,16 @@ public class BeerDetailsPresenter
 
     @Override
     public void setRating(User whoRates, Beer rated, int stars) {
-        RatingVote ratingVote = new RatingVote(stars, whoRates.getUserName(), rated.getName());
-        Disposable disposable = (Disposable) Observable
-                .create((ObservableOnSubscribe<RatingVote>) emitter -> {
-                    mRatingVoteService.createRatingVote(ratingVote);
-                })
-                .subscribeOn(mSchedulerProvider.background())
-                .observeOn(mSchedulerProvider.ui())
-                .doOnEach(x -> mView.hideLoading())
-                .doOnError(mView::showError)
-                .subscribe(s -> loadBeer());
+//        MyBeers ratingVote = new MyBeers(stars, whoRates.getUserName(), rated.getName());
+//        Disposable disposable = (Disposable) Observable
+//                .create((ObservableOnSubscribe<MyBeers>) emitter -> {
+//                    mRatingVoteService.createRatingVote(ratingVote);
+//                })
+//                .subscribeOn(mSchedulerProvider.background())
+//                .observeOn(mSchedulerProvider.ui())
+//                .doOnEach(x -> mView.hideLoading())
+//                .doOnError(mView::showError)
+//                .subscribe(s -> loadBeer());
     }
 
     @Override
@@ -151,10 +149,8 @@ public class BeerDetailsPresenter
                     })
                     .subscribeOn(mSchedulerProvider.background())
                     .observeOn(mSchedulerProvider.ui())
-                    .subscribe(result -> decodeImageAndPresentToView(result),
-                            error -> {
-                                mView.showError(error);
-                            });
+                    .subscribe(this::decodeImageAndPresentToView,
+                            error -> mView.showError(error));
         } else {
             mView.showMessage(Constants.IMAGE_CHANGE_ERROR_MESSAGE);
         }

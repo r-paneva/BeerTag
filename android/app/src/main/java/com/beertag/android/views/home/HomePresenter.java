@@ -1,15 +1,10 @@
 package com.beertag.android.views.home;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
 
-import com.beertag.android.R;
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
-import com.beertag.android.services.base.BeersService;
-import com.beertag.android.services.base.RatingVoteService;
 import com.beertag.android.services.base.UsersService;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.utils.ImageEncoder;
@@ -29,9 +24,7 @@ import static android.view.View.VISIBLE;
 public class HomePresenter implements HomeContracts.Presenter {
 
     private final UsersService mUsersService;
-    private final RatingVoteService mRatingsService;
     private final SchedulerProvider mSchedulerProvider;
-    private final BeersService mBeersService;
     private final ImageEncoder mImageEncoder;
     private final BitmapCacheRepository mBitmapCacheRepository;
     private HomeContracts.View mView;
@@ -39,10 +32,8 @@ public class HomePresenter implements HomeContracts.Presenter {
     private String mUserName;
 
     @Inject
-    public HomePresenter(UsersService usersService, RatingVoteService ratingsService, BeersService beersService, SchedulerProvider schedulerProvider, ImageEncoder imageEncoder, BitmapCacheRepository bitmapCacheRepository) {
+    HomePresenter(UsersService usersService, SchedulerProvider schedulerProvider, ImageEncoder imageEncoder, BitmapCacheRepository bitmapCacheRepository) {
         mUsersService = usersService;
-        mRatingsService = ratingsService;
-        mBeersService = beersService;
         mSchedulerProvider = schedulerProvider;
         mImageEncoder = imageEncoder;
         mBitmapCacheRepository = bitmapCacheRepository;
@@ -100,11 +91,10 @@ public class HomePresenter implements HomeContracts.Presenter {
     public void updateUserPicture(User user, String imageString) {
         if (!Objects.equals(user, null)) {
             user.setImage(imageString);
-
             mView.showProgressBar();
             Disposable observable = Observable
                     .create((ObservableOnSubscribe<User>) emitter -> {
-                        User userToUpdate = mUsersService.updateUser(user);
+                        mUsersService.updateUser(user);
                         emitter.onNext(user);
                         emitter.onComplete();
                     })
@@ -137,11 +127,6 @@ public class HomePresenter implements HomeContracts.Presenter {
     }
 
     @Override
-    public void errorOccurredOnChangingPicture() {
-        mView.showMessage(Constants.IMAGE_CHANGE_ERROR_MESSAGE);
-    }
-
-    @Override
     public void loadUserInformation() {
         mView.showProgressBar();
         Disposable observable = Observable
@@ -165,7 +150,7 @@ public class HomePresenter implements HomeContracts.Presenter {
 
     @Override
     public int setPictureBtnVisability(){
-        if (mUserName==null){
+        if (Objects.equals(mUserName, "")){
             return GONE;
         }else{
             return VISIBLE;

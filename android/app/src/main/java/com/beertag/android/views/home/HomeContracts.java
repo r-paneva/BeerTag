@@ -44,8 +44,6 @@ public interface HomeContracts {
 
         void updateUserPicture(User user, String imageString);
 
-        void errorOccurredOnChangingPicture();
-
         void decodeImageAndPresentToView(String userPicture, String errorMessage);
 
         int setPictureBtnVisability();

@@ -7,6 +7,7 @@ import com.beertag.android.diconfig.viewmodules.GetPictureModule;
 import com.beertag.android.diconfig.viewmodules.HomeModule;
 import com.beertag.android.diconfig.viewmodules.ImageViewModule;
 import com.beertag.android.diconfig.viewmodules.LoginModule;
+import com.beertag.android.diconfig.viewmodules.MyBeersModule;
 import com.beertag.android.views.home.HomeActivity;
 import com.beertag.android.views.image.ImageViewActivity;
 import com.beertag.android.views.login.LoginActivity;
@@ -14,12 +15,13 @@ import com.beertag.android.views.beerCreate.BeerCreateActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
 import com.beertag.android.views.getPicture.GetPictureActivity;
+import com.beertag.android.views.myBeers.MyBeersListActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class ActivityBindingModule {
+abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = BeersListModule.class)
     abstract BeersListActivity BeersListActivity();
@@ -48,5 +50,8 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = HomeModule.class)
     abstract HomeActivity homeActivity();
 
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = MyBeersModule.class)
+    abstract MyBeersListActivity MyBeersListActivity();
 
 }

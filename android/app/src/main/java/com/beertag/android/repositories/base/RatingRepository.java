@@ -1,19 +1,19 @@
-package com.beertag.android.services.base;
+package com.beertag.android.repositories.base;
 
 import com.beertag.android.models.MyBeers;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface RatingVoteService {
+public interface RatingRepository {
 
     List<MyBeers> getAll() throws IOException;
 
-    MyBeers createMyBeer(MyBeers myBeers) throws IOException;
+    MyBeers add(MyBeers item) throws IOException;
 
-    MyBeers deleteRatingVote(int id, MyBeers myBeers) throws IOException;
+    MyBeers delete(MyBeers item) throws IOException;
 
-    MyBeers updateRatingVote(int id, MyBeers myBeers) throws IOException;
+    MyBeers update(MyBeers item) throws IOException;
 
     MyBeers getRatingByBeerId(int beerId) throws IOException;
 

@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import com.beertag.android.R;
 import com.beertag.android.models.User;
+import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.views.home.HomeActivity;
 import com.stepstone.apprating.StringValue;
 
@@ -16,11 +17,10 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
-import static com.beertag.android.utils.Constants.USER_EXTRA;
+import static com.beertag.android.utils.Constants.USER_EXTRA_KEY;
 import static com.beertag.android.utils.Constants.USER_PROFILE_IMAGE_KEY;
 
 public class LoginActivity extends DaggerAppCompatActivity implements LoginContracts.Navigator {
-    private static final String TAG = "LoginActivity";
     SharedPreferences sharedPreferences;
 
     @Inject
@@ -29,6 +29,10 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     @Inject
     LoginFragment mLoginFragment;
 
+    @Inject
+    BitmapCacheRepository mBitmapCacheRepository;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -36,8 +40,10 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-         mLoginFragment.setNavigator(this);
-         mLoginFragment.setPresenter(mPresenter);
+        mBitmapCacheRepository.clearBitmapCache();
+
+        mLoginFragment.setNavigator(this);
+        mLoginFragment.setPresenter(mPresenter);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -60,15 +66,17 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     @Override
     public void navigateToHomeWithUser(User user) {
         Intent intent = new Intent(this, HomeActivity.class);
-
         sharedPreferences = getSharedPreferences("com.beertag.android", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(String.valueOf(R.string.userId), user.getId());
         editor.putString(String.valueOf(R.string.username),user.getUserName());
         editor.putString(String.valueOf(R.string.fullname), user.getFirstName()+" "+user.getLastName());
-        editor.putString(String.valueOf(R.string.userpicture), user.getImage());
-        editor.commit();
+        if(user.getImage()==null || user.getImage().length()>2) {
+            editor.putString(String.valueOf(R.string.userpicture), user.getImage());
+        }
+        editor.apply();
 
-        intent.putExtra(USER_EXTRA, user);
+        intent.putExtra(USER_EXTRA_KEY, user);
         startActivity(intent);
         finish();
     }

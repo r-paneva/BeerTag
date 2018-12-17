@@ -1,4 +1,4 @@
-package com.beertag.android.views.beersList;
+package com.beertag.android.views.myBeers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.MyBeers;
+import com.beertag.android.utils.ImageEncoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -26,19 +28,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHolder> {
+public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerViewHolder> {
     private final List<Beer> mBeers;
+    private final List<MyBeers> mMyBeers;
     private OnBeerClickListener mOnBeerClickListener;
 
     @Inject
-    public BeersAdapter() {
+    public MyBeersAdapter() {
         mBeers = new ArrayList<>();
+        mMyBeers = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public BeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.beer_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_beer_item, parent, false);
         return new BeerViewHolder(view);
     }
 
@@ -76,14 +80,17 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
         @BindView(R.id.tv_style)
         TextView mStyle;
 
-        @BindView(R.id.tv_alcohol)
-        TextView mAlcohol;
+        @BindView(R.id.tv_drink)
+        TextView mDrink;
 
-        @BindView(R.id.tv_brewery)
-        TextView mBrewery;
+        @BindView(R.id.tv_do_drink)
+        TextView mDoDrink;
 
-        @BindView(R.id.tv_country)
-        TextView mCountry;
+        @BindView(R.id.tv_rating)
+        TextView mRating;
+
+        @BindView(R.id.tv_how_i_rate_it)
+        TextView mHowIRateIt;
 
         @BindView(R.id.iv_beer_image)
         ImageView mBeerImageView;
@@ -99,10 +106,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.BeerViewHold
         void bind(Beer beer) {
             mName.setText(beer.getName().toUpperCase());
             mStyle.setText(beer.getStyle().getName());
-            mCountry.setText(beer.getCountry().getName());
-            mAlcohol.setText(String.format("%s%%", beer.getAlcohol()));
-            mBrewery.setText(beer.getBrewery());
-
+//            mDoDrink.setText()
             if (Objects.equals(beer.getImage(), null) ||  beer.getImage().length()<= 2 ) {
                 mBeerImageView.setImageResource(R.drawable.defaultbeerpicture);
             } else {

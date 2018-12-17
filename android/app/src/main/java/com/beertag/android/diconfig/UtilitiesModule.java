@@ -21,7 +21,7 @@ public class UtilitiesModule {
 
     @Provides
     @Singleton
-    public BitmapCacheRepository bitmapCacheRepository() {
+    BitmapCacheRepository bitmapCacheRepository() {
         return new LruBitmapCacheRepository();
     }
 

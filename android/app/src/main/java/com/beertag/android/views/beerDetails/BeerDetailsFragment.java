@@ -1,25 +1,18 @@
 package com.beertag.android.views.beerDetails;
 
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
@@ -33,23 +26,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beertag.android.BuildConfig;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.User;
 import com.beertag.android.utils.Constants;
-import com.beertag.android.utils.ImageEncoder;
-import com.beertag.android.views.beerCreate.BeerCreateContracts;
-import com.beertag.android.views.beersList.BeersListActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 
@@ -147,7 +134,7 @@ public class BeerDetailsFragment
         ButterKnife.bind(this, rootView);
         mView = rootView;
 
-        hideKeyboardFrom(getContext(), mView);
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), mView);
 
         return rootView;
     }
@@ -157,14 +144,14 @@ public class BeerDetailsFragment
         super.onResume();
         mPresenter.subscribe(this);
         mPresenter.loadBeer();
-        hideKeyboardFrom(getContext(), mView);
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), mView);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         handler.post(runnableCode);
-        hideKeyboardFrom(getContext(), mView);
+        hideKeyboardFrom(Objects.requireNonNull(getContext()), mView);
     }
 
     @Override
@@ -186,8 +173,6 @@ public class BeerDetailsFragment
     @Override
     public void showBeer(Beer beer) {
         mReviewListener = this;
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(BeersListActivity.getAppContext());
-//        String username = sharedPrefs.getString("username", "");
         mBeerId=beer.getId();
 
         mNameTextView.setText(beer.getName().toUpperCase());
@@ -211,20 +196,17 @@ public class BeerDetailsFragment
         }
         mBeerRatingBar.setRating(beer.getRating());
         mRateBeer.setText(getString(R.string.tv_rate));
-        mRateBeer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = getContext();
-                FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),user);
-                fiveStarsDialog.setRateText("How many stars this beer deserves?")
-                        .setTitle("")
-                        //.setForceMode(false)
-                        .setStarColor(Color.YELLOW)
-                        //.setUpperBound(2) // Market opened if a rating >= 2 is selected
-                        //.setNegativeReviewListener(this) // OVERRIDE mail intent for negative review
-                        .setReviewListener(mReviewListener) // Used to listen for reviews (if you want to track them )
-                        .showAfter(0);
-            }
+        mRateBeer.setOnClickListener(v -> {
+            Context context = getContext();
+            FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),user);
+            fiveStarsDialog.setRateText("How many stars this beer deserves?")
+                    .setTitle("")
+                    //.setForceMode(false)
+                    .setStarColor(Color.YELLOW)
+                    //.setUpperBound(2) // Market opened if a rating >= 2 is selected
+                    //.setNegativeReviewListener(this) // OVERRIDE mail intent for negative review
+                    .setReviewListener(mReviewListener) // Used to listen for reviews (if you want to track them )
+                    .showAfter(0);
         });
         //mRatingBar.setOnRatingBarChangeListener();
     }

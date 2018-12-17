@@ -1,5 +1,6 @@
 package com.beertag.android.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 
+import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.R;
@@ -18,6 +20,8 @@ import com.beertag.android.views.login.LoginActivity;
 import com.beertag.android.views.beerCreate.BeerCreateActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
+import com.beertag.android.views.myBeers.MyBeersListActivity;
+import com.beertag.android.views.myBeers.MyBeersListPresenter;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -25,6 +29,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 
 import java.util.Objects;
 
@@ -36,11 +41,11 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 import static com.beertag.android.utils.Constants.PREFERENCES_USER_ID_KEY;
 import static com.beertag.android.utils.Constants.PREFERENCES_USER_NAME_KEY;
+import static com.beertag.android.utils.Constants.USER_EXTRA_KEY;
 import static com.beertag.android.utils.Constants.USER_PROFILE_IMAGE_KEY;
 
 public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
 
-    private Drawer mDrawer;
     private AccountHeader mHeader;
     private SharedPreferences mPreferences;
 
@@ -53,6 +58,9 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
     @Inject
     ImageEncoder mImageEncoder;
 
+    @Inject
+    MyBeersListPresenter mMyBeersListPresenter;
+
     public BaseDrawerActivity() {
         //empty constructor required
     }
@@ -61,13 +69,13 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
 
         mHeader = new AccountHeaderBuilder()
                 .withActivity(BaseDrawerActivity.this)
-//                    .withHeaderBackground(R.drawable.drawerheader)
+
                 .withTranslucentStatusBar(true)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withCompactStyle(false)
                 .addProfiles(
                         new ProfileDrawerItem()
-//                                .withName(getUserDrawerName())
+                                .withName(getUserDrawerName())
                                 .withIcon(getUserProfileImage())
                                 .withSelectable(true)
                                 .withNameShown(true)
@@ -78,12 +86,9 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
         PrimaryDrawerItem homeItem = new PrimaryDrawerItem()
                 .withIdentifier(Constants.HOME_IDENTIFIER)
                 .withName("Home");
-//            SecondaryDrawerItem myDrunkBeers = new SecondaryDrawerItem()
-//                    .withIdentifier(Constants.DRUNK_BEERS)
-//                    .withName("Beers that i drank");
-//            SecondaryDrawerItem myWillDrinkBeers = new SecondaryDrawerItem()
-//                    .withIdentifier(Constants.DRUNK_BEERS)
-//                    .withName("Beers that i drank");
+        SecondaryDrawerItem myBeers = new SecondaryDrawerItem()
+                .withIdentifier(Constants.MY_BEERS_IDENTIFIER)
+                .withName("My Beers");
 
 
         PrimaryDrawerItem listBeersItem = new PrimaryDrawerItem()
@@ -114,6 +119,7 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
                 .withCloseOnClick(true)
                 .addDrawerItems(
                         homeItem.withIcon(R.drawable.ic_home_dark),
+                        myBeers.withIcon(R.drawable.ic_cup_dark),
                         new DividerDrawerItem(),
                         listBeersItem.withIcon(R.drawable.ic_photo_library),
                         createBeerItem.withIcon(R.drawable.ic_cup_dark),
@@ -150,14 +156,16 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
             return new Intent(this, BeerDetailsActivity.class);
         } else if (identifier == Constants.GET_PICTURE_IDENTIFIER) {
             return new Intent(this, GetPictureActivity.class);
+        } else if (identifier == Constants.MY_BEERS_IDENTIFIER) {
+            return new Intent(this, MyBeersListActivity.class);
         } else if (identifier == Constants.LOGOUT_IDENTIFIER) {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = sp.edit();
+            mBitmapCacheRepository.clearBitmapCache();
+            SharedPreferences.Editor editor = mPreferences.edit();
             editor.clear();
-            editor.putString("username", "");
-            editor.commit();
+            editor.putString(String.valueOf(R.string.username), "");
+            editor.apply();
             return new Intent(this, LoginActivity.class);
-        } else if ( identifier == Constants.HOME_IDENTIFIER ) {
+        } else if (identifier == Constants.HOME_IDENTIFIER) {
             return new Intent(this, HomeActivity.class);
         }
         return null;
@@ -178,36 +186,34 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mPreferences = getSharedPreferences("com.beertag.android", Context.MODE_PRIVATE);
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        mDrawer.closeDrawer();
     }
 
-    protected String getUserName() {
-        return mPreferences.getString(String.valueOf(R.string.username), "");
+    protected String getUserDrawerName() {
+        return mPreferences.getString(String.valueOf(R.string.fullname), "");
     }
 
     private Bitmap getUserProfileImage() {
 
         //initial check to handle the first try to get the user image at initial navigation to home it will not be loaded in lru cache
-        Bitmap userImage =  mBitmapCacheRepository.getBitmapFromCache(USER_PROFILE_IMAGE_KEY);
-
+        Bitmap userImage = mBitmapCacheRepository.getBitmapFromCache(String.valueOf(Constants.USER_IMAGE_KEY));
         if (Objects.equals(userImage, null)) {
-
-            String imageInString = mPreferences.getString(USER_PROFILE_IMAGE_KEY, "");
+            String imageInString = mPreferences.getString(String.valueOf(R.string.userpicture), "");
+            assert imageInString != null;
             if (Objects.equals(imageInString, null) || imageInString.equals("")) {
                 return BitmapFactory.decodeResource(getResources(),
                         R.drawable.defaultuserpicture);
             } else {
                 Bitmap userProfileImage = mImageEncoder.decodeStringToBitmap(imageInString);
                 if (!Objects.equals(userProfileImage, null)) {
-                    mBitmapCacheRepository.addBitmapToBitmapCache(userProfileImage, USER_PROFILE_IMAGE_KEY);
-                    return mBitmapCacheRepository.getBitmapFromCache(USER_PROFILE_IMAGE_KEY);
+                    mBitmapCacheRepository.addBitmapToBitmapCache(userProfileImage, String.valueOf(Constants.USER_IMAGE_KEY));
+                    return mBitmapCacheRepository.getBitmapFromCache(String.valueOf(Constants.USER_IMAGE_KEY));
                 } else {
                     BitmapFactory.decodeResource(getResources(),
                             R.drawable.defaultuserpicture);
