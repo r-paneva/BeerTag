@@ -11,4 +11,7 @@ public interface MyBeersService {
     List<MyBeers> getBeersByUserId(int id);
     MyBeers getRatingVoteByUsersVoterAndVotedFor(MyBeersIdentity myBeersIdentity);
     float getAverageRatingForBeerByBeerId(int votedForBeerId);
+    void update(MyBeers beer);
+    void create(MyBeers beer);
+    void delete(MyBeers beer);
 }

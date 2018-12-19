@@ -94,22 +94,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
-                android:layout_marginStart="217dp"
+                android:layout_marginStart="220dp"
                 android:layout_marginTop="14dp"
                 android:text="@string/tv_style"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_ABV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_style"
-                android:layout_marginStart="217dp"
+                android:layout_marginStart="220dp"
                 android:layout_marginTop="14dp"
                 android:text="@string/tv_alcohol"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_brewery"
@@ -120,7 +120,7 @@
                 android:layout_marginTop="14dp"
                 android:text="@string/tv_brewery"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_country"
@@ -131,38 +131,75 @@
                 android:layout_marginTop="14dp"
                 android:text="@string/tv_country"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_description"
+            <ScrollView
+                android:id="@+id/sv_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_below="@id/tv_country"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="14dp"
-                android:scrollbars="vertical"
-                android:text="@string/tv_description"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:layout_marginBottom="0dp">
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="14dp"
+                    android:scrollbars="vertical"
+                    android:text="@string/tv_description"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </ScrollView>
 
             <TextView
                 android:id="@+id/tv_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_description"
-                android:layout_alignParentRight="true"
+                android:layout_below="@+id/sv_description"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
                 android:color="@color/md_red_900"
                 android:text="@string/tv_tag"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
+
+            <TextView
+                android:id="@+id/tv_want_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tag"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:contextClickable="true"
+                android:text="@string/tv_want_to_drink"
+                android:textColor="@color/text_color"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_drank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tag"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp"
+                android:contextClickable="true"
+                android:text="@string/tv_already_drank"
+                android:textColor="@color/text_color"
+                android:textSize="22sp" />
+
             <RatingBar
                 android:id="@+id/rating_beer"
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tag"
+                android:layout_below="@+id/tv_want_drink"
+                android:layout_marginRight="16dp"
                 android:isIndicator="true"
                 android:numStars="5"
                 android:outlineAmbientShadowColor="@color/md_yellow_500"
@@ -172,11 +209,13 @@
                 android:id="@+id/tv_rate_beer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tag"
+                android:layout_below="@+id/tv_want_drink"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="16dp"
                 android:contextClickable="true"
                 android:text="@string/tv_rate_beer"
-                android:textColor="@color/md_light_green_900"
+                android:textColor="@color/colorAccent"
                 android:textSize="22sp" />
 
         </RelativeLayout>

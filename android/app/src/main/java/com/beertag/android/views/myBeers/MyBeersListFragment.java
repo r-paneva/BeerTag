@@ -33,9 +33,6 @@ public class MyBeersListFragment
     @BindView(R.id.loading)
     ProgressBar mLoadingView;
 
-    @BindView(R.id.et_filter)
-    EditText mFilterEditText;
-
     @Inject
     MyBeersAdapter mMyBeersAdapter;
 

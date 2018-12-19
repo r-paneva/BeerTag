@@ -1,14 +1,14 @@
 package com.beertag.repositories;
 
-import com.beertag.models.Beer;
 import com.beertag.models.MyBeers;
 import com.beertag.models.MyBeersIdentity;
 import com.beertag.repositories.base.MyBeersRepository;
-import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -37,22 +37,23 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
 
     @Override
     public MyBeers getRatingVoteByUsersVoterAndVotedFor(MyBeersIdentity myBeersId) {
-        List<MyBeers> ratingVoters;
+        List myBeers;
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
 
-            ratingVoters = session.createQuery("from MyBeers as RV") //where RV.voter=:voterUserId and RV.votedForBeer.beerId=:votedForBeerId")
-                    //.setParameter("myBeersId", myBeersId)
+            myBeers = session.createQuery("from MyBeers as RV where RV.myBeersIdentity.userId=:userId and RV.myBeersIdentity.beerId=:beerId")
+                    .setParameter("userId",myBeersId.getUserId())
+                    .setParameter("beerId", myBeersId.getBeerId())
                     .list();
 
             session.getTransaction().commit();
         }
-        if (ratingVoters.isEmpty()) {
+        if (myBeers.isEmpty()) {
             return null;
         } else {
-            return ratingVoters.get(0);
+            return (MyBeers) myBeers.get(0);
         }
     }
 
@@ -70,7 +71,7 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
             int sum = 0;
             for (MyBeers rv : ratingVotes
             ) {
-//                sum+=rv.getRatingVoted();
+                sum+=rv.getVote();
             }
             averageRating = (float) sum / ratingVotes.size();
 
@@ -97,5 +98,61 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    @Override
+    public MyBeers getMyBeersById(MyBeersIdentity id) {
+        return null;
+    }
+
+    @Override
+    public void create(MyBeers mybeer) {
+        try (
+                Session session = sessionFactory.openSession();
+        ) {
+            session.beginTransaction();
+            session.save(mybeer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("You can't create new MyBeer " + e.getMessage() + "\nHttp Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void update(MyBeers myBeers) {
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(myBeers);
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+
+    }
+
+    @Override
+    public void delete(MyBeers myBeers) {
+        try (
+                Session session = sessionFactory.openSession();
+        ) {
+            session.beginTransaction();
+            myBeers = session.get(myBeers.getClass(), myBeers.getMyBeersIdentity());
+            session.delete(myBeers);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

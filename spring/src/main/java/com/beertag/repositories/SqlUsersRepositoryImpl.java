@@ -51,6 +51,22 @@ public class SqlUsersRepositoryImpl implements UsersRepository {
     }
 
     @Override
+    public User getUserByID(int id) {
+        User result = null;
+        try (
+                Session session = sessionFactory.openSession();
+        ) {
+            session.beginTransaction();
+            result = session.get(User.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
     public void update(User item) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;

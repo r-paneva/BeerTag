@@ -30,4 +30,9 @@ public class HttpUsersService implements UsersService {
         return (User) mUsersRepository.update(user);
     }
 
+    @Override
+    public User getById(int id) throws IOException {
+        return (User) mUsersRepository.getById(id);
+    }
+
 }

@@ -12,4 +12,6 @@ public interface UsersService {
     User getUserByUserName(String username) throws IOException;
 
     User updateUser(User user) throws IOException;
+
+    User getById(int id) throws IOException;
 }

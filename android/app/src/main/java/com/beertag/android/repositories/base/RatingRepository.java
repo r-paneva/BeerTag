@@ -21,4 +21,6 @@ public interface RatingRepository {
     List <MyBeers> getBeersByUserId(int userId) throws IOException;
 
     MyBeers getByDrink(Drink drink) throws IOException;
+
+    MyBeers getById (int beerId, int userId) throws IOException;
 }

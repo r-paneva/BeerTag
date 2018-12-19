@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_user_names"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_beers"
@@ -58,10 +58,10 @@
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:textColor="@color/colorAccent"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/btn_login" />
+
         </LinearLayout>
 
     </RelativeLayout>

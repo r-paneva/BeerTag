@@ -15,6 +15,7 @@ import com.beertag.android.views.login.LoginActivity;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import dagger.Provides;
 
 import static com.beertag.android.utils.Constants.USER_EXTRA_KEY;
 
@@ -28,6 +29,7 @@ public class HomeActivity extends BaseDrawerActivity implements HomeContracts.Na
 
     private String mName;
     private static int mID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class HomeActivity extends BaseDrawerActivity implements HomeContracts.Na
         mHomeFragment.setNavigator(this);
         mHomeFragment.setPresenter(mPresenter);
         mPresenter.setUserName(mName);
+        mPresenter.setUserId(mID);
 
         getSupportFragmentManager()
                 .beginTransaction()

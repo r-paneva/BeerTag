@@ -1,6 +1,7 @@
 package com.beertag.services;
 
 import com.beertag.models.Beer;
+import com.beertag.models.Drink;
 import com.beertag.models.MyBeers;
 import com.beertag.models.MyBeersIdentity;
 import com.beertag.repositories.base.MyBeersRepository;
@@ -36,23 +37,37 @@ public class MyBeersServiceImpl implements MyBeersService {
 
     @Override
     public void CreateOrUpdateRatingVote(MyBeers myBeers) {
-        int voterUserId = myBeers.getMyBeersIdentity().getUserId();
-        int votedForBeerId = myBeers.getMyBeersIdentity().getBeerId();
-        Beer votedForBeer = mBeerService.getBeerByID(votedForBeerId);
-        MyBeers foundRatingVote = getRatingVoteByUsersVoterAndVotedFor(new MyBeersIdentity(voterUserId, votedForBeerId));
-//        if (foundRatingVote != null) {
-//            mRatingVoteRepository.delete(foundRatingVote);
-//        }
-//        MyBeers ratingVoteToReturn = new MyBeers();
-//        myBeersIdentity.setUserId(voterUserId);
-//        myBeersIdentity.setBeerId(votedForBeerId);
-//        ratingVoteToReturn.setRatingVoted(ratingVoteDTO.getRatingVoted());
-//        ratingVoteToReturn.setVotingDate(new Date());
-//        mGenericService.create(ratingVoteToReturn);
-//        votedForUser.setRating(getAverageRatingForUserByUsername(votedForUsername));
-//        mGenericService.update(votedForUser.getId(), votedForUser);
-    }
+        int UserId = myBeers.getMyBeersIdentity().getUserId();
+        int BeerId = myBeers.getMyBeersIdentity().getBeerId();
+        Beer beer = myBeers.getBeer();
+        float vote = myBeers.getVote();
+        Drink drink = myBeers.getDrink();
 
+        MyBeersIdentity myBeersIdentity = new MyBeersIdentity(BeerId, UserId);
+        Beer votedForBeer = mBeerService.getBeerByID(BeerId);
+        MyBeers foundRatingVote = getRatingVoteByUsersVoterAndVotedFor(myBeersIdentity);
+        MyBeers ratingVoteToReturn = new MyBeers();
+
+        if (foundRatingVote != null) {
+            if(foundRatingVote.getDrink().getId()!= 0 && drink.getId()==0){
+                drink = foundRatingVote.getDrink();
+            }
+
+            if(vote==0){
+                vote = foundRatingVote.getVote();
+            }
+
+            mMyBeersRepository.delete(foundRatingVote);
+        }
+
+        ratingVoteToReturn.setMyBeersIdentity(myBeersIdentity);
+        ratingVoteToReturn.setBeer(beer);
+        ratingVoteToReturn.setDrink(drink);
+        ratingVoteToReturn.setVote(vote);
+        create(ratingVoteToReturn);
+        votedForBeer.setRating(getAverageRatingForBeerByBeerId(votedForBeer.getId()));
+        mBeerService.update(votedForBeer);
+    }
 
     @Override
     public MyBeers getRatingVoteByUsersVoterAndVotedFor(MyBeersIdentity myBeersIdentity) {
@@ -69,5 +84,20 @@ public class MyBeersServiceImpl implements MyBeersService {
         int a = 1;
         MyBeersIdentity myBeersIdentity = new MyBeersIdentity(1, id);
         return mMyBeersRepository.getBeersByUserId(myBeersIdentity);
+    }
+
+    @Override
+    public void update(MyBeers beer) {
+        mMyBeersRepository.update(beer);
+    }
+
+    @Override
+    public void create(MyBeers beer) {
+        mMyBeersRepository.create(beer);
+    }
+
+    @Override
+    public void delete(MyBeers beer) {
+        mMyBeersRepository.delete(beer);
     }
 }

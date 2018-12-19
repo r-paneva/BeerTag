@@ -34,18 +34,19 @@
     <string name="tv_country">COUNTRY</string>
     <string name="tv_description">DESCRIPTION</string>
     <string name="tv_tag">TAG</string>
-    <string name="tv_rate_beer">Rate beer</string>
     <string name="tv_Title">NEW BEER DETAILS</string>
     <string name="tv_beer">BEER</string>
     <string name="tv_image">IMAGE</string>
     <string name="tv_rate">RATE</string>
-    <string name="tv_to_rate_beer">RATE BEER</string>
+    <string name="tv_rate_beer">RATE BEER</string>
 
 
     <string name="hint_select_country_of_origin">Select country of origin</string>
     <string name="hint_select_beer_style">Select beer style</string>
     <string name="hint_you_can_select_tag">You can select tag</string>
     <string name="btn_login">LOGIN</string>
+    <string name="tv_want_to_drink">I want to drink</string>
+    <string name="tv_already_drank">I\'ve already drank</string>
 
 
     <string-array name="countries">

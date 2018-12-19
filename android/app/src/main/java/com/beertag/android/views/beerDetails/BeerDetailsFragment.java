@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.method.ScrollingMovementMethod;
@@ -29,10 +28,10 @@ import android.widget.Toast;
 
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Drink;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.models.User;
 import com.beertag.android.utils.Constants;
-import com.beertag.android.views.beersList.BeersListActivity;
-import com.beertag.android.views.home.HomeActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -91,6 +90,12 @@ public class BeerDetailsFragment
     @BindView(R.id.tv_rate_beer)
     TextView mRateBeer;
 
+    @BindView(R.id.tv_want_drink)
+    TextView mWantDrink;
+
+    @BindView(R.id.tv_drank)
+    TextView mDrank;
+
     @BindView(R.id.fab_take_picture)
     FloatingActionButton mTakePictureButton;
 
@@ -104,7 +109,9 @@ public class BeerDetailsFragment
     ReviewListener mReviewListener;
     User user;
     Beer beer;
+    Drink drink;
     int mBeerId;
+    MyBeers mMyBeers;
     private String mWhoRates;
     SharedPreferences mPreferences;
 
@@ -121,7 +128,7 @@ public class BeerDetailsFragment
         }
 
         private void refresh() {
-//            mPresenter.loadBeer();
+  //          mPresenter.loadBeer();
         }
     };
 
@@ -146,6 +153,7 @@ public class BeerDetailsFragment
         super.onResume();
         mPresenter.subscribe(this);
         mPresenter.loadBeer();
+        mPresenter.loadUser();
         hideKeyboardFrom(Objects.requireNonNull(getContext()), mView);
     }
 
@@ -172,10 +180,11 @@ public class BeerDetailsFragment
         mPresenter = presenter;
     }
 
+
     @Override
     public void showBeer(Beer beer) {
         mReviewListener = this;
-        mBeerId=beer.getId();
+        mBeerId = beer.getId();
 
         mNameTextView.setText(beer.getName().toUpperCase());
 
@@ -193,33 +202,48 @@ public class BeerDetailsFragment
         mCountryTextView.setText(String.format("Country : %s", beer.getCountry().getName()));
         mABVTextView.setText(String.format("Alcohol by Volume : %s%%", beer.getAlcohol()));
         mStyleTextView.setText(String.format("Style : %s", beer.getStyle().getName()));
+
         // rating bar
-        if(beer.getTag()!= null) {
+        if (beer.getTag() != null) {
             mTagTextView.setText(String.format("Tag : %s", beer.getTag().getName()));
         }
-
-        if(user!=null) {
-            mBeerRatingBar.setRating(beer.getRating());
+        mBeerRatingBar.setRating(beer.getRating());
+        if (mPresenter.loadUserId() != 0) {
             mRateBeer.setText("RATE BEER");
             mRateBeer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context= getContext();
-                    FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);//new FiveStarsDialog(getContext(),mTenant);
-                    fiveStarsDialog.setRateText("How many stars your landlord deserves?")
+                    Context context = getContext();
+                    FiveStarsDialog fiveStarsDialog = new FiveStarsDialog(context);
+                    fiveStarsDialog.setRateText("How many stars this beer deserves?")
                             .setTitle("")
-                            //.setForceMode(false)
                             .setStarColor(Color.YELLOW)
-                            //.setUpperBound(2) // Market opened if a rating >= 2 is selected
-                            //.setNegativeReviewListener(this) // OVERRIDE mail intent for negative review
                             .setReviewListener(mReviewListener) // Used to listen for reviews (if you want to track them )
                             .showAfter(0);
                 }
             });
-        }else{
+
+            mWantDrink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drink = new Drink(1,"I want to drink it");
+                    mPresenter.setRating(beer.getId(), user.getId(), drink, beer, 0);
+                }
+
+
+            });
+
+            mDrank.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drink = new Drink(2,"I drank this beer");
+                    mPresenter.setRating(beer.getId(), user.getId(), drink, beer, 0);
+                }
+            });
+
+
+        } else {
             showMessage("You must be logged in to rate beer");
-//            mRateBeer.setVisibility(View.GONE);
-//            mBeerRatingBar.setVisibility(View.GONE);
         }
     }
 
@@ -239,8 +263,24 @@ public class BeerDetailsFragment
     }
 
     @Override
-    public void onReview(int stars) {//, User user) {
-        mPresenter.setRating(user, beer, stars);
+    public void setUser(User User) {
+        user = User;
+    }
+
+    @Override
+    public void setBeer(Beer Beer) {
+        beer = Beer;
+    }
+
+    @Override
+    public void setMyBeers(MyBeers myBeers) {
+        mMyBeers = myBeers;
+    }
+
+    @Override
+    public void onReview(int stars) {
+        drink = new Drink(0, "No");
+        mPresenter.setRating(beer.getId(), user.getId(), drink, beer, stars);
     }
 
     @Override
@@ -312,7 +352,7 @@ public class BeerDetailsFragment
         }
     }
 
-            @Override
+    @Override
     public void showError(Throwable error) {
         String errorMessage = Constants.ERROR_MESSAGE + error.getMessage();
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();

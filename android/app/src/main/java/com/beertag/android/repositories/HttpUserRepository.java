@@ -55,7 +55,7 @@ public class HttpUserRepository implements Repository {
 
     @Override
     public Object getById(int id) throws IOException {
-        String url = mServerUrl + id;
+        String url = mServerUrl + "id/" + id;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }

@@ -4,11 +4,15 @@ package com.beertag.android.views.beerDetails;
 import android.graphics.Bitmap;
 
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Drink;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.models.User;
 
 public interface BeerDetailsContracts {
     interface View {
         void showBeer(Beer beer);
+
+        void setMyBeers(MyBeers myBeers);
 
         void setPresenter(Presenter presenter);
 
@@ -30,9 +34,14 @@ public interface BeerDetailsContracts {
 
         void showOptionToChooseImage();
 
+        void setUser(User user);
+
+        void setBeer(Beer Beer);
+
     }
 
     interface Presenter {
+
         void subscribe(View view);
 
         void unsubscribe();
@@ -45,7 +54,7 @@ public interface BeerDetailsContracts {
 
         void takePictureButtonIsClicked();
 
-        void setRating(User whoRates, Beer rated, int stars);
+        void setRating(int beerId, int userId, Drink drink, Beer rated, int stars);
 
         void updateBeer(Beer beer);
 
@@ -55,7 +64,11 @@ public interface BeerDetailsContracts {
 
         void updateBeerPicture(Beer beer, String imageString);
 
-        void setUserId(int userId);
+        int setUserId();
+
+        void loadUser();
+
+        int loadUserId();
 
     }
     interface Navigator {

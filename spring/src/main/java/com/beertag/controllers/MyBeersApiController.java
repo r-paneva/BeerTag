@@ -1,6 +1,7 @@
 package com.beertag.controllers;
 
 import com.beertag.models.MyBeers;
+import com.beertag.models.MyBeersIdentity;
 import com.beertag.services.base.MyBeersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,4 +40,30 @@ public class MyBeersApiController {
     public void createOrUpdateMyBeer(@RequestBody MyBeers myBeers) {
          mMyBeersService.CreateOrUpdateRatingVote(myBeers);
     }
+
+    @RequestMapping(
+            method = RequestMethod.PUT
+    )
+    public void updateBeer(@RequestBody MyBeers myBeers) {
+        mMyBeersService.update(myBeers);
+    }
+
+
+    @RequestMapping(
+            method = RequestMethod.DELETE
+    )
+    public void deleteBeer(@RequestBody MyBeers beer) {
+        mMyBeersService.delete(beer);
+    }
+
+    @RequestMapping(
+            value = "/{beerId}/{userId}",
+            method = RequestMethod.GET
+    )
+    public MyBeers getMyBeerById(@PathVariable("beerId") int beerId, @PathVariable("userId") int userId) {
+        MyBeersIdentity myBeersIdentity = new MyBeersIdentity(beerId, userId);
+        return mMyBeersService.getRatingVoteByUsersVoterAndVotedFor(myBeersIdentity);
+    }
+
+
 }

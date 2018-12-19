@@ -30,6 +30,7 @@ public class HomePresenter implements HomeContracts.Presenter {
     private HomeContracts.View mView;
 
     private String mUserName;
+    private int mUserId;
 
     @Inject
     HomePresenter(UsersService usersService, SchedulerProvider schedulerProvider, ImageEncoder imageEncoder, BitmapCacheRepository bitmapCacheRepository) {
@@ -53,6 +54,12 @@ public class HomePresenter implements HomeContracts.Presenter {
     public void setUserName(String userName) {
         mUserName = userName;
     }
+
+    @Override
+    public void setUserId(int userId) {
+        mUserId = userId;
+    }
+
 
     @Override
     public void selectPictureFromGalleryButtonClickIsClicked() {
@@ -131,7 +138,7 @@ public class HomePresenter implements HomeContracts.Presenter {
         mView.showProgressBar();
         Disposable observable = Observable
                 .create((ObservableOnSubscribe<User>) emitter -> {
-                    User user = mUsersService.getUserByUserName(mUserName);
+                    User user = mUsersService.getById(mUserId);
                     emitter.onNext(user);
                     emitter.onComplete();
                 })

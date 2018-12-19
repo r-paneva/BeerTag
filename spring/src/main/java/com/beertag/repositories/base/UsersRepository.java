@@ -10,4 +10,6 @@ public interface UsersRepository{
     List getAll();
 
     void update (User user);
+
+    User getUserByID(int id);
 }

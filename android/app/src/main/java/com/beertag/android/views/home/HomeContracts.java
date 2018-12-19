@@ -40,6 +40,8 @@ public interface HomeContracts {
 
         void setUserName(String userName);
 
+        void setUserId(int userId);
+
         void selectPictureFromGalleryButtonClickIsClicked();
 
         void takePictureButtonIsClicked();

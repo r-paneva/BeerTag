@@ -34,6 +34,14 @@ public class UsersApiController {
     }
 
     @RequestMapping(
+            value = "/id/{id}",
+            method = RequestMethod.GET
+    )
+    public User getUserByID(@PathVariable("id") int id) {
+        return mUserService.getUserByID(id);
+    }
+
+    @RequestMapping(
             method = RequestMethod.PUT
     )
     public void updateBeer(@RequestBody User user) {

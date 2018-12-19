@@ -51,4 +51,9 @@ public class HttpRatingVoteService implements RatingVoteService {
     public  MyBeers getByDrink (Drink drink) throws IOException {
         return mRatingVoteRepository.getByDrink(drink);
     }
+
+    @Override
+    public  MyBeers getById (int beerId, int userId) throws IOException {
+        return mRatingVoteRepository.getById(beerId, userId);
+    }
 }

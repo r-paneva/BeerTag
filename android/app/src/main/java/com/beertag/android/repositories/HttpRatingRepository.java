@@ -72,4 +72,11 @@ public class HttpRatingRepository implements RatingRepository {
     public MyBeers getByDrink(Drink drink) throws IOException {
         return null;
     }
+
+    @Override
+    public MyBeers getById (int beerId, int userId) throws IOException {
+        String url = mServerUrl + beerId + "/" + userId;
+        String json = mHttpRequester.get(url);
+        return mJsonParser.fromJson(json);
+    }
 }

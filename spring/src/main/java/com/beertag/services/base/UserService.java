@@ -9,5 +9,6 @@ public interface UserService {
         User getByUserName(String userName);
         List<User> getAll();
         void update(User user);
+        User getUserByID(int id);
 
 }

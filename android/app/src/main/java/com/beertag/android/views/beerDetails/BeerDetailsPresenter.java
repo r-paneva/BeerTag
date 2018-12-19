@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.Drink;
 import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.MyBeersIdentity;
 import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.RatingVoteService;
+import com.beertag.android.services.base.UsersService;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.utils.ImageEncoder;
 import com.beertag.android.views.home.HomeActivity;
@@ -25,28 +28,29 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
 
     private final BeersService mBeersService;
     private final RatingVoteService mRatingVoteService;
+    private final UsersService mUserService;
     private final SchedulerProvider mSchedulerProvider;
     private final ImageEncoder mImageEncoder;
     private final BitmapCacheRepository mBitmapCacheRepository;
     private BeerDetailsContracts.View mView;
 
     private int mBeerId;
-//    private int mUserId;
 
     @Inject
     public BeerDetailsPresenter(
             BeersService beersService,
             RatingVoteService ratingVoteService,
+            UsersService userService,
             SchedulerProvider schedulerProvider,
             ImageEncoder imageEncoder,
             BitmapCacheRepository bitmapCacheRepository) {
         mBeersService = beersService;
+        mUserService = userService;
         mSchedulerProvider = schedulerProvider;
         mRatingVoteService = ratingVoteService;
         mImageEncoder = imageEncoder;
         mBitmapCacheRepository = bitmapCacheRepository;
     }
-
 
     @Override
     public void subscribe(BeerDetailsContracts.View view) {
@@ -64,10 +68,9 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     }
 
     @Override
-    public void setUserId(int userId) {
-//        mUserId = userId;
+    public int setUserId() {
+        return mUserId;
     }
-
 
     @Override
     public void selectPictureFromGalleryButtonClickIsClicked() {
@@ -78,7 +81,6 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     public void takePictureButtonIsClicked() {
         mView.presentOptionToTakePicture();
     }
-
 
     private int mUserId = HomeActivity.getVariable();  // Accessing in Another class
 
@@ -94,38 +96,33 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
                 .observeOn(mSchedulerProvider.ui())
                 .doFinally(mView::hideLoading)
                 .doOnError(mView::showError)
-                .subscribe(mView::showBeer);
+                .subscribe(b->{
+                    mView.showBeer(b);
+                    mView.setBeer(b);
+                });
 
     }
 
     @Override
-    public void setRating(User whoRates, Beer rated, int stars) {
-//        MyBeers ratingVote = new MyBeers(stars, whoRates.getUserName(), rated.getName());
-//        Disposable disposable = (Disposable) Observable
-//                .create((ObservableOnSubscribe<MyBeers>) emitter -> {
-//                    mRatingVoteService.createRatingVote(ratingVote);
-//                })
-//                .subscribeOn(mSchedulerProvider.background())
-//                .observeOn(mSchedulerProvider.ui())
-//                .doOnEach(x -> mView.hideLoading())
-//                .doOnError(mView::showError)
-//                .subscribe(s -> loadBeer());
+    public int loadUserId() {
+        return mUserId;
     }
 
     @Override
-    public void updateBeer(Beer updatedBeer) {
-        mView.showLoading();
+    public void loadUser(){
+
         Disposable observable = Observable
-                .create((ObservableOnSubscribe<Beer>) emitter -> {
-                    Beer beer = mBeersService.updateBeer(updatedBeer);
-                    emitter.onNext(beer);
+                .create((ObservableOnSubscribe<User>) emitter -> {
+                    User user = mUserService.getById(mUserId);
+                    emitter.onNext(user);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())
                 .observeOn(mSchedulerProvider.ui())
-                .subscribe(mView::hideLoading, error -> mView.showError(error));
+                .doFinally(mView::hideLoading)
+                .doOnError(mView::showError)
+                .subscribe(mView::setUser);
     }
-
 
     @Override
     public void newImageIsChosen(Bitmap image) {
@@ -180,4 +177,36 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
             mBitmapCacheRepository.addBitmapToBitmapCache(decodedBeerPicture, Constants.BEER_IMAGE_KEY);
         }
     }
+
+    @Override
+    public void updateBeer(Beer updatedBeer) {
+        mView.showLoading();
+        Disposable observable = Observable
+                .create((ObservableOnSubscribe<Beer>) emitter -> {
+                    Beer beer = mBeersService.updateBeer(updatedBeer);
+                    emitter.onNext(beer);
+                    emitter.onComplete();
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .subscribe(mView::hideLoading, error -> mView.showError(error));
+    }
+
+    @Override
+    public void setRating(int beerId, int userId, Drink drink, Beer beer, int stars) {
+        MyBeersIdentity myBeersIdentity = new MyBeersIdentity(beerId, mUserId);
+        MyBeers mybeer = new MyBeers( myBeersIdentity, stars, drink, beer );
+        Disposable disposable = (Disposable) Observable
+                .create((ObservableOnSubscribe<MyBeers>) emitter -> {
+                    mRatingVoteService.createMyBeer(mybeer);
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .doOnEach(x -> mView.hideLoading())
+                .doOnError(mView::showError)
+                .subscribe(s -> {
+                    loadBeer();
+                });
+    }
+
 }
