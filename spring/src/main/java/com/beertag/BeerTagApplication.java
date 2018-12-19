@@ -24,6 +24,7 @@ public class BeerTagApplication {
                 .addAnnotatedClass(Country.class)
                 .addAnnotatedClass(Style.class)
                 .addAnnotatedClass(Tag.class)
+                .addAnnotatedClass(Drink.class)
                 .buildSessionFactory();
     }
 }

@@ -28,6 +28,7 @@
         <mapping class="com.beertag.models.Beer"/>
         <mapping class="com.beertag.models.User"/>
         <mapping class="com.beertag.models.MyBeers"/>
+        <mapping class="com.beertag.models.Drink"/>
 
     </session-factory>
 </hibernate-configuration>

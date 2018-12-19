@@ -1,5 +1,6 @@
 package com.beertag.android.services;
 
+import com.beertag.android.models.Drink;
 import com.beertag.android.models.MyBeers;
 import com.beertag.android.repositories.base.RatingRepository;
 import com.beertag.android.services.base.RatingVoteService;
@@ -47,7 +48,7 @@ public class HttpRatingVoteService implements RatingVoteService {
     }
 
     @Override
-    public  MyBeers getByDrunk (String drunk) throws IOException {
-        return mRatingVoteRepository.getByDrunk(drunk);
+    public  MyBeers getByDrink (Drink drink) throws IOException {
+        return mRatingVoteRepository.getByDrink(drink);
     }
 }

@@ -18,7 +18,6 @@ public class LoginPresenter implements LoginContracts.Presenter {
     private final UsersService mUserService;
     private final SchedulerProvider mSchedulerProvider;
     private LoginContracts.View mView;
-    private User mUser;
 
     @Inject
     public LoginPresenter(UsersService usersService, SchedulerProvider schedulerProvider) {

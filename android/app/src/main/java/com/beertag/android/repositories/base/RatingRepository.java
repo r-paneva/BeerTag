@@ -1,5 +1,6 @@
 package com.beertag.android.repositories.base;
 
+import com.beertag.android.models.Drink;
 import com.beertag.android.models.MyBeers;
 
 import java.io.IOException;
@@ -19,5 +20,5 @@ public interface RatingRepository {
 
     List <MyBeers> getBeersByUserId(int userId) throws IOException;
 
-    MyBeers getByDrunk(String drunk) throws IOException;
+    MyBeers getByDrink(Drink drink) throws IOException;
 }

@@ -4,12 +4,14 @@ import android.graphics.Bitmap;
 
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.MyBeers;
 import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.RatingVoteService;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.utils.ImageEncoder;
+import com.beertag.android.views.home.HomeActivity;
 
 import java.util.Objects;
 
@@ -29,6 +31,7 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     private BeerDetailsContracts.View mView;
 
     private int mBeerId;
+//    private int mUserId;
 
     @Inject
     public BeerDetailsPresenter(
@@ -61,6 +64,12 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     }
 
     @Override
+    public void setUserId(int userId) {
+//        mUserId = userId;
+    }
+
+
+    @Override
     public void selectPictureFromGalleryButtonClickIsClicked() {
         mView.showOptionToChooseImage();
     }
@@ -69,6 +78,9 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     public void takePictureButtonIsClicked() {
         mView.presentOptionToTakePicture();
     }
+
+
+    private int mUserId = HomeActivity.getVariable();  // Accessing in Another class
 
     @Override
     public void loadBeer() {
@@ -83,6 +95,7 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
                 .doFinally(mView::hideLoading)
                 .doOnError(mView::showError)
                 .subscribe(mView::showBeer);
+
     }
 
     @Override

@@ -24,6 +24,7 @@
 
     <string name="btn_open_camera">OPEN CAMERA</string>
     <string name="btn_save">SAVE</string>
+    <string name="btn_beers">BEERS</string>
 
     <string name="tv_take_a_picture">TAKE A PICTURE</string>
     <string name="tv_beer_name">beer name</string>
@@ -38,11 +39,13 @@
     <string name="tv_beer">BEER</string>
     <string name="tv_image">IMAGE</string>
     <string name="tv_rate">RATE</string>
+    <string name="tv_to_rate_beer">RATE BEER</string>
 
 
     <string name="hint_select_country_of_origin">Select country of origin</string>
     <string name="hint_select_beer_style">Select beer style</string>
     <string name="hint_you_can_select_tag">You can select tag</string>
+    <string name="btn_login">LOGIN</string>
 
 
     <string-array name="countries">

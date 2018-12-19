@@ -33,7 +33,7 @@
         android:configChanges="orientation|screenSize|keyboardHidden"
         >
 
-        <activity android:name=".views.beersList.BeersListActivity"
+        <activity android:name=".views.home.HomeActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -51,7 +51,7 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".views.getPicture.GetPictureActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".views.home.HomeActivity"
+        <activity android:name=".views.beersList.BeersListActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".views.myBeers.MyBeersListActivity"
             android:screenOrientation="portrait"/>

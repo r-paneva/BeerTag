@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beertag.android.R;
-import com.beertag.android.models.Beer;
 import com.beertag.android.models.MyBeers;
-import com.beertag.android.utils.ImageEncoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -29,13 +27,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerViewHolder> {
-    private final List<Beer> mBeers;
+
     private final List<MyBeers> mMyBeers;
     private OnBeerClickListener mOnBeerClickListener;
 
     @Inject
     public MyBeersAdapter() {
-        mBeers = new ArrayList<>();
         mMyBeers = new ArrayList<>();
     }
 
@@ -49,25 +46,26 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
     @Override
     public void onBindViewHolder(@NonNull BeerViewHolder holder, int position) {
         holder.setOnClickListener(mOnBeerClickListener);
-        holder.bind(mBeers.get(position));
+        holder.bind(mMyBeers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mBeers.size();
+        return mMyBeers.size();
     }
 
-    public Beer getItem(int position) {
-        return mBeers.get(position);
+    public MyBeers getItem(int position) {
+        return mMyBeers.get(position);
     }
 
     void clear() {
-        mBeers.clear();
+        mMyBeers.clear();
     }
 
-    void addAll(List<Beer> Beers) {
-        mBeers.addAll(Beers);
+    void addAllMyBeers(List<MyBeers> myBeers) {
+        mMyBeers.addAll(myBeers);
     }
+
 
     void setOnBeerClickListener(OnBeerClickListener onBeerClickListener) {
         this.mOnBeerClickListener = onBeerClickListener;
@@ -96,31 +94,32 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
         ImageView mBeerImageView;
 
         private OnBeerClickListener mOnClickListener;
-        private Beer mBeer;
+        private MyBeers mMyBeer;
 
         BeerViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        void bind(Beer beer) {
-            mName.setText(beer.getName().toUpperCase());
-            mStyle.setText(beer.getStyle().getName());
-//            mDoDrink.setText()
-            if (Objects.equals(beer.getImage(), null) ||  beer.getImage().length()<= 2 ) {
+        void bind(MyBeers mybeer) {
+            mName.setText(mybeer.getBeer().getName().toUpperCase());
+            mStyle.setText(mybeer.getBeer().getStyle().getName());
+            mDoDrink.setText(mybeer.getDrink().getName());
+            mHowIRateIt.setText(mybeer.getVote().toString());
+            if (Objects.equals(mybeer.getBeer().getImage(), null) ||  mybeer.getBeer().getImage().length()<= 2 ) {
                 mBeerImageView.setImageResource(R.drawable.defaultbeerpicture);
             } else {
-                InputStream stream = new ByteArrayInputStream(Base64.decode(beer.getImage().getBytes(), Base64.DEFAULT));
+                InputStream stream = new ByteArrayInputStream(Base64.decode(mybeer.getBeer().getImage().getBytes(), Base64.DEFAULT));
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 mBeerImageView.setImageBitmap(bitmap);
             }
 
-            mBeer = beer;
+            mMyBeer = mybeer;
         }
 
         @OnClick
         public void onClick() {
-            mOnClickListener.onClick(mBeer);
+            mOnClickListener.onClick(mMyBeer);
         }
 
         public void setOnClickListener(OnBeerClickListener onClickListener) {
@@ -129,7 +128,7 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
     }
 
     interface OnBeerClickListener {
-        void onClick(Beer beer);
+        void onClick(MyBeers myBeers);
     }
 
 }

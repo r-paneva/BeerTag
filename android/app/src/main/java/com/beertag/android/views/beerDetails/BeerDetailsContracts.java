@@ -30,7 +30,6 @@ public interface BeerDetailsContracts {
 
         void showOptionToChooseImage();
 
-        void navigateToHome();
     }
 
     interface Presenter {
@@ -56,9 +55,10 @@ public interface BeerDetailsContracts {
 
         void updateBeerPicture(Beer beer, String imageString);
 
+        void setUserId(int userId);
+
     }
     interface Navigator {
-         void navigateToHome();
-//         void navigateToHomeWithBeer(Beer defaultbeerpicture);
+        // void navigateToHome();
     }
 }

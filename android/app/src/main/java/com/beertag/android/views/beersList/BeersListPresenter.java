@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
+import com.beertag.android.models.User;
 import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.UsersService;
 
@@ -76,11 +77,11 @@ public class BeersListPresenter
         mView.showBeerDetails(beer);
     }
 
-    private void presentBeersToView(List<Beer> Beers) {
-        if (Beers.isEmpty()) {
+    private void presentBeersToView(List<Beer> beers) {
+        if (beers.isEmpty()) {
             mView.showEmptyBeersList();
         } else {
-            mView.showBeers(Beers);
+            mView.showBeers(beers);
         }
     }
 

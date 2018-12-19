@@ -7,10 +7,10 @@ public class MyBeers implements Serializable {
     private MyBeersIdentity myBeersIdentity;
 
     private Integer vote;
-    private Integer drink;
+    private Drink drink;
     private Beer beer;
 
-    public MyBeers(MyBeersIdentity myBeersIdentity, Integer vote, Integer drink, Beer beer) {
+    public MyBeers(MyBeersIdentity myBeersIdentity, Integer vote, Drink drink, Beer beer) {
         this.myBeersIdentity = myBeersIdentity;
         setVote(vote);
         setDrink(drink);
@@ -36,11 +36,11 @@ public class MyBeers implements Serializable {
         this.vote = vote;
     }
 
-    public Integer getDrink() {
+    public Drink getDrink() {
         return drink;
     }
 
-    public void setDrink(Integer drink) {
+    public void setDrink(Drink drink) {
         this.drink = drink;
     }
 

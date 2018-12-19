@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,7 +55,14 @@ public class HomeFragment extends Fragment implements HomeContracts.View {
     @BindView(R.id.fam_image_options_menu)
     FloatingActionsMenu mImageChangeFloatingMenu;
 
+    @BindView(R.id.btn_beers)
+    Button mBeersButton;
+
+    @BindView(R.id.btn_login)
+    Button mLoginButton;
+
     private HomeContracts.Presenter mPresenter;
+    private HomeContracts.Navigator mNavigator;
 
     @Inject
     public HomeFragment() {
@@ -142,14 +150,39 @@ public class HomeFragment extends Fragment implements HomeContracts.View {
         Intent intentToChooseImage = new Intent(Intent.ACTION_GET_CONTENT);
         intentToChooseImage.setType(Constants.IMAGE_FILE_TYPE);
         startActivityForResult(intentToChooseImage, GALLERY_IMAGE_CHOOSER_REQUEST_CODE);
+    }
 
+    @OnClick(R.id.btn_beers)
+    public void onBeersButtonClick() {
+        mPresenter.handleBeersButtonClick();
+    }
+
+    @OnClick(R.id.btn_login)
+    public void onLoginButtonClick() {
+        mPresenter.handleLoginButtonClick();
+    }
+
+
+    public void setNavigator(HomeContracts.Navigator navigator) {
+        mNavigator = navigator;
     }
 
     @Override
-    public void showUserImage(Bitmap userImage) {
+    public void showBeersListActivity() {
+        mNavigator.navigateToBeersListActivity();
+    }
 
+    @Override
+    public void showLoginActivity() {
+        mNavigator.navigateToLoginActivity();
+    }
+
+
+    @Override
+    public void showUserImage(Bitmap userImage) {
         mUserPictureImageView.setImageBitmap(userImage);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

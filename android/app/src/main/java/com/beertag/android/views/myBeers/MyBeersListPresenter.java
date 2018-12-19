@@ -39,7 +39,7 @@ public class MyBeersListPresenter
     }
 
     @Override
-    public void loadBeers(int userId) {
+    public void loadMyBeers(int userId) {
         mView.showLoading();
         List<Beer> beers = new ArrayList<>();
         Disposable observable = Observable
@@ -55,39 +55,22 @@ public class MyBeersListPresenter
                             for (MyBeers mb : myBeers) {
                                 beers.add(mb.getBeer());
                             }
-                            presentBeersToView(beers);
+                            presentMyBeersToView(myBeers);
                         },
                         error -> mView.showError(error)
                 );
     }
 
     @Override
-    public void filterBeers(String pattern) {
-        mView.showLoading();
-        Disposable observable = Observable
-                .create((ObservableOnSubscribe<List<Beer>>) emitter -> {
-//                    List<Beer> beers = mBeersService.getFilteredBeers(pattern, username);
-                    List<Beer> beers = mBeersService.getAllBeers();
-                    emitter.onNext(beers);
-                    emitter.onComplete();
-                })
-                .subscribeOn(mSchedulerProvider.background())
-                .observeOn(mSchedulerProvider.ui())
-                .doOnError(error -> mView.showError(error))
-                .doFinally(mView::hideLoading)
-                .subscribe(this::presentBeersToView);
+    public void selectBeer(MyBeers myBeers) {
+        mView.showBeerDetails(myBeers);
     }
 
-    @Override
-    public void selectBeer(Beer beer) {
-        mView.showBeerDetails(beer);
-    }
-
-    private void presentBeersToView(List<Beer> Beers) {
-        if (Beers.isEmpty()) {
+    private void presentMyBeersToView(List<MyBeers> myBeers){
+        if (myBeers.isEmpty()) {
             mView.showEmptyBeersList();
         } else {
-            mView.showBeers(Beers);
+            mView.showMyBeers(myBeers);
         }
     }
 

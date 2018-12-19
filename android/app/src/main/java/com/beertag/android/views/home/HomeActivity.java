@@ -9,6 +9,8 @@ import com.beertag.android.R;
 import com.beertag.android.models.User;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.views.BaseDrawerActivity;
+import com.beertag.android.views.beersList.BeersListActivity;
+import com.beertag.android.views.login.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -16,7 +18,7 @@ import butterknife.ButterKnife;
 
 import static com.beertag.android.utils.Constants.USER_EXTRA_KEY;
 
-public class HomeActivity extends BaseDrawerActivity {
+public class HomeActivity extends BaseDrawerActivity implements HomeContracts.Navigator {
 
     @Inject
     HomeFragment mHomeFragment;
@@ -24,7 +26,8 @@ public class HomeActivity extends BaseDrawerActivity {
     @Inject
     HomeContracts.Presenter mPresenter;
 
-    private String mName="";
+    private String mName;
+    private static int mID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +40,19 @@ public class HomeActivity extends BaseDrawerActivity {
             User user = (User) incomingIntent.getSerializableExtra(USER_EXTRA_KEY);
         }
         persistUserSessionData();
-        mPresenter.setUserName(mName);
+
+        mHomeFragment.setNavigator(this);
         mHomeFragment.setPresenter(mPresenter);
+        mPresenter.setUserName(mName);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fr_home, mHomeFragment)
                 .commit();
     }
+
+
+    public static int getVariable() { return mID; }
 
     @Override
     protected long getIdentifier() {
@@ -55,5 +63,21 @@ public class HomeActivity extends BaseDrawerActivity {
     private void persistUserSessionData() {
         SharedPreferences result = getSharedPreferences("com.beertag.android", Context.MODE_PRIVATE);
         mName = result.getString(String.valueOf(R.string.username), "");
+        mID = result.getInt(String.valueOf(R.string.userId),0);
+    }
+
+
+    @Override
+    public void navigateToBeersListActivity() {
+        Intent intent = new Intent(this, BeersListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void navigateToLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

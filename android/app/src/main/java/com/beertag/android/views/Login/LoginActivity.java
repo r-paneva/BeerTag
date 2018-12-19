@@ -32,7 +32,6 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     @Inject
     BitmapCacheRepository mBitmapCacheRepository;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,19 +62,22 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
         super.onDestroy();
     }
 
-    @Override
-    public void navigateToHomeWithUser(User user) {
-        Intent intent = new Intent(this, HomeActivity.class);
+    private void persistUserSessionData(User user) {
         sharedPreferences = getSharedPreferences("com.beertag.android", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(String.valueOf(R.string.userId), user.getId());
-        editor.putString(String.valueOf(R.string.username),user.getUserName());
-        editor.putString(String.valueOf(R.string.fullname), user.getFirstName()+" "+user.getLastName());
+        editor.putString(String.valueOf(R.string.username), user.getUserName());
+        editor.putString(String.valueOf(R.string.fullname), user.getFirstName() + " " + user.getLastName());
         if(user.getImage()==null || user.getImage().length()>2) {
             editor.putString(String.valueOf(R.string.userpicture), user.getImage());
         }
         editor.apply();
+    }
 
+    @Override
+    public void navigateToHomeWithUser(User user) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        persistUserSessionData(user);
         intent.putExtra(USER_EXTRA_KEY, user);
         startActivity(intent);
         finish();

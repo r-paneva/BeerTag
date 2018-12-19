@@ -157,4 +157,14 @@ public class HomePresenter implements HomeContracts.Presenter {
         }
     }
 
+    @Override
+    public void handleBeersButtonClick() {
+        mView.showBeersListActivity();
+    }
+
+    @Override
+    public void handleLoginButtonClick() {
+        mView.showLoginActivity();
+    }
+
 }

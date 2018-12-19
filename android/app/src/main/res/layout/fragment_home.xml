@@ -7,43 +7,64 @@
     android:layout_height="match_parent"
     tools:context=".views.home.HomeFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/prb_loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/prb_loading_view"
+        <ImageView
+            android:id="@+id/iv_home_user_image"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/et_user_picture"
+            android:scaleType="fitXY"
+            android:src="@drawable/defaultuserpicture" />
+
+
+        <TextView
+            android:id="@+id/tv_user_names"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_home_user_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_user_names"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_beers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_home_user_image"
-                android:layout_centerInParent="true"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:contentDescription="@string/et_user_picture"
-                android:scaleType="fitXY"
-                android:src="@drawable/defaultuserpicture"
-                 />
-
-
-            <TextView
-                android:id="@+id/tv_user_names"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_home_user_image"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="24sp" />
-        </RelativeLayout>
-    </ScrollView>
+                android:text="@string/btn_beers" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="19dp"
+                android:text="@string/btn_login" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fam_image_options_menu"
@@ -77,5 +98,6 @@
             app:fab_size="mini" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 
 </FrameLayout>

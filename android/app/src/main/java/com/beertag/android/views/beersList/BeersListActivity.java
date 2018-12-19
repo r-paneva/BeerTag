@@ -72,7 +72,7 @@ public class BeersListActivity extends BaseDrawerActivity implements BeersListCo
     public void navigateWith(Beer beer) {
         if (isPhone()) {
             Intent intent = new Intent(this, BeerDetailsActivity.class);
-            intent.putExtra(Constants.EXTRA_KEY, beer);
+            intent.putExtra(Constants.BEER_EXTRA_KEY, beer);
             startActivity(intent);
             mBeerDetailsPresenter.setBeerId(beer.getId());
         } else {

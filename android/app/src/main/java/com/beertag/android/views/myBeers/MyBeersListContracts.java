@@ -1,7 +1,6 @@
 package com.beertag.android.views.myBeers;
 
-import com.beertag.android.models.Beer;
-import com.beertag.android.services.base.UsersService;
+import com.beertag.android.models.MyBeers;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ public interface MyBeersListContracts {
     interface View {
         void setPresenter(Presenter presenter);
 
-        void showBeers(List<Beer> beers);
+        void showMyBeers(List<MyBeers> myBeers);
 
         void showEmptyBeersList();
 
@@ -19,7 +18,7 @@ public interface MyBeersListContracts {
 
         void hideLoading();
 
-        void showBeerDetails(Beer beer);
+        void showBeerDetails(MyBeers mybeer);
 
         void setUserId(int userId);
     }
@@ -27,16 +26,14 @@ public interface MyBeersListContracts {
     interface Presenter {
         void subscribe(View view);
 
-        void loadBeers(int id);
+        void loadMyBeers(int id);
 
-        void filterBeers(String pattern);
-
-        void selectBeer(Beer beer);
+        void selectBeer(MyBeers mybeer);
 
         void unsubscribe();
     }
 
     interface Navigator {
-        void navigateWith(Beer beer);
+        void navigateWith(MyBeers myBeer);
     }
 }

@@ -24,6 +24,10 @@ public interface HomeContracts {
         void presentOptionToTakePicture();
 
         void showUserImage(Bitmap userImage);
+
+        void showBeersListActivity();
+
+        void showLoginActivity();
     }
 
     interface Presenter {
@@ -47,6 +51,17 @@ public interface HomeContracts {
         void decodeImageAndPresentToView(String userPicture, String errorMessage);
 
         int setPictureBtnVisability();
+
+        void handleBeersButtonClick();
+
+        void handleLoginButtonClick();
+
+    }
+    interface Navigator {
+
+        void navigateToBeersListActivity();
+
+        void navigateToLoginActivity();
 
     }
 }

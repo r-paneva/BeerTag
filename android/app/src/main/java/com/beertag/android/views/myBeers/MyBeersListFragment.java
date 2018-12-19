@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.beertag.android.R;
-import com.beertag.android.models.Beer;
+import com.beertag.android.models.MyBeers;
 
 import java.util.List;
 
@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 
 public class MyBeersListFragment
         extends Fragment
@@ -41,7 +40,6 @@ public class MyBeersListFragment
     MyBeersAdapter mMyBeersAdapter;
 
     private MyBeersListContracts.Presenter mPresenter;
-    String mPattern;
 
     private int mUserId;
 
@@ -70,7 +68,7 @@ public class MyBeersListFragment
     public void onResume() {
         super.onResume();
         mPresenter.subscribe(this);
-        mPresenter.loadBeers(mUserId);
+        mPresenter.loadMyBeers(mUserId);
     }
 
     @Override
@@ -90,9 +88,9 @@ public class MyBeersListFragment
     }
 
     @Override
-    public void showBeers(List<Beer> beers) {
+    public void showMyBeers(List<MyBeers> mybeers) {
         mMyBeersAdapter.clear();
-        mMyBeersAdapter.addAll(beers);
+        mMyBeersAdapter.addAllMyBeers(mybeers);
         mMyBeersAdapter.notifyDataSetChanged();
     }
 
@@ -117,8 +115,8 @@ public class MyBeersListFragment
     }
 
     @Override
-    public void showBeerDetails(Beer beer) {
-        mNavigator.navigateWith(beer);
+    public void showBeerDetails(MyBeers myBeers) {
+        mNavigator.navigateWith(myBeers);
     }
 
     @Override
@@ -131,14 +129,8 @@ public class MyBeersListFragment
         mNavigator = navigator;
     }
 
-    @OnTextChanged(R.id.et_filter)
-    public void onTextChanged() {
-        mPattern = mFilterEditText.getText().toString();
-        mPresenter.filterBeers(mPattern);
-    }
-
     @Override
-    public void onClick(Beer beer) {
-        mPresenter.selectBeer(beer);
+    public void onClick(MyBeers myBeers) {
+        mPresenter.selectBeer(myBeers);
     }
 }

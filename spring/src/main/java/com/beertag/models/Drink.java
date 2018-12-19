@@ -11,22 +11,22 @@ import java.io.Serializable;
 
 @Entity
 @EnableAutoConfiguration
-@Table(name = "country")
-public class Country implements Serializable {
+@Table(name = "drink")
+public class Drink implements Serializable {
 
     @Id
     @Column(name = "id")
     private int id;
 
-    @Column( name = "name")
+    @Column(name = "name")
     private String name;
 
-    public Country(int id, String name) {
+    public Drink(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Country() {
+    public Drink() {
     }
 
     //Getters and setters omitted for brevity
