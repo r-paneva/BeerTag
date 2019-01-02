@@ -2,30 +2,30 @@ package com.beertag.android.models;
 
 import java.io.Serializable;
 
-public class MyBeers implements Serializable {
+public class UserBeers implements Serializable {
 
-    private MyBeersIdentity myBeersIdentity;
+    private UserBeersIdentity userBeersIdentity;
 
     private Integer vote;
     private Drink drink;
     private Beer beer;
 
-    public MyBeers(MyBeersIdentity myBeersIdentity, Integer vote, Drink drink, Beer beer) {
-        this.myBeersIdentity = myBeersIdentity;
+    public UserBeers(UserBeersIdentity userBeersIdentity, Integer vote, Drink drink, Beer beer) {
+        this.userBeersIdentity = userBeersIdentity;
         setVote(vote);
         setDrink(drink);
         setBeer(beer);
     }
 
-    public MyBeers() {
+    public UserBeers() {
     }
 
-    public MyBeersIdentity getMyBeersIdentity() {
-        return myBeersIdentity;
+    public UserBeersIdentity getUserBeersIdentity() {
+        return userBeersIdentity;
     }
 
-    public void setMyBeersIdentity(MyBeersIdentity myBeersIdentity) {
-        this.myBeersIdentity = myBeersIdentity;
+    public void setUserBeersIdentity(UserBeersIdentity userBeersIdentity) {
+        this.userBeersIdentity = userBeersIdentity;
     }
 
     public Integer getVote() {

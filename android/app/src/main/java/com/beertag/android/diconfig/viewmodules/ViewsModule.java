@@ -3,7 +3,7 @@ package com.beertag.android.diconfig.viewmodules;
 import android.support.v7.widget.RecyclerView;
 
 import com.beertag.android.views.beersList.BeersAdapter;
-import com.beertag.android.views.myBeers.MyBeersAdapter;
+import com.beertag.android.views.userBeers.UserBeersAdapter;
 
 
 import dagger.Module;
@@ -17,7 +17,7 @@ public class ViewsModule {
     }
 
     @Provides
-    public RecyclerView.Adapter<MyBeersAdapter.BeerViewHolder> MyBeersArrayAdapter() {
-        return new MyBeersAdapter();
+    public RecyclerView.Adapter<UserBeersAdapter.BeerViewHolder> UserBeersArrayAdapter() {
+        return new UserBeersAdapter();
     }
 }

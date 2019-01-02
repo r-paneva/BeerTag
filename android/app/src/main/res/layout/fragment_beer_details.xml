@@ -112,6 +112,18 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_do_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_ABV"
+                android:layout_marginStart="220dp"
+                android:layout_marginTop="14dp"
+                android:text="DO I DRINK"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+
+            <TextView
                 android:id="@+id/tv_brewery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +148,7 @@
             <ScrollView
                 android:id="@+id/sv_description"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:layout_below="@id/tv_country"
                 android:layout_marginBottom="0dp">
 

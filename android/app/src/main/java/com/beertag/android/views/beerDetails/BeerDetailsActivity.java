@@ -97,7 +97,7 @@ public class BeerDetailsActivity extends BaseDrawerActivity implements BeerDetai
 
     private boolean shouldStartSignIn() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return mBeerDetailsPresenter.setUserId() == 0;
+        return mBeerDetailsPresenter.loadUserId() == 0;
     }
 
     private void startSignIn() {

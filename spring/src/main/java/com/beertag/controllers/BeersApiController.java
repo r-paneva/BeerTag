@@ -5,6 +5,7 @@ import com.beertag.services.base.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class BeersApiController {
     @RequestMapping(
             method = RequestMethod.POST
     )
-    public void createBeer(@RequestBody Beer beer) {
+    public void createBeer(@RequestBody @Valid Beer beer) {
             mBeerService.create(beer);
     }
 

@@ -1,4 +1,4 @@
-package com.beertag.android.views.myBeers;
+package com.beertag.android.views.userBeers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.beertag.android.R;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.views.BaseDrawerActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
@@ -20,16 +20,16 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class MyBeersListActivity
+public class UserBeersListActivity
         extends BaseDrawerActivity
-        implements MyBeersListContracts.Navigator {
+        implements UserBeersListContracts.Navigator {
 
 
     @Inject
-    MyBeersListFragment mMyBeersListFragment;
+    UserBeersListFragment mUserBeersListFragment;
 
     @Inject
-    MyBeersListContracts.Presenter mBeersListPresenter;
+    UserBeersListContracts.Presenter mBeersListPresenter;
 
     @Inject
     BeerDetailsFragment mBeerDetailsFragment;
@@ -38,7 +38,7 @@ public class MyBeersListActivity
     BeerDetailsPresenter mBeerDetailsPresenter;
 
     @Inject
-    MyBeersListPresenter mMyBeerListPresenter;
+    UserBeersListPresenter mUserBeerListPresenter;
 
     SharedPreferences mSharedPreferences;
 //    private int userId;
@@ -57,13 +57,13 @@ public class MyBeersListActivity
 
         //setSupportActionBar(getToolbar());
 
-        mMyBeersListFragment.setNavigator(this);
-        mMyBeersListFragment.setPresenter(mBeersListPresenter);
-        mMyBeersListFragment.setUserId(this.setUserId());
+        mUserBeersListFragment.setNavigator(this);
+        mUserBeersListFragment.setPresenter(mBeersListPresenter);
+        mUserBeersListFragment.setUserId(this.setUserId());
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, mMyBeersListFragment)
+                .replace(R.id.content, mUserBeersListFragment)
                 .commit();
 
     }
@@ -78,14 +78,14 @@ public class MyBeersListActivity
     }
 
     @Override
-    public void navigateWith(MyBeers myBeer) {
+    public void navigateWith(UserBeers userBeer) {
         if (isPhone()) {
             Intent intent = new Intent(this, BeerDetailsActivity.class);
-            intent.putExtra(Constants.BEER_EXTRA_KEY, myBeer.getBeer());
+            intent.putExtra(Constants.BEER_EXTRA_KEY, userBeer.getBeer());
             startActivity(intent);
-            mBeerDetailsPresenter.setBeerId(myBeer.getBeer().getId());
+            mBeerDetailsPresenter.setBeerId(userBeer.getBeer().getId());
         } else {
-            mBeerDetailsPresenter.setBeerId(myBeer.getBeer().getId());
+            mBeerDetailsPresenter.setBeerId(userBeer.getBeer().getId());
             mBeerDetailsPresenter.loadBeer();
         }
     }

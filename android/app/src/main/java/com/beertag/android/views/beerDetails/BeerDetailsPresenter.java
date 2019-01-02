@@ -5,18 +5,19 @@ import android.graphics.Bitmap;
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Drink;
-import com.beertag.android.models.MyBeers;
-import com.beertag.android.models.MyBeersIdentity;
+import com.beertag.android.models.UserBeers;
+import com.beertag.android.models.UserBeersIdentity;
 import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.services.base.BeersService;
-import com.beertag.android.services.base.RatingVoteService;
+import com.beertag.android.services.base.UserBeersService;
 import com.beertag.android.services.base.UsersService;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.utils.ImageEncoder;
 import com.beertag.android.views.home.HomeActivity;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -27,7 +28,7 @@ import io.reactivex.disposables.Disposable;
 public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
 
     private final BeersService mBeersService;
-    private final RatingVoteService mRatingVoteService;
+    private final UserBeersService mUserBeersService;
     private final UsersService mUserService;
     private final SchedulerProvider mSchedulerProvider;
     private final ImageEncoder mImageEncoder;
@@ -39,7 +40,7 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     @Inject
     public BeerDetailsPresenter(
             BeersService beersService,
-            RatingVoteService ratingVoteService,
+            UserBeersService userBeersService,
             UsersService userService,
             SchedulerProvider schedulerProvider,
             ImageEncoder imageEncoder,
@@ -47,7 +48,7 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
         mBeersService = beersService;
         mUserService = userService;
         mSchedulerProvider = schedulerProvider;
-        mRatingVoteService = ratingVoteService;
+        mUserBeersService = userBeersService;
         mImageEncoder = imageEncoder;
         mBitmapCacheRepository = bitmapCacheRepository;
     }
@@ -68,8 +69,8 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     }
 
     @Override
-    public int setUserId() {
-        return mUserId;
+    public void setUserId(int userId) {
+        mUserId = userId;
     }
 
     @Override
@@ -106,6 +107,11 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
     @Override
     public int loadUserId() {
         return mUserId;
+    }
+
+    @Override
+    public int loadBeerId() {
+        return mBeerId;
     }
 
     @Override
@@ -178,27 +184,14 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
         }
     }
 
-    @Override
-    public void updateBeer(Beer updatedBeer) {
-        mView.showLoading();
-        Disposable observable = Observable
-                .create((ObservableOnSubscribe<Beer>) emitter -> {
-                    Beer beer = mBeersService.updateBeer(updatedBeer);
-                    emitter.onNext(beer);
-                    emitter.onComplete();
-                })
-                .subscribeOn(mSchedulerProvider.background())
-                .observeOn(mSchedulerProvider.ui())
-                .subscribe(mView::hideLoading, error -> mView.showError(error));
-    }
 
     @Override
     public void setRating(int beerId, int userId, Drink drink, Beer beer, int stars) {
-        MyBeersIdentity myBeersIdentity = new MyBeersIdentity(beerId, mUserId);
-        MyBeers mybeer = new MyBeers( myBeersIdentity, stars, drink, beer );
+        UserBeersIdentity userBeersIdentity = new UserBeersIdentity(beerId, mUserId);
+        UserBeers userbeer = new UserBeers(userBeersIdentity, stars, drink, beer );
         Disposable disposable = (Disposable) Observable
-                .create((ObservableOnSubscribe<MyBeers>) emitter -> {
-                    mRatingVoteService.createMyBeer(mybeer);
+                .create((ObservableOnSubscribe<UserBeers>) emitter -> {
+                    mUserBeersService.createUserBeer(userbeer);
                 })
                 .subscribeOn(mSchedulerProvider.background())
                 .observeOn(mSchedulerProvider.ui())
@@ -208,5 +201,27 @@ public class BeerDetailsPresenter  implements BeerDetailsContracts.Presenter {
                     loadBeer();
                 });
     }
+
+    @Override
+    public void loadUserBeers(int beerId, int userId){
+        Disposable observable = Observable
+                .create((ObservableOnSubscribe<UserBeers>) emitter -> {
+                    UserBeers userbeers = mUserBeersService.getById(beerId, userId);
+                    emitter.onNext(userbeers);
+                    emitter.onComplete();
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .doFinally(mView::hideLoading)
+                .doOnError(mView::showError)
+                .subscribe(r -> {
+                    System.out.println("**************************************************************************************************");
+                    System.out.println(r.getDrink());
+                    System.out.println("**************************************************************************************************");
+                    Consumer<UserBeers> setUserBeers = mView::setUserBeers;
+                });
+
+    }
+
 
 }

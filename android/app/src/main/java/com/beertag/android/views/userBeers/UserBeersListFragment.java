@@ -1,4 +1,4 @@
-package com.beertag.android.views.myBeers;
+package com.beertag.android.views.userBeers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,12 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.beertag.android.R;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 
 import java.util.List;
 
@@ -22,10 +21,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyBeersListFragment
+public class UserBeersListFragment
         extends Fragment
-        implements MyBeersListContracts.View, MyBeersAdapter.OnBeerClickListener {
-    private MyBeersListContracts.Navigator mNavigator;
+        implements UserBeersListContracts.View, UserBeersAdapter.OnBeerClickListener {
+    private UserBeersListContracts.Navigator mNavigator;
 
     @BindView(R.id.rv_beers)
     RecyclerView mView;
@@ -34,14 +33,14 @@ public class MyBeersListFragment
     ProgressBar mLoadingView;
 
     @Inject
-    MyBeersAdapter mMyBeersAdapter;
+    UserBeersAdapter mUserBeersAdapter;
 
-    private MyBeersListContracts.Presenter mPresenter;
+    private UserBeersListContracts.Presenter mPresenter;
 
     private int mUserId;
 
     @Inject
-    public MyBeersListFragment() {
+    public UserBeersListFragment() {
         // Required empty public constructor
     }
 
@@ -53,9 +52,8 @@ public class MyBeersListFragment
         // ButterKnife is applied
         ButterKnife.bind(this, view);
 
-
-        mView.setAdapter(mMyBeersAdapter);
-        mMyBeersAdapter.setOnBeerClickListener(this);
+        mView.setAdapter(mUserBeersAdapter);
+        mUserBeersAdapter.setOnBeerClickListener(this);
         LinearLayoutManager mBeersViewLayoutManager = new LinearLayoutManager(getContext());
         mView.setLayoutManager(mBeersViewLayoutManager);
         return view;
@@ -65,7 +63,7 @@ public class MyBeersListFragment
     public void onResume() {
         super.onResume();
         mPresenter.subscribe(this);
-        mPresenter.loadMyBeers(mUserId);
+        mPresenter.loadUserBeers(mUserId);
     }
 
     @Override
@@ -80,15 +78,15 @@ public class MyBeersListFragment
     }
 
     @Override
-    public void setPresenter(MyBeersListContracts.Presenter presenter) {
+    public void setPresenter(UserBeersListContracts.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void showMyBeers(List<MyBeers> mybeers) {
-        mMyBeersAdapter.clear();
-        mMyBeersAdapter.addAllMyBeers(mybeers);
-        mMyBeersAdapter.notifyDataSetChanged();
+    public void showUserBeers(List<UserBeers> userbeers) {
+        mUserBeersAdapter.clear();
+        mUserBeersAdapter.addAllUserBeers(userbeers);
+        mUserBeersAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -112,8 +110,8 @@ public class MyBeersListFragment
     }
 
     @Override
-    public void showBeerDetails(MyBeers myBeers) {
-        mNavigator.navigateWith(myBeers);
+    public void showBeerDetails(UserBeers userBeers) {
+        mNavigator.navigateWith(userBeers);
     }
 
     @Override
@@ -122,12 +120,12 @@ public class MyBeersListFragment
         mLoadingView.setVisibility(View.GONE);
     }
 
-    void setNavigator(MyBeersListContracts.Navigator navigator) {
+    void setNavigator(UserBeersListContracts.Navigator navigator) {
         mNavigator = navigator;
     }
 
     @Override
-    public void onClick(MyBeers myBeers) {
-        mPresenter.selectBeer(myBeers);
+    public void onClick(UserBeers userBeers) {
+        mPresenter.selectBeer(userBeers);
     }
 }

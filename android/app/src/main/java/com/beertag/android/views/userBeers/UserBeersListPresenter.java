@@ -1,10 +1,10 @@
-package com.beertag.android.views.myBeers;
+package com.beertag.android.views.userBeers;
 
 import com.beertag.android.async.base.SchedulerProvider;
 import com.beertag.android.models.Beer;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.services.base.BeersService;
-import com.beertag.android.services.base.RatingVoteService;
+import com.beertag.android.services.base.UserBeersService;
 import com.beertag.android.services.base.UsersService;
 
 import java.util.ArrayList;
@@ -16,21 +16,21 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.Disposable;
 
-public class MyBeersListPresenter
-        implements MyBeersListContracts.Presenter {
+public class UserBeersListPresenter
+        implements UserBeersListContracts.Presenter {
 
     private final BeersService mBeersService;
     private final UsersService mUsersService;
-    private final RatingVoteService mRatingService;
+    private final UserBeersService mRatingService;
     private final SchedulerProvider mSchedulerProvider;
-    private MyBeersListContracts.View mView;
+    private UserBeersListContracts.View mView;
 
 
     @Inject
-    public MyBeersListPresenter(
+    public UserBeersListPresenter(
             BeersService BeersService,
             UsersService usersService,
-            RatingVoteService ratingService,
+            UserBeersService ratingService,
             SchedulerProvider schedulerProvider) {
         mBeersService = BeersService;
         mRatingService = ratingService;
@@ -39,38 +39,38 @@ public class MyBeersListPresenter
     }
 
     @Override
-    public void loadMyBeers(int userId) {
+    public void loadUserBeers(int userId) {
         mView.showLoading();
         List<Beer> beers = new ArrayList<>();
         Disposable observable = Observable
-                .create((ObservableOnSubscribe<List<MyBeers>>) emitter -> {
-                    List<MyBeers> myBeers = mRatingService.getBeersByUserId(userId);
-                    emitter.onNext(myBeers);
+                .create((ObservableOnSubscribe<List<UserBeers>>) emitter -> {
+                    List<UserBeers> userBeers = mRatingService.getBeersByUserId(userId);
+                    emitter.onNext(userBeers);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())
                 .observeOn(mSchedulerProvider.ui())
                 .doFinally(mView::hideLoading)
-                .subscribe( myBeers -> {
-                            for (MyBeers mb : myBeers) {
+                .subscribe( userBeers -> {
+                            for (UserBeers mb : userBeers) {
                                 beers.add(mb.getBeer());
                             }
-                            presentMyBeersToView(myBeers);
+                            presentUserBeersToView(userBeers);
                         },
                         error -> mView.showError(error)
                 );
     }
 
     @Override
-    public void selectBeer(MyBeers myBeers) {
-        mView.showBeerDetails(myBeers);
+    public void selectBeer(UserBeers userBeers) {
+        mView.showBeerDetails(userBeers);
     }
 
-    private void presentMyBeersToView(List<MyBeers> myBeers){
-        if (myBeers.isEmpty()) {
+    private void presentUserBeersToView(List<UserBeers> userBeers){
+        if (userBeers.isEmpty()) {
             mView.showEmptyBeersList();
         } else {
-            mView.showMyBeers(myBeers);
+            mView.showUserBeers(userBeers);
         }
     }
 
@@ -80,7 +80,7 @@ public class MyBeersListPresenter
     }
 
     @Override
-    public void subscribe(MyBeersListContracts.View view) {
+    public void subscribe(UserBeersListContracts.View view) {
         mView = view;
     }
 

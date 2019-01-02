@@ -1,4 +1,4 @@
-package com.beertag.android.views.myBeers;
+package com.beertag.android.views.userBeers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beertag.android.R;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -26,14 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerViewHolder> {
+public class UserBeersAdapter extends RecyclerView.Adapter<UserBeersAdapter.BeerViewHolder> {
 
-    private final List<MyBeers> mMyBeers;
+    private final List<UserBeers> mUserBeers;
     private OnBeerClickListener mOnBeerClickListener;
 
     @Inject
-    public MyBeersAdapter() {
-        mMyBeers = new ArrayList<>();
+    public UserBeersAdapter() {
+        mUserBeers = new ArrayList<>();
     }
 
     @NonNull
@@ -46,24 +46,24 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
     @Override
     public void onBindViewHolder(@NonNull BeerViewHolder holder, int position) {
         holder.setOnClickListener(mOnBeerClickListener);
-        holder.bind(mMyBeers.get(position));
+        holder.bind(mUserBeers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mMyBeers.size();
+        return mUserBeers.size();
     }
 
-    public MyBeers getItem(int position) {
-        return mMyBeers.get(position);
+    public UserBeers getItem(int position) {
+        return mUserBeers.get(position);
     }
 
     void clear() {
-        mMyBeers.clear();
+        mUserBeers.clear();
     }
 
-    void addAllMyBeers(List<MyBeers> myBeers) {
-        mMyBeers.addAll(myBeers);
+    void addAllUserBeers(List<UserBeers> userBeers) {
+        mUserBeers.addAll(userBeers);
     }
 
 
@@ -94,32 +94,32 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
         ImageView mBeerImageView;
 
         private OnBeerClickListener mOnClickListener;
-        private MyBeers mMyBeer;
+        private UserBeers mUserBeer;
 
         BeerViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        void bind(MyBeers mybeer) {
-            mName.setText(mybeer.getBeer().getName().toUpperCase());
-            mStyle.setText(mybeer.getBeer().getStyle().getName());
-            mDoDrink.setText(mybeer.getDrink().getName());
-            mHowIRateIt.setText(mybeer.getVote().toString());
-            if (Objects.equals(mybeer.getBeer().getImage(), null) ||  mybeer.getBeer().getImage().length()<= 2 ) {
+        void bind(UserBeers userbeer) {
+            mName.setText(userbeer.getBeer().getName().toUpperCase());
+            mStyle.setText(userbeer.getBeer().getStyle().getName());
+            mDoDrink.setText(userbeer.getDrink().getName());
+            mHowIRateIt.setText(userbeer.getVote().toString());
+            if (Objects.equals(userbeer.getBeer().getImage(), null) ||  userbeer.getBeer().getImage().length()<= 2 ) {
                 mBeerImageView.setImageResource(R.drawable.defaultbeerpicture);
             } else {
-                InputStream stream = new ByteArrayInputStream(Base64.decode(mybeer.getBeer().getImage().getBytes(), Base64.DEFAULT));
+                InputStream stream = new ByteArrayInputStream(Base64.decode(userbeer.getBeer().getImage().getBytes(), Base64.DEFAULT));
                 Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 mBeerImageView.setImageBitmap(bitmap);
             }
 
-            mMyBeer = mybeer;
+            mUserBeer = userbeer;
         }
 
         @OnClick
         public void onClick() {
-            mOnClickListener.onClick(mMyBeer);
+            mOnClickListener.onClick(mUserBeer);
         }
 
         public void setOnClickListener(OnBeerClickListener onClickListener) {
@@ -128,7 +128,7 @@ public class MyBeersAdapter extends RecyclerView.Adapter<MyBeersAdapter.BeerView
     }
 
     interface OnBeerClickListener {
-        void onClick(MyBeers myBeers);
+        void onClick(UserBeers userBeers);
     }
 
 }

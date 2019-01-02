@@ -1,8 +1,8 @@
 package com.beertag.repositories;
 
-import com.beertag.models.MyBeers;
-import com.beertag.models.MyBeersIdentity;
-import com.beertag.repositories.base.MyBeersRepository;
+import com.beertag.models.UserBeers;
+import com.beertag.models.UserBeersIdentity;
+import com.beertag.repositories.base.UserBeersRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
+public class SqlUserBeersRepositoryImpl implements UserBeersRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -26,7 +26,7 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
-            result = session.createQuery("from MyBeers").list();
+            result = session.createQuery("from UserBeers").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -36,40 +36,40 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
     }
 
     @Override
-    public MyBeers getRatingVoteByUsersVoterAndVotedFor(MyBeersIdentity myBeersId) {
-        List myBeers;
+    public UserBeers getRatingVoteByUsersVoterAndVotedFor(UserBeersIdentity userBeersId) {
+        List userBeers;
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
 
-            myBeers = session.createQuery("from MyBeers as RV where RV.myBeersIdentity.userId=:userId and RV.myBeersIdentity.beerId=:beerId")
-                    .setParameter("userId",myBeersId.getUserId())
-                    .setParameter("beerId", myBeersId.getBeerId())
+            userBeers = session.createQuery("from UserBeers as RV where RV.userBeersIdentity.userId=:userId and RV.userBeersIdentity.beerId=:beerId")
+                    .setParameter("userId",userBeersId.getUserId())
+                    .setParameter("beerId", userBeersId.getBeerId())
                     .list();
 
             session.getTransaction().commit();
         }
-        if (myBeers.isEmpty()) {
+        if (userBeers.isEmpty()) {
             return null;
         } else {
-            return (MyBeers) myBeers.get(0);
+            return (UserBeers) userBeers.get(0);
         }
     }
 
     @Override
     public float getAverageRatingForBeerByBeerId(int votedForBeerId) {
         float averageRating = 0;
-        List<MyBeers> ratingVotes = new ArrayList<>();
+        List<UserBeers> ratingVotes = new ArrayList<>();
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
-            ratingVotes = session.createQuery("from MyBeers as MB where MB.myBeersIdentity.beerId=:votedForBeerId")
+            ratingVotes = session.createQuery("from UserBeers as MB where MB.userBeersIdentity.beerId=:votedForBeerId")
                     .setParameter("votedForBeerId", votedForBeerId)
                     .list();
             int sum = 0;
-            for (MyBeers rv : ratingVotes
+            for (UserBeers rv : ratingVotes
             ) {
                 sum+=rv.getVote();
             }
@@ -81,14 +81,14 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
     }
 
     @Override
-    public List getBeersByUserId(MyBeersIdentity myBeersIdentity) {
+    public List getBeersByUserId(UserBeersIdentity userBeersIdentity) {
         List result = new ArrayList();
-        int userId = myBeersIdentity.getUserId();
+        int userId = userBeersIdentity.getUserId();
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
-            result = session.createQuery("from MyBeers where userId = :userId")
+            result = session.createQuery("from UserBeers where userId = :userId")
                     .setParameter("userId", userId).list();
 
             session.getTransaction().commit();
@@ -101,33 +101,33 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
     }
 
     @Override
-    public MyBeers getMyBeersById(MyBeersIdentity id) {
+    public UserBeers getUserBeersById(UserBeersIdentity id) {
         return null;
     }
 
     @Override
-    public void create(MyBeers mybeer) {
+    public void create(UserBeers userbeer) {
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
-            session.save(mybeer);
+            session.save(userbeer);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("You can't create new MyBeer " + e.getMessage() + "\nHttp Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println("You can't create new Beer " + e.getMessage() + "\nHttp Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
         }
 
     }
 
     @Override
-    public void update(MyBeers myBeers) {
+    public void update(UserBeers userBeers) {
 
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.update(myBeers);
+            session.update(userBeers);
             tx.commit();
 
         } catch (HibernateException e) {
@@ -142,13 +142,13 @@ public class SqlMyBeersRepositoryImpl implements MyBeersRepository {
     }
 
     @Override
-    public void delete(MyBeers myBeers) {
+    public void delete(UserBeers userBeers) {
         try (
                 Session session = sessionFactory.openSession();
         ) {
             session.beginTransaction();
-            myBeers = session.get(myBeers.getClass(), myBeers.getMyBeersIdentity());
-            session.delete(myBeers);
+            userBeers = session.get(userBeers.getClass(), userBeers.getUserBeersIdentity());
+            session.delete(userBeers);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

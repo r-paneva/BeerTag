@@ -3,19 +3,20 @@ package com.beertag.android.diconfig;
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Country;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
 import com.beertag.android.parsers.json.JsonParser;
 import com.beertag.android.repositories.HttpBeerRepository;
 import com.beertag.android.repositories.HttpCountryRepository;
-import com.beertag.android.repositories.HttpRatingRepository;
+import com.beertag.android.repositories.HttpUserBeersRepository;
 import com.beertag.android.repositories.HttpStyleRepository;
 import com.beertag.android.repositories.HttpTagRepository;
 import com.beertag.android.repositories.HttpUserRepository;
-import com.beertag.android.repositories.base.RatingRepository;
-import com.beertag.android.repositories.base.Repository;;
+import com.beertag.android.repositories.base.UserBeersRepository;
+import com.beertag.android.repositories.base.Repository;
+;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -38,13 +39,13 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    public RatingRepository RatingVoteRepository(
+    public UserBeersRepository RatingVoteRepository(
             @Named("baseServerUrl") String baseServerUrl,
             HttpRequester httpRequester,
-            JsonParser<MyBeers> jsonParser
+            JsonParser<UserBeers> jsonParser
     ) {
         String url = baseServerUrl;
-        return new HttpRatingRepository(url, httpRequester, jsonParser);
+        return new HttpUserBeersRepository(url, httpRequester, jsonParser);
     }
 
     @Provides

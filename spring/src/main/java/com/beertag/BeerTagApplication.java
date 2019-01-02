@@ -20,7 +20,7 @@ public class BeerTagApplication {
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Beer.class)
-                .addAnnotatedClass(MyBeers.class)
+                .addAnnotatedClass(UserBeers.class)
                 .addAnnotatedClass(Country.class)
                 .addAnnotatedClass(Style.class)
                 .addAnnotatedClass(Tag.class)

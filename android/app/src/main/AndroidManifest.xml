@@ -21,6 +21,7 @@
 
     <application
         android:name=".BeerTagApplication"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -53,7 +54,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".views.beersList.BeersListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".views.myBeers.MyBeersListActivity"
+        <activity android:name=".views.userBeers.UserBeersListActivity"
             android:screenOrientation="portrait"/>
 
     </application>

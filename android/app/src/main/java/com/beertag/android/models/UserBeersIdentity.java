@@ -1,26 +1,17 @@
-package com.beertag.models;
+package com.beertag.android.models;
 
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Embeddable
-public class MyBeersIdentity implements Serializable {
+public class UserBeersIdentity implements Serializable {
 
-    @NotNull
-    @Size(max = 11)
     private Integer beerId;
-
-    @NotNull
-    @Size(max = 11)
     private Integer userId;
 
-    public MyBeersIdentity() {
+    public UserBeersIdentity() {
 
     }
 
-    public MyBeersIdentity(int beerId, int userId) {
+    public UserBeersIdentity(int beerId, int userId) {
         this.beerId = beerId;
         this.userId = userId;
     }
@@ -46,7 +37,7 @@ public class MyBeersIdentity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MyBeersIdentity that = (MyBeersIdentity) o;
+        UserBeersIdentity that = (UserBeersIdentity) o;
 
         if (!beerId.equals(that.beerId)) return false;
         return userId.equals(that.userId);

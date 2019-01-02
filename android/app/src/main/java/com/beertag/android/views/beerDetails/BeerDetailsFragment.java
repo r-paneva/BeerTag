@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.beertag.android.R;
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Drink;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.models.User;
 import com.beertag.android.utils.Constants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -78,6 +78,9 @@ public class BeerDetailsFragment
     @BindView(R.id.tv_ABV)
     TextView mABVTextView;
 
+    @BindView(R.id.tv_do_drink)
+    TextView mDrinkTextView;
+
     @BindView(R.id.tv_style)
     TextView mStyleTextView;
 
@@ -111,9 +114,7 @@ public class BeerDetailsFragment
     Beer beer;
     Drink drink;
     int mBeerId;
-    MyBeers mMyBeers;
-    private String mWhoRates;
-    SharedPreferences mPreferences;
+    UserBeers mUserBeers;
 
     Handler handler = new Handler();
     // Define the code block to be executed
@@ -128,7 +129,7 @@ public class BeerDetailsFragment
         }
 
         private void refresh() {
-  //          mPresenter.loadBeer();
+            mPresenter.loadBeer();
         }
     };
 
@@ -241,9 +242,23 @@ public class BeerDetailsFragment
                 }
             });
 
-
         } else {
             showMessage("You must be logged in to rate beer");
+        }
+
+        if (mPresenter.loadUserId() != 0) {
+            mPresenter.loadUserBeers(mPresenter.loadBeerId(), mPresenter.loadUserId());
+
+            System.out.println("*******************************************************************************************************************");
+
+            System.out.println(mPresenter.loadBeerId());
+
+            System.out.println(mPresenter.loadUserId());
+//            System.out.println(mUserBeers.getDrink());
+            System.out.println("*******************************************************************************************************************");
+//            mDrinkTextView.setText( mUserBeers.getDrink().toString());
+        }else{
+            mDrinkTextView.setVisibility(View.GONE);
         }
     }
 
@@ -273,8 +288,8 @@ public class BeerDetailsFragment
     }
 
     @Override
-    public void setMyBeers(MyBeers myBeers) {
-        mMyBeers = myBeers;
+    public void setUserBeers(UserBeers userBeers) {
+        mUserBeers = userBeers;
     }
 
     @Override

@@ -1,14 +1,14 @@
-package com.beertag.android.views.myBeers;
+package com.beertag.android.views.userBeers;
 
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 
 import java.util.List;
 
-public interface MyBeersListContracts {
+public interface UserBeersListContracts {
     interface View {
         void setPresenter(Presenter presenter);
 
-        void showMyBeers(List<MyBeers> myBeers);
+        void showUserBeers(List<UserBeers> userBeers);
 
         void showEmptyBeersList();
 
@@ -18,7 +18,7 @@ public interface MyBeersListContracts {
 
         void hideLoading();
 
-        void showBeerDetails(MyBeers mybeer);
+        void showBeerDetails(UserBeers userbeer);
 
         void setUserId(int userId);
     }
@@ -26,14 +26,14 @@ public interface MyBeersListContracts {
     interface Presenter {
         void subscribe(View view);
 
-        void loadMyBeers(int id);
+        void loadUserBeers(int id);
 
-        void selectBeer(MyBeers mybeer);
+        void selectBeer(UserBeers userbeer);
 
         void unsubscribe();
     }
 
     interface Navigator {
-        void navigateWith(MyBeers myBeer);
+        void navigateWith(UserBeers userBeer);
     }
 }

@@ -2,40 +2,39 @@ package com.beertag.android.repositories;
 
 import com.beertag.android.http.HttpRequester;
 import com.beertag.android.models.Drink;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.parsers.json.JsonParser;
-import com.beertag.android.repositories.base.RatingRepository;
-import com.beertag.android.repositories.base.Repository;
+import com.beertag.android.repositories.base.UserBeersRepository;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpRatingRepository implements RatingRepository {
+public class HttpUserBeersRepository implements UserBeersRepository {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;
-    private final JsonParser<MyBeers> mJsonParser;
+    private final JsonParser<UserBeers> mJsonParser;
 
-    public HttpRatingRepository(
+    public HttpUserBeersRepository(
             String serverUrl,
             HttpRequester httpRequester,
-            JsonParser<MyBeers> jsonParser
+            JsonParser<UserBeers> jsonParser
 
     ) {
-        mServerUrl = serverUrl + "/mybeers/";
+        mServerUrl = serverUrl + "/userbeers/";
         mHttpRequester = httpRequester;
         mJsonParser = jsonParser;
     }
 
     @Override
-    public List<MyBeers> getAll() throws IOException {
+    public List<UserBeers> getAll() throws IOException {
         String url = mServerUrl;
         String jsonArray = mHttpRequester.get(url);
         return mJsonParser.fromJsonArray(jsonArray);
     }
 
     @Override
-    public MyBeers add(MyBeers item) throws IOException {
+    public UserBeers add(UserBeers item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
         //String responseBody =
         mHttpRequester.post(mServerUrl + "add/", requestBody);
@@ -43,38 +42,38 @@ public class HttpRatingRepository implements RatingRepository {
     }
 
     @Override
-    public MyBeers delete(MyBeers item) throws IOException {
+    public UserBeers delete(UserBeers item) throws IOException {
         return null;
     }
 
     @Override
-    public MyBeers update(MyBeers item) throws IOException {
+    public UserBeers update(UserBeers item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
         mHttpRequester.put(mServerUrl + "update/", requestBody);
         return null;//mJsonParser.fromJson(responseBody);
     }
 
     @Override
-    public MyBeers getRatingByBeerId(int beerId) throws IOException {
+    public UserBeers getRatingByBeerId(int beerId) throws IOException {
         String url = mServerUrl + "rating/" + beerId;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);
     }
 
     @Override
-    public List <MyBeers> getBeersByUserId(int userId) throws IOException {
-        String url = mServerUrl + "beers/" + userId;
+    public List <UserBeers> getBeersByUserId(int userId) throws IOException {
+        String url = mServerUrl + "user/" + userId;
         String jsonArray = mHttpRequester.get(url);
         return mJsonParser.fromJsonArray(jsonArray);
     }
 
     @Override
-    public MyBeers getByDrink(Drink drink) throws IOException {
+    public UserBeers getByDrink(Drink drink) throws IOException {
         return null;
     }
 
     @Override
-    public MyBeers getById (int beerId, int userId) throws IOException {
+    public UserBeers getById (int beerId, int userId) throws IOException {
         String url = mServerUrl + beerId + "/" + userId;
         String json = mHttpRequester.get(url);
         return mJsonParser.fromJson(json);

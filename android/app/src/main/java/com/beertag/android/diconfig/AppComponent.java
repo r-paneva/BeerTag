@@ -7,7 +7,7 @@ import com.beertag.android.diconfig.viewmodules.GetPictureModule;
 import com.beertag.android.diconfig.viewmodules.HomeModule;
 import com.beertag.android.diconfig.viewmodules.ImageViewModule;
 import com.beertag.android.diconfig.viewmodules.LoginModule;
-import com.beertag.android.diconfig.viewmodules.MyBeersModule;
+import com.beertag.android.diconfig.viewmodules.UserBeersModule;
 import com.beertag.android.diconfig.viewmodules.ViewsModule;
 
 import javax.inject.Singleton;
@@ -27,10 +27,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ImageViewModule.class,
         GetPictureModule.class,
         LoginModule.class,
-        MyBeersModule.class,
         ParsersModule.class,
         RepositoriesModule.class,
         ServicesModule.class,
+        UserBeersModule.class,
         UtilitiesModule.class,
         ViewsModule.class,
         AndroidSupportInjectionModule.class

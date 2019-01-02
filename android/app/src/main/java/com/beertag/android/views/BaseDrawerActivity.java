@@ -6,10 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 
-import com.beertag.android.models.User;
 import com.beertag.android.repositories.base.BitmapCacheRepository;
 import com.beertag.android.utils.Constants;
 import com.beertag.android.R;
@@ -20,8 +18,8 @@ import com.beertag.android.views.login.LoginActivity;
 import com.beertag.android.views.beerCreate.BeerCreateActivity;
 import com.beertag.android.views.beerDetails.BeerDetailsActivity;
 import com.beertag.android.views.beersList.BeersListActivity;
-import com.beertag.android.views.myBeers.MyBeersListActivity;
-import com.beertag.android.views.myBeers.MyBeersListPresenter;
+import com.beertag.android.views.userBeers.UserBeersListActivity;
+import com.beertag.android.views.userBeers.UserBeersListPresenter;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -39,11 +37,6 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import dagger.android.support.DaggerAppCompatActivity;
 
-import static com.beertag.android.utils.Constants.PREFERENCES_USER_ID_KEY;
-import static com.beertag.android.utils.Constants.PREFERENCES_USER_NAME_KEY;
-import static com.beertag.android.utils.Constants.USER_EXTRA_KEY;
-import static com.beertag.android.utils.Constants.USER_PROFILE_IMAGE_KEY;
-
 public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
 
     private AccountHeader mHeader;
@@ -59,7 +52,7 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
     ImageEncoder mImageEncoder;
 
     @Inject
-    MyBeersListPresenter mMyBeersListPresenter;
+    UserBeersListPresenter mUserBeersListPresenter;
 
     public BaseDrawerActivity() {
         //empty constructor required
@@ -157,7 +150,7 @@ public abstract class BaseDrawerActivity extends DaggerAppCompatActivity {
         } else if (identifier == Constants.GET_PICTURE_IDENTIFIER) {
             return new Intent(this, GetPictureActivity.class);
         } else if (identifier == Constants.MY_BEERS_IDENTIFIER) {
-            return new Intent(this, MyBeersListActivity.class);
+            return new Intent(this, UserBeersListActivity.class);
         } else if (identifier == Constants.LOGOUT_IDENTIFIER) {
             mBitmapCacheRepository.clearBitmapCache();
             SharedPreferences.Editor editor = mPreferences.edit();

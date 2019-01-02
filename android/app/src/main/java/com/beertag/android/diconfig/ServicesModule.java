@@ -5,17 +5,17 @@ import com.beertag.android.models.Country;
 import com.beertag.android.models.Style;
 import com.beertag.android.models.Tag;
 import com.beertag.android.models.User;
-import com.beertag.android.repositories.base.RatingRepository;
+import com.beertag.android.repositories.base.UserBeersRepository;
 import com.beertag.android.repositories.base.Repository;
 import com.beertag.android.services.HttpBeersService;
 import com.beertag.android.services.HttpCountryService;
-import com.beertag.android.services.HttpRatingVoteService;
+import com.beertag.android.services.HttpUserBeersService;
 import com.beertag.android.services.HttpStyleService;
 import com.beertag.android.services.HttpTagService;
 import com.beertag.android.services.HttpUsersService;
 import com.beertag.android.services.base.BeersService;
 import com.beertag.android.services.base.CountryService;
-import com.beertag.android.services.base.RatingVoteService;
+import com.beertag.android.services.base.UserBeersService;
 import com.beertag.android.services.base.StyleService;
 import com.beertag.android.services.base.TagService;
 import com.beertag.android.services.base.UsersService;
@@ -31,8 +31,8 @@ public class ServicesModule {
     }
 
     @Provides
-    RatingVoteService RatingVoteService(RatingRepository repository) {
-        return new HttpRatingVoteService(repository);
+    UserBeersService RatingVoteService(UserBeersRepository repository) {
+        return new HttpUserBeersService(repository);
     }
 
     @Provides

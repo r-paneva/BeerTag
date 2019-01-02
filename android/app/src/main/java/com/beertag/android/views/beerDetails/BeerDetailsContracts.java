@@ -5,14 +5,14 @@ import android.graphics.Bitmap;
 
 import com.beertag.android.models.Beer;
 import com.beertag.android.models.Drink;
-import com.beertag.android.models.MyBeers;
+import com.beertag.android.models.UserBeers;
 import com.beertag.android.models.User;
 
 public interface BeerDetailsContracts {
     interface View {
         void showBeer(Beer beer);
 
-        void setMyBeers(MyBeers myBeers);
+        void setUserBeers(UserBeers userBeers);
 
         void setPresenter(Presenter presenter);
 
@@ -50,13 +50,13 @@ public interface BeerDetailsContracts {
 
         void setBeerId(int beerId);
 
+        void setUserId(int userId);
+
         void selectPictureFromGalleryButtonClickIsClicked();
 
         void takePictureButtonIsClicked();
 
         void setRating(int beerId, int userId, Drink drink, Beer rated, int stars);
-
-        void updateBeer(Beer beer);
 
         void newImageIsChosen(Bitmap image);
 
@@ -64,11 +64,13 @@ public interface BeerDetailsContracts {
 
         void updateBeerPicture(Beer beer, String imageString);
 
-        int setUserId();
-
         void loadUser();
 
         int loadUserId();
+
+        int loadBeerId();
+
+        void loadUserBeers(int beerId, int userId);
 
     }
     interface Navigator {
