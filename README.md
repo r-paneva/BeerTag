@@ -42,6 +42,8 @@ Rumyana Paneva
 
 <h2>Images</h2>
 
+<img src="documentation/Screenshot_1546396257.png"  width="200">  . <img src="documentation/Screenshot_1546388099.png"  width="200">  .  <img src="documentation/Screenshot_1546398013.png" width="200">   .  <img src="documentation/Screenshot_1546397918.png"  width="200">
+<img src="documentation/Screenshot_1546397955.png"  width="200">  . <img src="documentation/Screenshot_1546397969.png"  width="200">  .  <img src="documentation/Screenshot_1546389613.png" width="200">   .  <img src="documentation/Screenshot_1546399131.png"  width="200">
 
 <h4>Links</h4>
 
